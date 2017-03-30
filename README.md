@@ -4,6 +4,8 @@ Tangram is a UI Framework for building a fast and dynamic ScrollView.
  
 The system requirement for Tangram is iOS 7.0+
 
+[中文站点](http://tangram.pingguohe.net)
+
 ## Feature
 
 - Two platform support (iOS & Android, See Tangram-Android in Github for Android Version)
