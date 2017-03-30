@@ -28,3 +28,8 @@ framework/
 *.moved-aside
 *.xcuserstate
 
+##Demo
+TangramDemo/Pods/
+TangramDemo/Podfile.lock
+TangramDemo/*.xcworkspace
+TangramDemo/*.xcuserstate
