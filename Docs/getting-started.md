@@ -142,10 +142,9 @@ Use `TangramDefaultDataSourceHelper` to parse JSON to a layout array.
 
 ```objc
  NSString *mockDataPath = [NSString stringWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"TangramMock" ofType:@"json"] encoding:NSUTF8StringEncoding error:nil];
-
- NSDictionary *dict = [mockDataPath tbObjectFromJSONString];
-self.layoutModelArray = [[dict objectForKey:@"data"] objectForKey:@"cards"];
-self.layoutArray = [TangramDefaultDataSourceHelper layoutsWithArray:self.layoutModelArray];
+ NSDictionary *dict = [mockDataPath objectFromJSONString];
+ self.layoutModelArray = [[dict objectForKey:@"data"] objectForKey:@"cards"];
+ self.layoutArray = [TangramDefaultDataSourceHelper layoutsWithArray:self.layoutModelArray];
 ```
  
  About `TangramMock.json` , you can find it in TangramDemo

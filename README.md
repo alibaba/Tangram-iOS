@@ -4,8 +4,6 @@ Tangram is a UI Framework for building a fast and dynamic ScrollView.
  
 The system requirement for Tangram is iOS 7.0+
 
-[中文站点](http://tangram.pingguohe.net)
-
 ## Feature
 
 - Two platform support (iOS & Android, See Tangram-Android in Github for Android Version)
@@ -48,6 +46,8 @@ We provide internal layouts, including:
 * PageScroll Layout
 * WaterFlow Layout
 
+To See detailed performance of interal layouts , [Click me](https://github.com/alibaba/Tangram-iOS/blob/master/Docs/layoutIndex.md)
+
 ## Install
 
 Use Cocoapods to Get latest version of Tangram
@@ -59,8 +59,8 @@ pod 'Tangram'
 
 ## Getting Started
 
-- See [Getting Started Guide]
-- Or Open project in `TangramDemo` to see detail usage.
+- See [Getting Started Guide](https://github.com/alibaba/Tangram-iOS/blob/master/Docs/getting-started.md)
+- Or Open project in `TangramDemo` and execute `pod install` to see detail usage.
 
 
 ## LICENSE 
