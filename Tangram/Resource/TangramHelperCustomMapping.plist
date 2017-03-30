@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+	<dict>
+		<key>namespace</key>
+		<string>TMFrontPage</string>
+		<key>modelMap</key>
+		<string>FrontPageTangramSpecialModelMap</string>
+		<key>layoutMap</key>
+		<string>FrontPageTangramSpecialLayoutMap</string>
+	</dict>
+	<dict>
+		<key>namespace</key>
+		<string>WUSE_FORU</string>
+		<key>modelDictMap</key>
+		<string>WuseTangramModelDictMap</string>
+	</dict>
+</array>
+</plist>
