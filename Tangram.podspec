@@ -7,7 +7,7 @@ Pod::Spec.new do |s|
                    Tangram is a UI Framework for building a fast and dynamic ScrollView, with two platform support(Android & iOS)
                    DESC
 
-  s.homepage     = "https://tangram.pingguohe.net"
+  s.homepage     = "http://tangram.pingguohe.net"
   s.license      = {
     :type => 'MIT'
   }
