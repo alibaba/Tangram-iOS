@@ -178,7 +178,6 @@
 				TargetAttributes = {
 					70EF51971E66B25C0005B0E2 = {
 						CreatedOnToolsVersion = 8.2.1;
-						DevelopmentTeam = PBH63ZAR55;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -393,7 +392,7 @@
 			baseConfigurationReference = 9123C311486E00BBD8282FB5 /* Pods-TangramDemo.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = PBH63ZAR55;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = TangramDemo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = tmall.TangramDemo;
@@ -406,7 +405,7 @@
 			baseConfigurationReference = 5F1A88DF1FC6AE33CC113255 /* Pods-TangramDemo.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = PBH63ZAR55;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = TangramDemo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = tmall.TangramDemo;
