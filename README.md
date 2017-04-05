@@ -6,6 +6,8 @@ The system requirement for Tangram is iOS 7.0+
 
 [中文站点](http://tangram.pingguohe.net)
 
+Tips: If you get ``[!] Unable to find a specification for `LazyScroll` `` when executed `pod install`, you can try to update `ruby` to `2.3.0` or higher and update `CocoaPods` to `1.0.0` or higher . If it doesn't work , you can try to reset or update CocoaPods master repo again . 
+
 ## Feature
 
 - Two platform support (iOS & Android, See Tangram-Android in Github for Android Version)
