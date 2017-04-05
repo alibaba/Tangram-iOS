@@ -23,6 +23,8 @@
 
 @property (nonatomic, strong) NSArray *layoutArray;
 
+@property  (nonatomic, strong) TangramBus *tangramBus;
+
 
 @end
 
@@ -34,6 +36,14 @@
     [self loadMockContent];
     [self.tangramView reloadData];
     // Do any additional setup after loading the view.
+}
+
+- (TangramBus *)tangramBus
+{
+    if (nil == _tangramBus) {
+        _tangramBus = [[TangramBus alloc]init];
+    }
+    return _tangramBus;
 }
 -(NSMutableArray *)modelArray
 {
@@ -72,7 +82,7 @@
 //    [TangramDefaultItemModelFactory registElementType:@"202" className:@"TangramSingleImageElement"];
 //    [TangramDefaultItemModelFactory registElementType:@"203" className:@"TangramSingleImageElement"];
 //    [TangramDefaultItemModelFactory registElementType:@"204" className:@"TangramSingleImageElement"];
-    self.layoutArray = [TangramDefaultDataSourceHelper layoutsWithArray:self.layoutModelArray];
+    self.layoutArray = [TangramDefaultDataSourceHelper layoutsWithArray:self.layoutModelArray tangramBus:self.tangramBus];
 }
 - (NSUInteger)numberOfLayoutsInTangramView:(TangramView *)view
 {
@@ -95,14 +105,14 @@
 
 - (UIView *)itemInTangramView:(TangramView *)view withModel:(NSObject<TangramItemModelProtocol> *)model forLayout:(UIView<TangramLayoutProtocol> *)layout atIndex:(NSUInteger)index
 {
-    UIView *reuseableView = [view dequeueReusableItemWithIdentifier:model.reuseIdentifier];
+    UIView *reuseableView = [view dequeueReusableItemWithIdentifier:model.reuseIdentifier ];
     
     if (reuseableView) {
-        reuseableView =  [TangramDefaultDataSourceHelper refreshElement:reuseableView byModel:model];
+        reuseableView =  [TangramDefaultDataSourceHelper refreshElement:reuseableView byModel:model layout:layout tangramBus:self.tangramBus];
     }
     else
     {
-        reuseableView =  [TangramDefaultDataSourceHelper elementByModel:model];
+        reuseableView =  [TangramDefaultDataSourceHelper elementByModel:model layout:layout tangramBus:self.tangramBus];
     }
     return reuseableView;
 }
