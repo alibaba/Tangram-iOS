@@ -8,6 +8,9 @@
 
 #import <Foundation/Foundation.h>
 #import "TangramDefaultItemModel.h"
+#import "TangramLayoutProtocol.h"
+@class TangramBus;
+
 @protocol TangramEasyElementProtocol <NSObject>
 
 @required
