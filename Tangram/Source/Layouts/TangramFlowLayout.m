@@ -240,7 +240,18 @@
         }
     }
     NSObject<TangramItemModelProtocol> *lastItemModel = nil;
-    NSUInteger maxRows = (numberWithColspan < self.numberOfColumns) ? 1 : ceilf((CGFloat)(numberWithColspan - blockRows)/ self.numberOfColumns);
+    NSUInteger maxRows = 0;
+    if (numberWithColspan < self.numberOfColumns) {
+        maxRows = 1;
+    } else {
+        if (self.numberOfColumns <= 0) {
+#ifdef DEBUG
+            NSLog(@"[TangramFlowLayout] calculateLayout : Invalid data errors for self.numberOfColumns: %d",self.numberOfColumns);
+#endif
+            self.numberOfColumns = 1;
+        }
+        maxRows = ceilf((CGFloat)(numberWithColspan - blockRows) / self.numberOfColumns);
+    }
     
     maxRows += blockRows;
     NSUInteger columns = self.numberOfColumns;
