@@ -181,6 +181,10 @@
 }
 - (void)calculateLayout
 {
+    //默认一行, 和Android一致
+    if (self.numberOfColumns <= 0) {
+        self.numberOfColumns = 1;
+    }
     //抛出可异步加载的事件,暂时仅FlowLayout支持
     if ((self.loadType == TangramLayoutLoadTypeLoadOnce || self.loadType == TangramLayoutLoadTypeByPage) && self.loadAPI.length > 0) {
         TangramEvent *loadEvent = [[TangramEvent alloc]initWithTopic:@"requestItems" withTangramView:self.tangramView posterIdentifier:@"requestItems" andPoster:self];

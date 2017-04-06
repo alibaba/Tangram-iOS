@@ -18,7 +18,7 @@ typedef NS_ENUM(NSUInteger,TangramFlowLayoutBgImageScaleType)
 
 // Models Array , as protocol request.
 @property   (nonatomic, strong) NSArray         *itemModels;
-// Number of columns.
+// Number of columns.The default value is 1.
 @property   (nonatomic, assign) NSUInteger      numberOfColumns;
 // Percentage number of every cols
 @property   (nonatomic, strong) NSArray         *cols;

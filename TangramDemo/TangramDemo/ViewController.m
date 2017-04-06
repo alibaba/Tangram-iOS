@@ -230,7 +230,7 @@
     layout.margin = @[@10,@20,@20,@20];
     //layout.aspectRatio = @"5";
     //控制列数，行数根据Item个数自己算
-    
+    //在Tangram的FlowLayout里面，行数默认是1
     layout.numberOfColumns = index % 5;
     layout.hGap = 3;
     layout.vGap = 5;
