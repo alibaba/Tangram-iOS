@@ -13,6 +13,7 @@
 #import "TangramEvent.h"
 #import "TangramContext.h"
 #import "TangramSafeMethod.h"
+#import "TangramFlowLayout.h"
 
 @interface TangramViewDelegateHandler : NSObject<TangramViewDelegate>
 
@@ -410,6 +411,14 @@
         for (int i=0; i< numberOfLayouts; i++) {
             NSString *layoutKey = [NSString stringWithFormat:@"%d", i];
             UIView<TangramLayoutProtocol> *layout = [self.clDataSource layoutInTangramView:self atIndex:i];
+            if ([layout isKindOfClass:[TangramFlowLayout class]]) {
+                if(((TangramFlowLayout *)layout).numberOfColumns <= 0) {
+#ifdef DEBUG
+                    NSLog(@"[TangramView] reloadData : Invalid data errors for layout.numberOfColumns at index, index is %d",i);
+#endif
+                    ((TangramFlowLayout *)layout).numberOfColumns = 1;
+                }
+            }
             [self.layoutDict tgrm_setObjectCheck:layout forKey:layoutKey];
             [self.layoutKeyArray tgrm_addObjectCheck:layoutKey];
             NSUInteger numberOfItemsInLayout = [self.clDataSource numberOfItemsInTangramView:self forLayout:layout];
