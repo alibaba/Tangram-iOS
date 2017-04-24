@@ -212,6 +212,19 @@
 + (UIView<TangramLayoutProtocol> *)fillLayoutProperty :(UIView<TangramLayoutProtocol> *)layout withDict:(NSDictionary *)dict tangramBus:(TangramBus *)tangramBus
 {
     layout.itemModels = [self modelsWithLayoutDictionary:dict];
+    //layout在自己内部做处理其他数据
+    layout = [TangramLayoutParseHelper layoutConfigByOriginLayout:layout withDict:dict];
+    //解析HeaderModel & FooterModel
+    if ([dict tgrm_dictionaryForKey:@"header"] != nil && [layout respondsToSelector:@selector(setHeaderItemModel:)]) {
+        TangramDefaultItemModel *headerModel = [TangramDefaultDataSourceHelper modelWithDictionary:[dict tgrm_dictionaryForKey:@"header"]];
+        headerModel.display = @"block";
+        layout.headerItemModel = headerModel;
+    }
+    if ([dict tgrm_dictionaryForKey:@"footer"] != nil && [layout respondsToSelector:@selector(setHeaderItemModel:)]) {
+        TangramDefaultItemModel *footerModel = [TangramDefaultDataSourceHelper modelWithDictionary:[dict tgrm_dictionaryForKey:@"footer"]];
+        footerModel.display = @"block";
+        layout.footerItemModel = footerModel;
+    }
     //Check whether its nested layout
     NSMutableDictionary *mutableInnerLayoutDict = [[NSMutableDictionary alloc]init];
     NSMutableArray *mutableInnerLayoutIdentifierArray = [[NSMutableArray alloc]init];
