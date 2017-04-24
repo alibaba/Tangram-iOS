@@ -64,7 +64,12 @@
                             "imgUrl": "https://gw.alicdn.com/tps/TB1Nin9JFXXXXbXaXXXXXXXXXXX-224-224.png",
                             "type": "1"
                             }
-                            ]
+                            ],
+                  "footer":{
+                  "type": "2",
+                  "text":"Double Column Layout footer(use footer) "
+                  
+                  }
                   },
                   {
                   "type": "1",
