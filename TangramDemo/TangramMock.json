@@ -270,6 +270,7 @@
                     "indicatorRadius": "20",
                     "indicatorPosition": "inside",
                     "align": "left",
+                    "infinite":"true",
                     "pageMargin": [
                         "3",
                         "0",

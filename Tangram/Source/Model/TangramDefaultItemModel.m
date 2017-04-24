@@ -179,5 +179,26 @@
     }
 }
 
+- (id)initWithCoder:(NSCoder *)aDecoder
+{
+    self = [super init];
+    if (self) {
+        self.bizDict = [aDecoder decodeObjectForKey:@"bizDict"];
+        self.styleDict = [aDecoder decodeObjectForKey:@"styleDict"];
+        self.type = [aDecoder decodeObjectForKey:@"type"];
+        self.linkElementName = [aDecoder decodeObjectForKey:@"linkElementName"];
+        self.margin = [aDecoder decodeObjectForKey:@"margin"];
+    }
+    return self;
+}
 
+- (void)encodeWithCoder:(NSCoder *)aCoder
+{
+    [aCoder encodeObject:self.bizDict forKey:@"bizDict"];
+    [aCoder encodeObject:self.styleDict forKey:@"styleDict"];
+    [aCoder encodeObject:self.linkElementName forKey:@"linkElementName"];
+    [aCoder encodeObject:self.type forKey:@"type"];
+    [aCoder encodeObject:self.margin forKey:@"margin"];
+
+}
 @end

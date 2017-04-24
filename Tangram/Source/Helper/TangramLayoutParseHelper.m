@@ -126,7 +126,7 @@
     layout.indicatorImg2 = [styleDict tgrm_stringForKey:@"indicatorImg2"];
     layout.autoScrollTime = [styleDict tgrm_floatForKey:@"autoScroll"]/1000.0;
     layout.layoutLoadAPI = [dict tgrm_stringForKey:@"load"];
-    if ([styleDict tgrm_stringForKey:@"infiniteMinCount"].length > 0) {
+    if ([styleDict tgrm_stringForKey:@"infinite"].length > 0) {
         layout.infiniteLoop = YES;
     }
     if ([[styleDict tgrm_stringForKey:@"indicatorPosition"] isEqualToString:@"inside"]) {
