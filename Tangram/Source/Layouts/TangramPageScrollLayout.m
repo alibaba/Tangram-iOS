@@ -260,7 +260,7 @@
 {
     _footerItemModel = footerItemModel;
     NSMutableArray *mutableItemModels = [self.itemModels mutableCopy];
-    if (self.headerItemModel && ![self.itemModels containsObject:self.headerItemModel]) {
+    if (self.footerItemModel && ![self.itemModels containsObject:self.footerItemModel]) {
         [mutableItemModels tgrm_addObjectCheck:self.footerItemModel];
     }
     _itemModels = [mutableItemModels copy];

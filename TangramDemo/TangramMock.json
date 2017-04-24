@@ -1,198 +1,221 @@
 {
     "data": {
         "cards": [
-                  {
-                  "type": "1",
-                  "id": "first-line",
-                  "items":[
-                           {"type": "2",
-                           "text":"Test Page"
-                           }
-                           ]
-                  },
-                  {
-                  "type": "1",
-                  "id": "first-line-1",
-                  "items":[
-                           {"type": "2",
-                           "text":"type = 1 Single Column Layout "
-                           }
-                           ]
-                  },
-                  {
-                  "type": "1",
-                  "id": "type=1",
-                  "style": {
-                  "bgColor": "#ffffff"
-                  },
-                  "items": [
-                            {
-                            "type": "1",
-                            "imgUrl": "https://gw.alicdn.com/tps/TB1Nin9JFXXXXbXaXXXXXXXXXXX-224-224.png"
-                            },
-                            {
-                            "type": "1",
-                            "imgUrl": "https://gw.alicdn.com/tps/TB1Nin9JFXXXXbXaXXXXXXXXXXX-224-224.png"
-                            },
-                            {
-                            "imgUrl": "https://gw.alicdn.com/tps/TB1Nin9JFXXXXbXaXXXXXXXXXXX-224-224.png",
-                            "type": "1"
-                            }
-                            ]
-                  },
-                  {
-                  "type": "2",
-                  "id": "type=2",
-                  "style": {
-                  "bgColor": "#ffffff"
-                  },
-                  "header":{
-                  "type": "2",
-                  "text":"type = 2 Double Column Layout(use header) "
-                  
-                  },
-                  "items": [
-                            {
-                            "type": "1",
-                            "imgUrl": "https://gw.alicdn.com/tps/TB1Nin9JFXXXXbXaXXXXXXXXXXX-224-224.png"
-                            },
-                            {
-                            "type": "1",
-                            "imgUrl": "https://gw.alicdn.com/tps/TB1Nin9JFXXXXbXaXXXXXXXXXXX-224-224.png"
-                            },
-                            {
-                            "imgUrl": "https://gw.alicdn.com/tps/TB1Nin9JFXXXXbXaXXXXXXXXXXX-224-224.png",
-                            "type": "1"
-                            }
-                            ],
-                  "footer":{
-                  "type": "2",
-                  "text":"Double Column Layout footer(use footer) "
-                  
-                  }
-                  },
-                  {
-                  "type": "1",
-                  "id": "first-line-3",
-                  "items":[
-                           {"type": "3",
-                           "text":"type = 3 Trible Column Layout "
-                           }
-                           ]
-                  },
-                  {
-                  "type": "3",
-                  "id": "type=3",
-                  "style": {
-                  "bgColor": "#ffffff"
-                  },
-                  "items": [
-                            {
-                            "type": "1",
-                            "imgUrl": "https://gw.alicdn.com/tps/TB1Nin9JFXXXXbXaXXXXXXXXXXX-224-224.png"
-                            },
-                            {
-                            "type": "1",
-                            "imgUrl": "https://gw.alicdn.com/tps/TB1Nin9JFXXXXbXaXXXXXXXXXXX-224-224.png"
-                            },
-                            {
-                            "imgUrl": "https://gw.alicdn.com/tps/TB1Nin9JFXXXXbXaXXXXXXXXXXX-224-224.png",
-                            "type": "1"
-                            }
-                            ]
-                  },
-                  {
-                  "type": "4",
-                  "id": "first-line-4",
-                  "items":[
-                           {"type": "4",
-                           "text":"type = 4 Quintet Column Layout "
-                           }
-                           ]
-                  },
-                  {
-                  "type": "4",
-                  "id": "type=4",
-                  "style": {
-                  "bgColor": "#ffffff"
-                  },
-                  "items": [
-                            {
-                            "type": "1",
-                            "imgUrl": "https://gw.alicdn.com/tps/TB1Nin9JFXXXXbXaXXXXXXXXXXX-224-224.png"
-                            },
-                            {
-                            "type": "1",
-                            "imgUrl": "https://gw.alicdn.com/tps/TB1Nin9JFXXXXbXaXXXXXXXXXXX-224-224.png"
-                            },
-                            {
-                            "imgUrl": "https://gw.alicdn.com/tps/TB1Nin9JFXXXXbXaXXXXXXXXXXX-224-224.png",
-                            "type": "1"
-                            },
-                            {
-                            "imgUrl": "https://gw.alicdn.com/tps/TB1Nin9JFXXXXbXaXXXXXXXXXXX-224-224.png",
-                            "type": "1"
-                            }
-                            ]
-                  },
-                  {
-                  "type": "5",
-                  "id": "LifeHome_oneToTwo",
-                  "style": {
-                  "bgColor": "#ffffff",
-                  "aspectRatio": 1.8762,
-                  "cols": [
-                           43.733
-                           ],
-                  "margin": [
-                             "0",
-                             "0",
-                             "12",
-                             "0"
-                             ]
-                  },
-                  "items": [
-                            {
-                            
-                            "type": "1",
-                            "imgUrl": "https://gw.alicdn.com/tps/TB1Nin9JFXXXXbXaXXXXXXXXXXX-224-224.png",
-                            "style": {
+            {
+                "type": "1",
+                "id": "first-line",
+                "items": [
+                    {
+                        "type": "2",
+                        "text": "Test Page"
+                    }
+                ]
+            },
+            {
+                "type": "1",
+                "id": "first-line-1",
+                "items": [
+                    {
+                        "type": "2",
+                        "text": "type = 1 Single Column Layout "
+                    }
+                ]
+            },
+            {
+                "type": "1",
+                "id": "type=1",
+                "style": {
+                    "bgColor": "#ffffff"
+                },
+                "items": [
+                    {
+                        "type": "1",
+                        "imgUrl": "https://gw.alicdn.com/tps/TB1Nin9JFXXXXbXaXXXXXXXXXXX-224-224.png"
+                    },
+                    {
+                        "type": "1",
+                        "imgUrl": "https://gw.alicdn.com/tps/TB1Nin9JFXXXXbXaXXXXXXXXXXX-224-224.png"
+                    },
+                    {
+                        "imgUrl": "https://gw.alicdn.com/tps/TB1Nin9JFXXXXbXaXXXXXXXXXXX-224-224.png",
+                        "type": "1"
+                    }
+                ]
+            },
+            {
+                "type": "2",
+                "id": "type=2",
+                "style": {
+                    "bgColor": "#ffffff"
+                },
+                "header": {
+                    "type": "2",
+                    "text": "type = 2 Double Column Layout(use header) "
+                },
+                "items": [
+                    {
+                        "type": "1",
+                        "imgUrl": "https://gw.alicdn.com/tps/TB1Nin9JFXXXXbXaXXXXXXXXXXX-224-224.png"
+                    },
+                    {
+                        "type": "1",
+                        "imgUrl": "https://gw.alicdn.com/tps/TB1Nin9JFXXXXbXaXXXXXXXXXXX-224-224.png"
+                    },
+                    {
+                        "imgUrl": "https://gw.alicdn.com/tps/TB1Nin9JFXXXXbXaXXXXXXXXXXX-224-224.png",
+                        "type": "1"
+                    }
+                ],
+                "footer": {
+                    "type": "2",
+                    "text": "Double Column Layout footer(use footer) "
+                }
+            },
+            {
+                "type": "1",
+                "id": "first-line-3",
+                "items": [
+                    {
+                        "type": "3",
+                        "text": "type = 3 Trible Column Layout "
+                    }
+                ]
+            },
+            {
+                "type": "3",
+                "id": "type=3",
+                "style": {
+                    "bgColor": "#ffffff"
+                },
+                "items": [
+                    {
+                        "type": "1",
+                        "imgUrl": "https://gw.alicdn.com/tps/TB1Nin9JFXXXXbXaXXXXXXXXXXX-224-224.png"
+                    },
+                    {
+                        "type": "1",
+                        "imgUrl": "https://gw.alicdn.com/tps/TB1Nin9JFXXXXbXaXXXXXXXXXXX-224-224.png"
+                    },
+                    {
+                        "imgUrl": "https://gw.alicdn.com/tps/TB1Nin9JFXXXXbXaXXXXXXXXXXX-224-224.png",
+                        "type": "1"
+                    }
+                ]
+            },
+            {
+                "type": "4",
+                "id": "first-line-4",
+                "items": [
+                    {
+                        "type": "4",
+                        "text": "type = 4 Quintet Column Layout "
+                    }
+                ]
+            },
+            {
+                "type": "4",
+                "id": "type=4",
+                "style": {
+                    "bgColor": "#ffffff"
+                },
+                "items": [
+                    {
+                        "type": "1",
+                        "imgUrl": "https://gw.alicdn.com/tps/TB1Nin9JFXXXXbXaXXXXXXXXXXX-224-224.png"
+                    },
+                    {
+                        "type": "1",
+                        "imgUrl": "https://gw.alicdn.com/tps/TB1Nin9JFXXXXbXaXXXXXXXXXXX-224-224.png"
+                    },
+                    {
+                        "imgUrl": "https://gw.alicdn.com/tps/TB1Nin9JFXXXXbXaXXXXXXXXXXX-224-224.png",
+                        "type": "1"
+                    },
+                    {
+                        "imgUrl": "https://gw.alicdn.com/tps/TB1Nin9JFXXXXbXaXXXXXXXXXXX-224-224.png",
+                        "type": "1"
+                    }
+                ]
+            },
+            {
+                "type": "5",
+                "id": "LifeHome_oneToTwo",
+                "style": {
+                    "bgColor": "#ffffff",
+                    "aspectRatio": 1.8762,
+                    "cols": [
+                        43.733
+                    ],
+                    "margin": [
+                        "0",
+                        "0",
+                        "12",
+                        "0"
+                    ]
+                },
+                "items": [
+                    {
+                        "type": "1",
+                        "imgUrl": "https://gw.alicdn.com/tps/TB1Nin9JFXXXXbXaXXXXXXXXXXX-224-224.png",
+                        "style": {
                             "margin": [
-                                       "0",
-                                       "2",
-                                       "0",
-                                       "0"
-                                       ]
-                            }
-                            },
-                            {
-                            "spm": "banner",
-                            "type": "1",
-                            "imgUrl": "https://gw.alicdn.com/tps/TB1Nin9JFXXXXbXaXXXXXXXXXXX-224-224.png",
-                            "style": {
-                            "margin": [
-                                       "0",
-                                       "0",
-                                       "2",
-                                       "0"
-                                       ]
-                            }
-                            },
-                            {
-                            "imgUrl": "https://gw.alicdn.com/tps/TB1Nin9JFXXXXbXaXXXXXXXXXXX-224-224.png",
-                            "type": "1"
-                            }
+                                "0",
+                                "2",
+                                "0",
+                                "0"
                             ]
-                  },
-                  {
-                  "type": "9",
-                  "id": "LifeHome_oneToTwo2",
-                  "style": {
-                  "bgColor": "#ffffff",
-                  "hGap": "5"
-                  },
-                  "items": [
-                            {
+                        }
+                    },
+                    {
+                        "spm": "banner",
+                        "type": "1",
+                        "imgUrl": "https://gw.alicdn.com/tps/TB1Nin9JFXXXXbXaXXXXXXXXXXX-224-224.png",
+                        "style": {
+                            "margin": [
+                                "0",
+                                "0",
+                                "2",
+                                "0"
+                            ]
+                        }
+                    },
+                    {
+                        "imgUrl": "https://gw.alicdn.com/tps/TB1Nin9JFXXXXbXaXXXXXXXXXXX-224-224.png",
+                        "type": "1"
+                    }
+                ]
+            },
+            {
+                "type": "10",
+                "id": "calendarCard_tangram",
+                "style": {
+                    "bgColor": "#FFFFFF",
+                    "pageWidth": "176",
+                    "hasIndicator":"false",
+                    "pageMargin": [
+                        "3",
+                        "0",
+                        "2",
+                        "4"
+                    ],
+                    "pageHeight": "109",
+                    "margin": [
+                        "0",
+                        "0",
+                        "0",
+                        "0"
+                    ]
+                },
+                "header": {
+                    "type": "2",
+                    "text": "type = 10 PageScroll Layout(use header) "
+                },
+                 "footer": {
+                    "type": "2",
+                    "text": "PageScroll footer(use footer) "
+                },
+                "items": [
+                    {
                             "type": "1",
                             "imgUrl": "https://gw.alicdn.com/tps/TB1Nin9JFXXXXbXaXXXXXXXXXXX-224-224.png",
                             "style": {
@@ -236,8 +259,86 @@
                             "imgUrl": "https://img.alicdn.com/tps/i1/TB1DwDoKpXXXXcIXFXXYCR.YFXX-422-200.jpg",
                             "type": "1"
                             }
-                            ]
-                  }
-                  ]
+                ]
+            },
+            {
+                "type": "10",
+                "id": "calendarCard_tangram2",
+                "style": {
+                    "indicatorStyle": "dot",
+                    "bgColor": "#FFFFFF",
+                    "indicatorRadius": "20",
+                    "indicatorPosition": "inside",
+                    "align": "left",
+                    "pageMargin": [
+                        "3",
+                        "0",
+                        "2",
+                        "4"
+                    ],
+                    "defaultIndicatorColor": "#333333",
+                    "indicatorColor": "#B4B4B4",
+                    "pageHeight": "109",
+                    "animation": "desc",
+                    "hasIndicator": "true",
+                    "margin": [
+                        "0",
+                        "0",
+                        "0",
+                        "0"
+                    ]
+                },
+                "header": {
+                    "type": "2",
+                    "text": "type = 10 PageScroll Layout Scroll by Page "
+                },
+                "items": [
+                    {
+                            "type": "1",
+                            "imgUrl": "https://gw.alicdn.com/tps/TB1Nin9JFXXXXbXaXXXXXXXXXXX-224-224.png",
+                            "style": {
+                            "margin": [
+                                       "0",
+                                       "2",
+                                       "0",
+                                       "0"
+                                       ]
+                            }
+                            },
+                            {
+                            "type": "1",
+                            "imgUrl": "https://gw.alicdn.com/tps/TB1Nin9JFXXXXbXaXXXXXXXXXXX-224-224.png",
+                            "style": {
+                            "margin": [
+                                       "0",
+                                       "0",
+                                       "2",
+                                       "0"
+                                       ]
+                            }
+                            },
+                            {
+                            "type": "1",
+                            "imgUrl": "https://gw.alicdn.com/tps/TB1Nin9JFXXXXbXaXXXXXXXXXXX-224-224.png",
+                            "style": {
+                            "margin": [
+                                       "0",
+                                       "0",
+                                       "2",
+                                       "0"
+                                       ]
+                            }
+                            },
+                            {
+                            "imgUrl": "https://img.alicdn.com/tps/i1/TB1DwDoKpXXXXcIXFXXYCR.YFXX-422-200.jpg",
+                            "type": "1"
+                            },
+                            {
+                            "imgUrl": "https://img.alicdn.com/tps/i1/TB1DwDoKpXXXXcIXFXXYCR.YFXX-422-200.jpg",
+                            "type": "1"
+                            }
+                ]
+            }
+        ]
     }
 }
