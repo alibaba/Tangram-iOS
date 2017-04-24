@@ -487,6 +487,10 @@
     }
     [self startTimer];
    // [self buildIndicator];
+    if (self.infiniteLoop) {
+        [self.scrollView setContentOffset:CGPointMake(self.scrollView.frame.size.width, 0) animated:NO];
+    }
+
 }
 
 

@@ -271,6 +271,7 @@
                     "indicatorPosition": "inside",
                     "align": "left",
                     "infinite":"true",
+                    "autoScroll":"3000",
                     "pageMargin": [
                         "3",
                         "0",
