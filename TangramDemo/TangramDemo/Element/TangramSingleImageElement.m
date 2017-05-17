@@ -8,6 +8,8 @@
 
 #import "TangramSingleImageElement.h"
 #import <SDWebImage/UIImageView+WebCache.h>
+#import "TangramEvent.h"
+#import "UIView+Tangram.h"
 
 @interface TangramSingleImageElement()
 
@@ -19,6 +21,18 @@
 
 
 @implementation TangramSingleImageElement
+
+- (instancetype)init
+{
+    self = [super init];
+    if (self)
+    {
+        [self addTarget:self action:@selector(clickedOnElement) forControlEvents:UIControlEventTouchUpInside];
+        self.clipsToBounds = YES;
+    }
+    return self;
+}
+
 
 - (UIImageView *)imageView
 {
@@ -62,6 +76,13 @@
     self.imageView.frame = CGRectMake(0, 0, self.frame.size.width, self.frame.size.height);
     self.titleLabel.text = [NSString stringWithFormat:@"%ld",[self.number longValue]];
     [self.titleLabel sizeToFit];
+}
+
+- (void)clickedOnElement
+{
+    TangramEvent *event = [[TangramEvent alloc]initWithTopic:@"jumpAction" withTangramView:self.inTangramView posterIdentifier:@"singleImage" andPoster:self];
+    [event setParam:self.action forKey:@"action"];
+    [self.tangramBus postEvent:event];
 }
 
 

@@ -11,7 +11,7 @@
 #import "TangramDefaultItemModel.h"
 #import "TangramEasyElementProtocol.h"
 
-@interface TangramSingleImageElement : UIView<TangramElementHeightProtocol,TMMuiLazyScrollViewCellProtocol,TangramEasyElementProtocol>
+@interface TangramSingleImageElement : UIControl<TangramElementHeightProtocol,TMMuiLazyScrollViewCellProtocol,TangramEasyElementProtocol>
 
 @property (nonatomic, strong) NSString *imgUrl;
 
@@ -22,5 +22,7 @@
 @property (nonatomic, weak) UIView<TangramLayoutProtocol> *atLayout;
 
 @property (nonatomic, weak) TangramBus *tangramBus;
+
+@property (nonatomic, strong) NSString *action;
 
 @end

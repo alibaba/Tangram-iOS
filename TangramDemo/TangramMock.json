@@ -30,15 +30,18 @@
                 "items": [
                     {
                         "type": "1",
-                        "imgUrl": "https://gw.alicdn.com/tps/TB1Nin9JFXXXXbXaXXXXXXXXXXX-224-224.png"
+                        "imgUrl": "https://gw.alicdn.com/tps/TB1Nin9JFXXXXbXaXXXXXXXXXXX-224-224.png",
+                        "action":"https://www.taobao.com"
                     },
                     {
                         "type": "1",
-                        "imgUrl": "https://gw.alicdn.com/tps/TB1Nin9JFXXXXbXaXXXXXXXXXXX-224-224.png"
+                        "imgUrl": "https://gw.alicdn.com/tps/TB1Nin9JFXXXXbXaXXXXXXXXXXX-224-224.png",
+                        "action":"https://www.tmall.com"
                     },
                     {
                         "imgUrl": "https://gw.alicdn.com/tps/TB1Nin9JFXXXXbXaXXXXXXXXXXX-224-224.png",
-                        "type": "1"
+                        "type": "1",
+                          "action":"https://www.tmall.com"
                     }
                 ]
             },

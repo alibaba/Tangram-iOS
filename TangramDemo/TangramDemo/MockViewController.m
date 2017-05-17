@@ -11,6 +11,9 @@
 #import <Tangram/TangramView.h>
 #import <Tangram/TangramDefaultDataSourceHelper.h>
 #import <Tangram/TangramDefaultItemModelFactory.h>
+#import <Tangram/TangramContext.h>
+#import <Tangram/TangramEvent.h>
+#import <Tangram/TangramSafeMethod.h>
 
 
 @interface MockViewController ()<TangramViewDatasource>
@@ -34,6 +37,7 @@
     [super viewDidLoad];
     
     [self loadMockContent];
+    [self registEvent];
     [self.tangramView reloadData];
     // Do any additional setup after loading the view.
 }
@@ -83,6 +87,17 @@
 //    [TangramDefaultItemModelFactory registElementType:@"203" className:@"TangramSingleImageElement"];
 //    [TangramDefaultItemModelFactory registElementType:@"204" className:@"TangramSingleImageElement"];
     self.layoutArray = [TangramDefaultDataSourceHelper layoutsWithArray:self.layoutModelArray tangramBus:self.tangramBus];
+}
+
+- (void)registEvent
+{
+    [self.tangramBus registerAction:@"responseToClickEvent:" ofExecuter:self onEventTopic:@"jumpAction"];
+}
+
+- (void)responseToClickEvent:(TangramContext *)context
+{
+    NSString *action = [context.event.params tgrm_stringForKey:@"action"];
+    NSLog(@"Click Action: %@",action);
 }
 - (NSUInteger)numberOfLayoutsInTangramView:(TangramView *)view
 {
