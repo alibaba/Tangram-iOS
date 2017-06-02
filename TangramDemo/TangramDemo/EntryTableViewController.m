@@ -59,6 +59,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
      //NSDictionary *dict = [self.testArray objectAtIndex:indexPath.row];
     //NSString *controllerName = [dict objectForKey:@"entry"];
     if (indexPath.row == 0) {
