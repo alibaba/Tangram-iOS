@@ -435,6 +435,7 @@
     
     //如果是点的PageControl
     if (self.hasIndicator) {
+        self.pageControl.hidden = NO;
         if (self.indicatorStyleType == IndicatorStyleDot)
         {
             if (self.indicatorImg1.length <= 0 && self.indicatorImg2.length <= 0) {
@@ -470,6 +471,9 @@
             }
             [self calculatePageControlPosition];
         }
+    }
+    else{
+        self.pageControl.hidden = YES;
     }
     [self bringSubviewToFront:self.pageControl];
     //对footer进行布局
