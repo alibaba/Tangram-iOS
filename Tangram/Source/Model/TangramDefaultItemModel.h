@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "TangramItemModelProtocol.h"
-#import <LazyScroll/TMMuiLazyScrollView.h>
+#import "TMMuiLazyScrollView.h"
 
 @interface TangramDefaultItemModel : TMMuiRectModel<TangramItemModelProtocol,NSCoding>
 

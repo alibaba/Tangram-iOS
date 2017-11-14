@@ -8,7 +8,7 @@
 
 #import "TangramPageScrollLayout.h"
 #import "TangramItemModelProtocol.h"
-#import <LazyScroll/TMMuiLazyScrollView.h>
+#import "TMMuiLazyScrollView.h"
 #import "TangramView.h"
 #import "UIImageView+WebCache.h"
 #import "TangramEvent.h"

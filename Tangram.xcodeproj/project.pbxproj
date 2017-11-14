@@ -7,84 +7,85 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		70962D781E768D52000F85EB /* TangramHelperCustomMapping.plist in Resources */ = {isa = PBXBuildFile; fileRef = 70962D751E768D52000F85EB /* TangramHelperCustomMapping.plist */; };
-		70962D791E768D52000F85EB /* TangramHelperMapping.plist in Resources */ = {isa = PBXBuildFile; fileRef = 70962D761E768D52000F85EB /* TangramHelperMapping.plist */; };
-		70962D7A1E768D52000F85EB /* TangramKitLayoutTypeMap.plist in Resources */ = {isa = PBXBuildFile; fileRef = 70962D771E768D52000F85EB /* TangramKitLayoutTypeMap.plist */; };
-		70962D811E768D62000F85EB /* TangramDefaultElementFactory.h in Headers */ = {isa = PBXBuildFile; fileRef = 70962D7B1E768D62000F85EB /* TangramDefaultElementFactory.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		70962D821E768D62000F85EB /* TangramDefaultElementFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 70962D7C1E768D62000F85EB /* TangramDefaultElementFactory.m */; };
-		70962D831E768D62000F85EB /* TangramDefaultItemModelFactory.h in Headers */ = {isa = PBXBuildFile; fileRef = 70962D7D1E768D62000F85EB /* TangramDefaultItemModelFactory.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		70962D841E768D62000F85EB /* TangramDefaultItemModelFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 70962D7E1E768D62000F85EB /* TangramDefaultItemModelFactory.m */; };
-		70962D851E768D62000F85EB /* TangramDefaultLayoutFactory.h in Headers */ = {isa = PBXBuildFile; fileRef = 70962D7F1E768D62000F85EB /* TangramDefaultLayoutFactory.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		70962D861E768D62000F85EB /* TangramDefaultLayoutFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 70962D801E768D62000F85EB /* TangramDefaultLayoutFactory.m */; };
-		70962D891E768D6C000F85EB /* TangramSafeMethod.h in Headers */ = {isa = PBXBuildFile; fileRef = 70962D871E768D6C000F85EB /* TangramSafeMethod.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		70962D8A1E768D6C000F85EB /* TangramSafeMethod.m in Sources */ = {isa = PBXBuildFile; fileRef = 70962D881E768D6C000F85EB /* TangramSafeMethod.m */; };
-		70962D8D1E768D76000F85EB /* TangramView.h in Headers */ = {isa = PBXBuildFile; fileRef = 70962D8B1E768D76000F85EB /* TangramView.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		70962D8E1E768D76000F85EB /* TangramView.m in Sources */ = {isa = PBXBuildFile; fileRef = 70962D8C1E768D76000F85EB /* TangramView.m */; };
-		70962D9F1E768D86000F85EB /* TangramBus.h in Headers */ = {isa = PBXBuildFile; fileRef = 70962D8F1E768D86000F85EB /* TangramBus.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		70962DA01E768D86000F85EB /* TangramBus.m in Sources */ = {isa = PBXBuildFile; fileRef = 70962D901E768D86000F85EB /* TangramBus.m */; };
-		70962DA11E768D86000F85EB /* TangramBusIndex.h in Headers */ = {isa = PBXBuildFile; fileRef = 70962D911E768D86000F85EB /* TangramBusIndex.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		70962DA21E768D86000F85EB /* TangramBusIndex.m in Sources */ = {isa = PBXBuildFile; fileRef = 70962D921E768D86000F85EB /* TangramBusIndex.m */; };
-		70962DA31E768D86000F85EB /* TangramBusIndexClass.h in Headers */ = {isa = PBXBuildFile; fileRef = 70962D931E768D86000F85EB /* TangramBusIndexClass.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		70962DA41E768D86000F85EB /* TangramBusIndexClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 70962D941E768D86000F85EB /* TangramBusIndexClass.m */; };
-		70962DA51E768D86000F85EB /* TangramBusIndexTopic.h in Headers */ = {isa = PBXBuildFile; fileRef = 70962D951E768D86000F85EB /* TangramBusIndexTopic.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		70962DA61E768D86000F85EB /* TangramBusIndexTopic.m in Sources */ = {isa = PBXBuildFile; fileRef = 70962D961E768D86000F85EB /* TangramBusIndexTopic.m */; };
-		70962DA71E768D86000F85EB /* TangramContext.h in Headers */ = {isa = PBXBuildFile; fileRef = 70962D971E768D86000F85EB /* TangramContext.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		70962DA81E768D86000F85EB /* TangramContext.m in Sources */ = {isa = PBXBuildFile; fileRef = 70962D981E768D86000F85EB /* TangramContext.m */; };
-		70962DA91E768D86000F85EB /* TangramEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = 70962D991E768D86000F85EB /* TangramEvent.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		70962DAA1E768D86000F85EB /* TangramEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 70962D9A1E768D86000F85EB /* TangramEvent.m */; };
-		70962DAB1E768D86000F85EB /* TangramEventDispatcher.h in Headers */ = {isa = PBXBuildFile; fileRef = 70962D9B1E768D86000F85EB /* TangramEventDispatcher.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		70962DAC1E768D86000F85EB /* TangramEventDispatcher.m in Sources */ = {isa = PBXBuildFile; fileRef = 70962D9C1E768D86000F85EB /* TangramEventDispatcher.m */; };
-		70962DAD1E768D86000F85EB /* TangramEventQueue.h in Headers */ = {isa = PBXBuildFile; fileRef = 70962D9D1E768D86000F85EB /* TangramEventQueue.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		70962DAE1E768D86000F85EB /* TangramEventQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 70962D9E1E768D86000F85EB /* TangramEventQueue.m */; };
-		70962DB51E768D95000F85EB /* TangramDefaultDataSourceHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 70962DAF1E768D95000F85EB /* TangramDefaultDataSourceHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		70962DB61E768D95000F85EB /* TangramDefaultDataSourceHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 70962DB01E768D95000F85EB /* TangramDefaultDataSourceHelper.m */; };
-		70962DB71E768D95000F85EB /* TangramLayoutParseHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 70962DB11E768D95000F85EB /* TangramLayoutParseHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		70962DB81E768D95000F85EB /* TangramLayoutParseHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 70962DB21E768D95000F85EB /* TangramLayoutParseHelper.m */; };
-		70962DB91E768D95000F85EB /* UIView+Tangram.h in Headers */ = {isa = PBXBuildFile; fileRef = 70962DB31E768D95000F85EB /* UIView+Tangram.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		70962DBA1E768D95000F85EB /* UIView+Tangram.m in Sources */ = {isa = PBXBuildFile; fileRef = 70962DB41E768D95000F85EB /* UIView+Tangram.m */; };
-		70962DD91E768DA4000F85EB /* TangramDoubleColumnLayout.h in Headers */ = {isa = PBXBuildFile; fileRef = 70962DBB1E768DA4000F85EB /* TangramDoubleColumnLayout.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		70962DDA1E768DA4000F85EB /* TangramDoubleColumnLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 70962DBC1E768DA4000F85EB /* TangramDoubleColumnLayout.m */; };
-		70962DDB1E768DA4000F85EB /* TangramDragableLayout.h in Headers */ = {isa = PBXBuildFile; fileRef = 70962DBD1E768DA4000F85EB /* TangramDragableLayout.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		70962DDC1E768DA4000F85EB /* TangramDragableLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 70962DBE1E768DA4000F85EB /* TangramDragableLayout.m */; };
-		70962DDD1E768DA4000F85EB /* TangramFixBottomLayout.h in Headers */ = {isa = PBXBuildFile; fileRef = 70962DBF1E768DA4000F85EB /* TangramFixBottomLayout.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		70962DDE1E768DA4000F85EB /* TangramFixBottomLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 70962DC01E768DA4000F85EB /* TangramFixBottomLayout.m */; };
-		70962DDF1E768DA4000F85EB /* TangramFixLayout.h in Headers */ = {isa = PBXBuildFile; fileRef = 70962DC11E768DA4000F85EB /* TangramFixLayout.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		70962DE01E768DA4000F85EB /* TangramFixLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 70962DC21E768DA4000F85EB /* TangramFixLayout.m */; };
-		70962DE11E768DA4000F85EB /* TangramFixTopLayout.h in Headers */ = {isa = PBXBuildFile; fileRef = 70962DC31E768DA4000F85EB /* TangramFixTopLayout.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		70962DE21E768DA4000F85EB /* TangramFixTopLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 70962DC41E768DA4000F85EB /* TangramFixTopLayout.m */; };
-		70962DE31E768DA4000F85EB /* TangramFlowLayout.h in Headers */ = {isa = PBXBuildFile; fileRef = 70962DC51E768DA4000F85EB /* TangramFlowLayout.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		70962DE41E768DA4000F85EB /* TangramFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 70962DC61E768DA4000F85EB /* TangramFlowLayout.m */; };
-		70962DE51E768DA4000F85EB /* TangramPageScrollLayout.h in Headers */ = {isa = PBXBuildFile; fileRef = 70962DC71E768DA4000F85EB /* TangramPageScrollLayout.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		70962DE61E768DA4000F85EB /* TangramPageScrollLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 70962DC81E768DA4000F85EB /* TangramPageScrollLayout.m */; };
-		70962DE71E768DA4000F85EB /* TangramQuintetColumnLayout.h in Headers */ = {isa = PBXBuildFile; fileRef = 70962DC91E768DA4000F85EB /* TangramQuintetColumnLayout.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		70962DE81E768DA4000F85EB /* TangramQuintetColumnLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 70962DCA1E768DA4000F85EB /* TangramQuintetColumnLayout.m */; };
-		70962DE91E768DA4000F85EB /* TangramSingleAndDoubleLayout.h in Headers */ = {isa = PBXBuildFile; fileRef = 70962DCB1E768DA4000F85EB /* TangramSingleAndDoubleLayout.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		70962DEA1E768DA4000F85EB /* TangramSingleAndDoubleLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 70962DCC1E768DA4000F85EB /* TangramSingleAndDoubleLayout.m */; };
-		70962DEB1E768DA4000F85EB /* TangramSingleColumnLayout.h in Headers */ = {isa = PBXBuildFile; fileRef = 70962DCD1E768DA4000F85EB /* TangramSingleColumnLayout.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		70962DEC1E768DA4000F85EB /* TangramSingleColumnLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 70962DCE1E768DA4000F85EB /* TangramSingleColumnLayout.m */; };
-		70962DED1E768DA4000F85EB /* TangramStickyBottomLayout.h in Headers */ = {isa = PBXBuildFile; fileRef = 70962DCF1E768DA4000F85EB /* TangramStickyBottomLayout.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		70962DEE1E768DA4000F85EB /* TangramStickyBottomLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 70962DD01E768DA4000F85EB /* TangramStickyBottomLayout.m */; };
-		70962DEF1E768DA4000F85EB /* TangramStickyLayout.h in Headers */ = {isa = PBXBuildFile; fileRef = 70962DD11E768DA4000F85EB /* TangramStickyLayout.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		70962DF01E768DA4000F85EB /* TangramStickyLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 70962DD21E768DA4000F85EB /* TangramStickyLayout.m */; };
-		70962DF11E768DA4000F85EB /* TangramTetradColumnLayout.h in Headers */ = {isa = PBXBuildFile; fileRef = 70962DD31E768DA4000F85EB /* TangramTetradColumnLayout.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		70962DF21E768DA4000F85EB /* TangramTetradColumnLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 70962DD41E768DA4000F85EB /* TangramTetradColumnLayout.m */; };
-		70962DF31E768DA4000F85EB /* TangramTribleColumnLayout.h in Headers */ = {isa = PBXBuildFile; fileRef = 70962DD51E768DA4000F85EB /* TangramTribleColumnLayout.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		70962DF41E768DA4000F85EB /* TangramTribleColumnLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 70962DD61E768DA4000F85EB /* TangramTribleColumnLayout.m */; };
-		70962DF51E768DA4000F85EB /* TangramWaterFlowLayout.h in Headers */ = {isa = PBXBuildFile; fileRef = 70962DD71E768DA4000F85EB /* TangramWaterFlowLayout.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		70962DF61E768DA4000F85EB /* TangramWaterFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 70962DD81E768DA4000F85EB /* TangramWaterFlowLayout.m */; };
-		70962DF91E768DB0000F85EB /* TangramDefaultItemModel.h in Headers */ = {isa = PBXBuildFile; fileRef = 70962DF71E768DB0000F85EB /* TangramDefaultItemModel.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		70962DFA1E768DB0000F85EB /* TangramDefaultItemModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 70962DF81E768DB0000F85EB /* TangramDefaultItemModel.m */; };
-		70962E031E768DB7000F85EB /* TangramEasyElementProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 70962DFB1E768DB7000F85EB /* TangramEasyElementProtocol.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		70962E041E768DB7000F85EB /* TangramElementFactoryProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 70962DFC1E768DB7000F85EB /* TangramElementFactoryProtocol.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		70962E051E768DB7000F85EB /* TangramElementHeightProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 70962DFD1E768DB7000F85EB /* TangramElementHeightProtocol.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		70962E061E768DB7000F85EB /* TangramElementReuseIdentifierProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 70962DFE1E768DB7000F85EB /* TangramElementReuseIdentifierProtocol.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		70962E071E768DB7000F85EB /* TangramItemModelFactoryProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 70962DFF1E768DB7000F85EB /* TangramItemModelFactoryProtocol.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		70962E081E768DB7000F85EB /* TangramItemModelProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 70962E001E768DB7000F85EB /* TangramItemModelProtocol.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		70962E091E768DB7000F85EB /* TangramLayoutFactoryProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 70962E011E768DB7000F85EB /* TangramLayoutFactoryProtocol.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		70962E0A1E768DB7000F85EB /* TangramLayoutProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 70962E021E768DB7000F85EB /* TangramLayoutProtocol.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		70962E0D1E768DC7000F85EB /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 70962E0B1E768DC7000F85EB /* Info.plist */; };
 		70962E0E1E768DC7000F85EB /* Tangram-Prefix.pch in Headers */ = {isa = PBXBuildFile; fileRef = 70962E0C1E768DC7000F85EB /* Tangram-Prefix.pch */; settings = {ATTRIBUTES = (Public, ); }; };
-		A3DB80663CD42258E102B352 /* libPods-Tangram.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F154B0692B448E84864C09F /* libPods-Tangram.a */; };
+		9240F2BF1FBAABA900A630E6 /* TangramDefaultElementFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 9240F2B91FBAABA900A630E6 /* TangramDefaultElementFactory.m */; };
+		9240F2C01FBAABA900A630E6 /* TangramDefaultItemModelFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 9240F2BA1FBAABA900A630E6 /* TangramDefaultItemModelFactory.m */; };
+		9240F2C11FBAABA900A630E6 /* TangramDefaultElementFactory.h in Headers */ = {isa = PBXBuildFile; fileRef = 9240F2BB1FBAABA900A630E6 /* TangramDefaultElementFactory.h */; };
+		9240F2C21FBAABA900A630E6 /* TangramDefaultItemModelFactory.h in Headers */ = {isa = PBXBuildFile; fileRef = 9240F2BC1FBAABA900A630E6 /* TangramDefaultItemModelFactory.h */; };
+		9240F2C31FBAABA900A630E6 /* TangramDefaultLayoutFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 9240F2BD1FBAABA900A630E6 /* TangramDefaultLayoutFactory.m */; };
+		9240F2C41FBAABA900A630E6 /* TangramDefaultLayoutFactory.h in Headers */ = {isa = PBXBuildFile; fileRef = 9240F2BE1FBAABA900A630E6 /* TangramDefaultLayoutFactory.h */; };
+		9240F2C81FBAABCB00A630E6 /* TangramKitLayoutTypeMap.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9240F2C51FBAABCB00A630E6 /* TangramKitLayoutTypeMap.plist */; };
+		9240F2C91FBAABCB00A630E6 /* TangramHelperCustomMapping.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9240F2C61FBAABCB00A630E6 /* TangramHelperCustomMapping.plist */; };
+		9240F2CA1FBAABCB00A630E6 /* TangramHelperMapping.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9240F2C71FBAABCB00A630E6 /* TangramHelperMapping.plist */; };
+		9240F2CD1FBAABE400A630E6 /* TangramSafeMethod.h in Headers */ = {isa = PBXBuildFile; fileRef = 9240F2CB1FBAABE400A630E6 /* TangramSafeMethod.h */; };
+		9240F2CE1FBAABE400A630E6 /* TangramSafeMethod.m in Sources */ = {isa = PBXBuildFile; fileRef = 9240F2CC1FBAABE400A630E6 /* TangramSafeMethod.m */; };
+		9240F2D11FBAABF700A630E6 /* TangramView.h in Headers */ = {isa = PBXBuildFile; fileRef = 9240F2CF1FBAABF700A630E6 /* TangramView.h */; };
+		9240F2D21FBAABF700A630E6 /* TangramView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9240F2D01FBAABF700A630E6 /* TangramView.m */; };
+		9240F2E31FBAAC0800A630E6 /* TangramBus.h in Headers */ = {isa = PBXBuildFile; fileRef = 9240F2D31FBAAC0700A630E6 /* TangramBus.h */; };
+		9240F2E41FBAAC0800A630E6 /* TangramContext.h in Headers */ = {isa = PBXBuildFile; fileRef = 9240F2D41FBAAC0700A630E6 /* TangramContext.h */; };
+		9240F2E51FBAAC0800A630E6 /* TangramBus.m in Sources */ = {isa = PBXBuildFile; fileRef = 9240F2D51FBAAC0700A630E6 /* TangramBus.m */; };
+		9240F2E61FBAAC0800A630E6 /* TangramBusIndexClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 9240F2D61FBAAC0800A630E6 /* TangramBusIndexClass.m */; };
+		9240F2E71FBAAC0800A630E6 /* TangramEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = 9240F2D71FBAAC0800A630E6 /* TangramEvent.h */; };
+		9240F2E81FBAAC0800A630E6 /* TangramContext.m in Sources */ = {isa = PBXBuildFile; fileRef = 9240F2D81FBAAC0800A630E6 /* TangramContext.m */; };
+		9240F2E91FBAAC0800A630E6 /* TangramEventQueue.h in Headers */ = {isa = PBXBuildFile; fileRef = 9240F2D91FBAAC0800A630E6 /* TangramEventQueue.h */; };
+		9240F2EA1FBAAC0800A630E6 /* TangramEventQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 9240F2DA1FBAAC0800A630E6 /* TangramEventQueue.m */; };
+		9240F2EB1FBAAC0800A630E6 /* TangramBusIndexClass.h in Headers */ = {isa = PBXBuildFile; fileRef = 9240F2DB1FBAAC0800A630E6 /* TangramBusIndexClass.h */; };
+		9240F2EC1FBAAC0800A630E6 /* TangramBusIndex.h in Headers */ = {isa = PBXBuildFile; fileRef = 9240F2DC1FBAAC0800A630E6 /* TangramBusIndex.h */; };
+		9240F2ED1FBAAC0800A630E6 /* TangramBusIndexTopic.m in Sources */ = {isa = PBXBuildFile; fileRef = 9240F2DD1FBAAC0800A630E6 /* TangramBusIndexTopic.m */; };
+		9240F2EE1FBAAC0800A630E6 /* TangramEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 9240F2DE1FBAAC0800A630E6 /* TangramEvent.m */; };
+		9240F2EF1FBAAC0800A630E6 /* TangramBusIndex.m in Sources */ = {isa = PBXBuildFile; fileRef = 9240F2DF1FBAAC0800A630E6 /* TangramBusIndex.m */; };
+		9240F2F01FBAAC0800A630E6 /* TangramBusIndexTopic.h in Headers */ = {isa = PBXBuildFile; fileRef = 9240F2E01FBAAC0800A630E6 /* TangramBusIndexTopic.h */; };
+		9240F2F11FBAAC0800A630E6 /* TangramEventDispatcher.h in Headers */ = {isa = PBXBuildFile; fileRef = 9240F2E11FBAAC0800A630E6 /* TangramEventDispatcher.h */; };
+		9240F2F21FBAAC0800A630E6 /* TangramEventDispatcher.m in Sources */ = {isa = PBXBuildFile; fileRef = 9240F2E21FBAAC0800A630E6 /* TangramEventDispatcher.m */; };
+		9240F2F91FBAAC1700A630E6 /* UIView+Tangram.h in Headers */ = {isa = PBXBuildFile; fileRef = 9240F2F31FBAAC1700A630E6 /* UIView+Tangram.h */; };
+		9240F2FA1FBAAC1700A630E6 /* UIView+Tangram.m in Sources */ = {isa = PBXBuildFile; fileRef = 9240F2F41FBAAC1700A630E6 /* UIView+Tangram.m */; };
+		9240F2FB1FBAAC1700A630E6 /* TangramLayoutParseHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 9240F2F51FBAAC1700A630E6 /* TangramLayoutParseHelper.h */; };
+		9240F2FC1FBAAC1700A630E6 /* TangramLayoutParseHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 9240F2F61FBAAC1700A630E6 /* TangramLayoutParseHelper.m */; };
+		9240F2FD1FBAAC1700A630E6 /* TangramDefaultDataSourceHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 9240F2F71FBAAC1700A630E6 /* TangramDefaultDataSourceHelper.m */; };
+		9240F2FE1FBAAC1700A630E6 /* TangramDefaultDataSourceHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 9240F2F81FBAAC1700A630E6 /* TangramDefaultDataSourceHelper.h */; };
+		9240F31D1FBAAC2C00A630E6 /* TangramFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 9240F2FF1FBAAC2900A630E6 /* TangramFlowLayout.m */; };
+		9240F31E1FBAAC2C00A630E6 /* TangramFixBottomLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 9240F3001FBAAC2900A630E6 /* TangramFixBottomLayout.m */; };
+		9240F31F1FBAAC2C00A630E6 /* TangramFixLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 9240F3011FBAAC2900A630E6 /* TangramFixLayout.m */; };
+		9240F3201FBAAC2C00A630E6 /* TangramSingleColumnLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 9240F3021FBAAC2900A630E6 /* TangramSingleColumnLayout.m */; };
+		9240F3211FBAAC2C00A630E6 /* TangramFixTopLayout.h in Headers */ = {isa = PBXBuildFile; fileRef = 9240F3031FBAAC2900A630E6 /* TangramFixTopLayout.h */; };
+		9240F3221FBAAC2C00A630E6 /* TangramStickyLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 9240F3041FBAAC2900A630E6 /* TangramStickyLayout.m */; };
+		9240F3231FBAAC2C00A630E6 /* TangramFixLayout.h in Headers */ = {isa = PBXBuildFile; fileRef = 9240F3051FBAAC2A00A630E6 /* TangramFixLayout.h */; };
+		9240F3241FBAAC2C00A630E6 /* TangramFlowLayout.h in Headers */ = {isa = PBXBuildFile; fileRef = 9240F3061FBAAC2A00A630E6 /* TangramFlowLayout.h */; };
+		9240F3251FBAAC2C00A630E6 /* TangramPageScrollLayout.h in Headers */ = {isa = PBXBuildFile; fileRef = 9240F3071FBAAC2A00A630E6 /* TangramPageScrollLayout.h */; };
+		9240F3261FBAAC2C00A630E6 /* TangramFixTopLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 9240F3081FBAAC2A00A630E6 /* TangramFixTopLayout.m */; };
+		9240F3271FBAAC2C00A630E6 /* TangramFixBottomLayout.h in Headers */ = {isa = PBXBuildFile; fileRef = 9240F3091FBAAC2A00A630E6 /* TangramFixBottomLayout.h */; };
+		9240F3281FBAAC2C00A630E6 /* TangramStickyBottomLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 9240F30A1FBAAC2A00A630E6 /* TangramStickyBottomLayout.m */; };
+		9240F3291FBAAC2C00A630E6 /* TangramTetradColumnLayout.h in Headers */ = {isa = PBXBuildFile; fileRef = 9240F30B1FBAAC2A00A630E6 /* TangramTetradColumnLayout.h */; };
+		9240F32A1FBAAC2C00A630E6 /* TangramSingleAndDoubleLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 9240F30C1FBAAC2A00A630E6 /* TangramSingleAndDoubleLayout.m */; };
+		9240F32B1FBAAC2C00A630E6 /* TangramStickyBottomLayout.h in Headers */ = {isa = PBXBuildFile; fileRef = 9240F30D1FBAAC2A00A630E6 /* TangramStickyBottomLayout.h */; };
+		9240F32C1FBAAC2C00A630E6 /* TangramWaterFlowLayout.h in Headers */ = {isa = PBXBuildFile; fileRef = 9240F30E1FBAAC2A00A630E6 /* TangramWaterFlowLayout.h */; };
+		9240F32D1FBAAC2C00A630E6 /* TangramQuintetColumnLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 9240F30F1FBAAC2A00A630E6 /* TangramQuintetColumnLayout.m */; };
+		9240F32E1FBAAC2C00A630E6 /* TangramTribleColumnLayout.h in Headers */ = {isa = PBXBuildFile; fileRef = 9240F3101FBAAC2A00A630E6 /* TangramTribleColumnLayout.h */; };
+		9240F32F1FBAAC2C00A630E6 /* TangramPageScrollLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 9240F3111FBAAC2A00A630E6 /* TangramPageScrollLayout.m */; };
+		9240F3301FBAAC2C00A630E6 /* TangramDragableLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 9240F3121FBAAC2B00A630E6 /* TangramDragableLayout.m */; };
+		9240F3311FBAAC2C00A630E6 /* TangramWaterFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 9240F3131FBAAC2B00A630E6 /* TangramWaterFlowLayout.m */; };
+		9240F3321FBAAC2C00A630E6 /* TangramStickyLayout.h in Headers */ = {isa = PBXBuildFile; fileRef = 9240F3141FBAAC2B00A630E6 /* TangramStickyLayout.h */; };
+		9240F3331FBAAC2C00A630E6 /* TangramDoubleColumnLayout.h in Headers */ = {isa = PBXBuildFile; fileRef = 9240F3151FBAAC2B00A630E6 /* TangramDoubleColumnLayout.h */; };
+		9240F3341FBAAC2C00A630E6 /* TangramDragableLayout.h in Headers */ = {isa = PBXBuildFile; fileRef = 9240F3161FBAAC2B00A630E6 /* TangramDragableLayout.h */; };
+		9240F3351FBAAC2C00A630E6 /* TangramTribleColumnLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 9240F3171FBAAC2B00A630E6 /* TangramTribleColumnLayout.m */; };
+		9240F3361FBAAC2C00A630E6 /* TangramDoubleColumnLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 9240F3181FBAAC2B00A630E6 /* TangramDoubleColumnLayout.m */; };
+		9240F3371FBAAC2C00A630E6 /* TangramSingleColumnLayout.h in Headers */ = {isa = PBXBuildFile; fileRef = 9240F3191FBAAC2B00A630E6 /* TangramSingleColumnLayout.h */; };
+		9240F3381FBAAC2C00A630E6 /* TangramQuintetColumnLayout.h in Headers */ = {isa = PBXBuildFile; fileRef = 9240F31A1FBAAC2B00A630E6 /* TangramQuintetColumnLayout.h */; };
+		9240F3391FBAAC2C00A630E6 /* TangramTetradColumnLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 9240F31B1FBAAC2B00A630E6 /* TangramTetradColumnLayout.m */; };
+		9240F33A1FBAAC2C00A630E6 /* TangramSingleAndDoubleLayout.h in Headers */ = {isa = PBXBuildFile; fileRef = 9240F31C1FBAAC2C00A630E6 /* TangramSingleAndDoubleLayout.h */; };
+		9240F33D1FBAAC4500A630E6 /* TangramDefaultItemModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 9240F33B1FBAAC4500A630E6 /* TangramDefaultItemModel.m */; };
+		9240F33E1FBAAC4500A630E6 /* TangramDefaultItemModel.h in Headers */ = {isa = PBXBuildFile; fileRef = 9240F33C1FBAAC4500A630E6 /* TangramDefaultItemModel.h */; };
+		9240F3471FBAAC5100A630E6 /* TangramEasyElementProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 9240F33F1FBAAC5000A630E6 /* TangramEasyElementProtocol.h */; };
+		9240F3481FBAAC5100A630E6 /* TangramItemModelFactoryProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 9240F3401FBAAC5000A630E6 /* TangramItemModelFactoryProtocol.h */; };
+		9240F3491FBAAC5100A630E6 /* TangramElementHeightProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 9240F3411FBAAC5000A630E6 /* TangramElementHeightProtocol.h */; };
+		9240F34A1FBAAC5100A630E6 /* TangramLayoutProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 9240F3421FBAAC5000A630E6 /* TangramLayoutProtocol.h */; };
+		9240F34B1FBAAC5100A630E6 /* TangramElementFactoryProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 9240F3431FBAAC5000A630E6 /* TangramElementFactoryProtocol.h */; };
+		9240F34C1FBAAC5100A630E6 /* TangramItemModelProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 9240F3441FBAAC5000A630E6 /* TangramItemModelProtocol.h */; };
+		9240F34D1FBAAC5100A630E6 /* TangramElementReuseIdentifierProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 9240F3451FBAAC5000A630E6 /* TangramElementReuseIdentifierProtocol.h */; };
+		9240F34E1FBAAC5100A630E6 /* TangramLayoutFactoryProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 9240F3461FBAAC5100A630E6 /* TangramLayoutFactoryProtocol.h */; };
+		9240F3541FBAAC6800A630E6 /* TMMuiLazyScrollView.h in Headers */ = {isa = PBXBuildFile; fileRef = 9240F3521FBAAC6800A630E6 /* TMMuiLazyScrollView.h */; };
+		9240F3551FBAAC6800A630E6 /* TMMuiLazyScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9240F3531FBAAC6800A630E6 /* TMMuiLazyScrollView.m */; };
 		D85037D31B9C6D8400864DF0 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D85037D21B9C6D8400864DF0 /* Foundation.framework */; };
 		D85037EB1B9C6F8A00864DF0 /* Dummy.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = D85037EA1B9C6F8A00864DF0 /* Dummy.h */; };
 		D85037ED1B9C6F8A00864DF0 /* Dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = D85037EC1B9C6F8A00864DF0 /* Dummy.m */; };
@@ -107,84 +108,85 @@
 /* Begin PBXFileReference section */
 		26DCDC1519C5D3D4A5D14FF2 /* Pods-Tangram.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tangram.release.xcconfig"; path = "Pods/Target Support Files/Pods-Tangram/Pods-Tangram.release.xcconfig"; sourceTree = "<group>"; };
 		5815446D60FBD6766EFE0B65 /* Pods-Tangram.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tangram.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Tangram/Pods-Tangram.debug.xcconfig"; sourceTree = "<group>"; };
-		70962D751E768D52000F85EB /* TangramHelperCustomMapping.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = TangramHelperCustomMapping.plist; path = Tangram/Resource/TangramHelperCustomMapping.plist; sourceTree = SOURCE_ROOT; };
-		70962D761E768D52000F85EB /* TangramHelperMapping.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = TangramHelperMapping.plist; path = Tangram/Resource/TangramHelperMapping.plist; sourceTree = SOURCE_ROOT; };
-		70962D771E768D52000F85EB /* TangramKitLayoutTypeMap.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = TangramKitLayoutTypeMap.plist; path = Tangram/Resource/TangramKitLayoutTypeMap.plist; sourceTree = SOURCE_ROOT; };
-		70962D7B1E768D62000F85EB /* TangramDefaultElementFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TangramDefaultElementFactory.h; path = Tangram/Source/Factory/TangramDefaultElementFactory.h; sourceTree = SOURCE_ROOT; };
-		70962D7C1E768D62000F85EB /* TangramDefaultElementFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TangramDefaultElementFactory.m; path = Tangram/Source/Factory/TangramDefaultElementFactory.m; sourceTree = SOURCE_ROOT; };
-		70962D7D1E768D62000F85EB /* TangramDefaultItemModelFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TangramDefaultItemModelFactory.h; path = Tangram/Source/Factory/TangramDefaultItemModelFactory.h; sourceTree = SOURCE_ROOT; };
-		70962D7E1E768D62000F85EB /* TangramDefaultItemModelFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TangramDefaultItemModelFactory.m; path = Tangram/Source/Factory/TangramDefaultItemModelFactory.m; sourceTree = SOURCE_ROOT; };
-		70962D7F1E768D62000F85EB /* TangramDefaultLayoutFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TangramDefaultLayoutFactory.h; path = Tangram/Source/Factory/TangramDefaultLayoutFactory.h; sourceTree = SOURCE_ROOT; };
-		70962D801E768D62000F85EB /* TangramDefaultLayoutFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TangramDefaultLayoutFactory.m; path = Tangram/Source/Factory/TangramDefaultLayoutFactory.m; sourceTree = SOURCE_ROOT; };
-		70962D871E768D6C000F85EB /* TangramSafeMethod.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TangramSafeMethod.h; path = Tangram/Source/Util/TangramSafeMethod.h; sourceTree = SOURCE_ROOT; };
-		70962D881E768D6C000F85EB /* TangramSafeMethod.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TangramSafeMethod.m; path = Tangram/Source/Util/TangramSafeMethod.m; sourceTree = SOURCE_ROOT; };
-		70962D8B1E768D76000F85EB /* TangramView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TangramView.h; path = Tangram/Source/Core/TangramView.h; sourceTree = SOURCE_ROOT; };
-		70962D8C1E768D76000F85EB /* TangramView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TangramView.m; path = Tangram/Source/Core/TangramView.m; sourceTree = SOURCE_ROOT; };
-		70962D8F1E768D86000F85EB /* TangramBus.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TangramBus.h; path = Tangram/Source/EventBus/TangramBus.h; sourceTree = SOURCE_ROOT; };
-		70962D901E768D86000F85EB /* TangramBus.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TangramBus.m; path = Tangram/Source/EventBus/TangramBus.m; sourceTree = SOURCE_ROOT; };
-		70962D911E768D86000F85EB /* TangramBusIndex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TangramBusIndex.h; path = Tangram/Source/EventBus/TangramBusIndex.h; sourceTree = SOURCE_ROOT; };
-		70962D921E768D86000F85EB /* TangramBusIndex.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TangramBusIndex.m; path = Tangram/Source/EventBus/TangramBusIndex.m; sourceTree = SOURCE_ROOT; };
-		70962D931E768D86000F85EB /* TangramBusIndexClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TangramBusIndexClass.h; path = Tangram/Source/EventBus/TangramBusIndexClass.h; sourceTree = SOURCE_ROOT; };
-		70962D941E768D86000F85EB /* TangramBusIndexClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TangramBusIndexClass.m; path = Tangram/Source/EventBus/TangramBusIndexClass.m; sourceTree = SOURCE_ROOT; };
-		70962D951E768D86000F85EB /* TangramBusIndexTopic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TangramBusIndexTopic.h; path = Tangram/Source/EventBus/TangramBusIndexTopic.h; sourceTree = SOURCE_ROOT; };
-		70962D961E768D86000F85EB /* TangramBusIndexTopic.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TangramBusIndexTopic.m; path = Tangram/Source/EventBus/TangramBusIndexTopic.m; sourceTree = SOURCE_ROOT; };
-		70962D971E768D86000F85EB /* TangramContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TangramContext.h; path = Tangram/Source/EventBus/TangramContext.h; sourceTree = SOURCE_ROOT; };
-		70962D981E768D86000F85EB /* TangramContext.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TangramContext.m; path = Tangram/Source/EventBus/TangramContext.m; sourceTree = SOURCE_ROOT; };
-		70962D991E768D86000F85EB /* TangramEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TangramEvent.h; path = Tangram/Source/EventBus/TangramEvent.h; sourceTree = SOURCE_ROOT; };
-		70962D9A1E768D86000F85EB /* TangramEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TangramEvent.m; path = Tangram/Source/EventBus/TangramEvent.m; sourceTree = SOURCE_ROOT; };
-		70962D9B1E768D86000F85EB /* TangramEventDispatcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TangramEventDispatcher.h; path = Tangram/Source/EventBus/TangramEventDispatcher.h; sourceTree = SOURCE_ROOT; };
-		70962D9C1E768D86000F85EB /* TangramEventDispatcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TangramEventDispatcher.m; path = Tangram/Source/EventBus/TangramEventDispatcher.m; sourceTree = SOURCE_ROOT; };
-		70962D9D1E768D86000F85EB /* TangramEventQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TangramEventQueue.h; path = Tangram/Source/EventBus/TangramEventQueue.h; sourceTree = SOURCE_ROOT; };
-		70962D9E1E768D86000F85EB /* TangramEventQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TangramEventQueue.m; path = Tangram/Source/EventBus/TangramEventQueue.m; sourceTree = SOURCE_ROOT; };
-		70962DAF1E768D95000F85EB /* TangramDefaultDataSourceHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TangramDefaultDataSourceHelper.h; path = Tangram/Source/Helper/TangramDefaultDataSourceHelper.h; sourceTree = SOURCE_ROOT; };
-		70962DB01E768D95000F85EB /* TangramDefaultDataSourceHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TangramDefaultDataSourceHelper.m; path = Tangram/Source/Helper/TangramDefaultDataSourceHelper.m; sourceTree = SOURCE_ROOT; };
-		70962DB11E768D95000F85EB /* TangramLayoutParseHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TangramLayoutParseHelper.h; path = Tangram/Source/Helper/TangramLayoutParseHelper.h; sourceTree = SOURCE_ROOT; };
-		70962DB21E768D95000F85EB /* TangramLayoutParseHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TangramLayoutParseHelper.m; path = Tangram/Source/Helper/TangramLayoutParseHelper.m; sourceTree = SOURCE_ROOT; };
-		70962DB31E768D95000F85EB /* UIView+Tangram.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIView+Tangram.h"; path = "Tangram/Source/Helper/UIView+Tangram.h"; sourceTree = SOURCE_ROOT; };
-		70962DB41E768D95000F85EB /* UIView+Tangram.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIView+Tangram.m"; path = "Tangram/Source/Helper/UIView+Tangram.m"; sourceTree = SOURCE_ROOT; };
-		70962DBB1E768DA4000F85EB /* TangramDoubleColumnLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TangramDoubleColumnLayout.h; path = Tangram/Source/Layouts/TangramDoubleColumnLayout.h; sourceTree = SOURCE_ROOT; };
-		70962DBC1E768DA4000F85EB /* TangramDoubleColumnLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TangramDoubleColumnLayout.m; path = Tangram/Source/Layouts/TangramDoubleColumnLayout.m; sourceTree = SOURCE_ROOT; };
-		70962DBD1E768DA4000F85EB /* TangramDragableLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TangramDragableLayout.h; path = Tangram/Source/Layouts/TangramDragableLayout.h; sourceTree = SOURCE_ROOT; };
-		70962DBE1E768DA4000F85EB /* TangramDragableLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TangramDragableLayout.m; path = Tangram/Source/Layouts/TangramDragableLayout.m; sourceTree = SOURCE_ROOT; };
-		70962DBF1E768DA4000F85EB /* TangramFixBottomLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TangramFixBottomLayout.h; path = Tangram/Source/Layouts/TangramFixBottomLayout.h; sourceTree = SOURCE_ROOT; };
-		70962DC01E768DA4000F85EB /* TangramFixBottomLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TangramFixBottomLayout.m; path = Tangram/Source/Layouts/TangramFixBottomLayout.m; sourceTree = SOURCE_ROOT; };
-		70962DC11E768DA4000F85EB /* TangramFixLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TangramFixLayout.h; path = Tangram/Source/Layouts/TangramFixLayout.h; sourceTree = SOURCE_ROOT; };
-		70962DC21E768DA4000F85EB /* TangramFixLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TangramFixLayout.m; path = Tangram/Source/Layouts/TangramFixLayout.m; sourceTree = SOURCE_ROOT; };
-		70962DC31E768DA4000F85EB /* TangramFixTopLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TangramFixTopLayout.h; path = Tangram/Source/Layouts/TangramFixTopLayout.h; sourceTree = SOURCE_ROOT; };
-		70962DC41E768DA4000F85EB /* TangramFixTopLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TangramFixTopLayout.m; path = Tangram/Source/Layouts/TangramFixTopLayout.m; sourceTree = SOURCE_ROOT; };
-		70962DC51E768DA4000F85EB /* TangramFlowLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TangramFlowLayout.h; path = Tangram/Source/Layouts/TangramFlowLayout.h; sourceTree = SOURCE_ROOT; };
-		70962DC61E768DA4000F85EB /* TangramFlowLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TangramFlowLayout.m; path = Tangram/Source/Layouts/TangramFlowLayout.m; sourceTree = SOURCE_ROOT; };
-		70962DC71E768DA4000F85EB /* TangramPageScrollLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TangramPageScrollLayout.h; path = Tangram/Source/Layouts/TangramPageScrollLayout.h; sourceTree = SOURCE_ROOT; };
-		70962DC81E768DA4000F85EB /* TangramPageScrollLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TangramPageScrollLayout.m; path = Tangram/Source/Layouts/TangramPageScrollLayout.m; sourceTree = SOURCE_ROOT; };
-		70962DC91E768DA4000F85EB /* TangramQuintetColumnLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TangramQuintetColumnLayout.h; path = Tangram/Source/Layouts/TangramQuintetColumnLayout.h; sourceTree = SOURCE_ROOT; };
-		70962DCA1E768DA4000F85EB /* TangramQuintetColumnLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TangramQuintetColumnLayout.m; path = Tangram/Source/Layouts/TangramQuintetColumnLayout.m; sourceTree = SOURCE_ROOT; };
-		70962DCB1E768DA4000F85EB /* TangramSingleAndDoubleLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TangramSingleAndDoubleLayout.h; path = Tangram/Source/Layouts/TangramSingleAndDoubleLayout.h; sourceTree = SOURCE_ROOT; };
-		70962DCC1E768DA4000F85EB /* TangramSingleAndDoubleLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TangramSingleAndDoubleLayout.m; path = Tangram/Source/Layouts/TangramSingleAndDoubleLayout.m; sourceTree = SOURCE_ROOT; };
-		70962DCD1E768DA4000F85EB /* TangramSingleColumnLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TangramSingleColumnLayout.h; path = Tangram/Source/Layouts/TangramSingleColumnLayout.h; sourceTree = SOURCE_ROOT; };
-		70962DCE1E768DA4000F85EB /* TangramSingleColumnLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TangramSingleColumnLayout.m; path = Tangram/Source/Layouts/TangramSingleColumnLayout.m; sourceTree = SOURCE_ROOT; };
-		70962DCF1E768DA4000F85EB /* TangramStickyBottomLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TangramStickyBottomLayout.h; path = Tangram/Source/Layouts/TangramStickyBottomLayout.h; sourceTree = SOURCE_ROOT; };
-		70962DD01E768DA4000F85EB /* TangramStickyBottomLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TangramStickyBottomLayout.m; path = Tangram/Source/Layouts/TangramStickyBottomLayout.m; sourceTree = SOURCE_ROOT; };
-		70962DD11E768DA4000F85EB /* TangramStickyLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TangramStickyLayout.h; path = Tangram/Source/Layouts/TangramStickyLayout.h; sourceTree = SOURCE_ROOT; };
-		70962DD21E768DA4000F85EB /* TangramStickyLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TangramStickyLayout.m; path = Tangram/Source/Layouts/TangramStickyLayout.m; sourceTree = SOURCE_ROOT; };
-		70962DD31E768DA4000F85EB /* TangramTetradColumnLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TangramTetradColumnLayout.h; path = Tangram/Source/Layouts/TangramTetradColumnLayout.h; sourceTree = SOURCE_ROOT; };
-		70962DD41E768DA4000F85EB /* TangramTetradColumnLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TangramTetradColumnLayout.m; path = Tangram/Source/Layouts/TangramTetradColumnLayout.m; sourceTree = SOURCE_ROOT; };
-		70962DD51E768DA4000F85EB /* TangramTribleColumnLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TangramTribleColumnLayout.h; path = Tangram/Source/Layouts/TangramTribleColumnLayout.h; sourceTree = SOURCE_ROOT; };
-		70962DD61E768DA4000F85EB /* TangramTribleColumnLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TangramTribleColumnLayout.m; path = Tangram/Source/Layouts/TangramTribleColumnLayout.m; sourceTree = SOURCE_ROOT; };
-		70962DD71E768DA4000F85EB /* TangramWaterFlowLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TangramWaterFlowLayout.h; path = Tangram/Source/Layouts/TangramWaterFlowLayout.h; sourceTree = SOURCE_ROOT; };
-		70962DD81E768DA4000F85EB /* TangramWaterFlowLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TangramWaterFlowLayout.m; path = Tangram/Source/Layouts/TangramWaterFlowLayout.m; sourceTree = SOURCE_ROOT; };
-		70962DF71E768DB0000F85EB /* TangramDefaultItemModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TangramDefaultItemModel.h; path = Tangram/Source/Model/TangramDefaultItemModel.h; sourceTree = SOURCE_ROOT; };
-		70962DF81E768DB0000F85EB /* TangramDefaultItemModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TangramDefaultItemModel.m; path = Tangram/Source/Model/TangramDefaultItemModel.m; sourceTree = SOURCE_ROOT; };
-		70962DFB1E768DB7000F85EB /* TangramEasyElementProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TangramEasyElementProtocol.h; path = Tangram/Source/Protocols/TangramEasyElementProtocol.h; sourceTree = SOURCE_ROOT; };
-		70962DFC1E768DB7000F85EB /* TangramElementFactoryProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TangramElementFactoryProtocol.h; path = Tangram/Source/Protocols/TangramElementFactoryProtocol.h; sourceTree = SOURCE_ROOT; };
-		70962DFD1E768DB7000F85EB /* TangramElementHeightProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TangramElementHeightProtocol.h; path = Tangram/Source/Protocols/TangramElementHeightProtocol.h; sourceTree = SOURCE_ROOT; };
-		70962DFE1E768DB7000F85EB /* TangramElementReuseIdentifierProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TangramElementReuseIdentifierProtocol.h; path = Tangram/Source/Protocols/TangramElementReuseIdentifierProtocol.h; sourceTree = SOURCE_ROOT; };
-		70962DFF1E768DB7000F85EB /* TangramItemModelFactoryProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TangramItemModelFactoryProtocol.h; path = Tangram/Source/Protocols/TangramItemModelFactoryProtocol.h; sourceTree = SOURCE_ROOT; };
-		70962E001E768DB7000F85EB /* TangramItemModelProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TangramItemModelProtocol.h; path = Tangram/Source/Protocols/TangramItemModelProtocol.h; sourceTree = SOURCE_ROOT; };
-		70962E011E768DB7000F85EB /* TangramLayoutFactoryProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TangramLayoutFactoryProtocol.h; path = Tangram/Source/Protocols/TangramLayoutFactoryProtocol.h; sourceTree = SOURCE_ROOT; };
-		70962E021E768DB7000F85EB /* TangramLayoutProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TangramLayoutProtocol.h; path = Tangram/Source/Protocols/TangramLayoutProtocol.h; sourceTree = SOURCE_ROOT; };
 		70962E0B1E768DC7000F85EB /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		70962E0C1E768DC7000F85EB /* Tangram-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Tangram-Prefix.pch"; sourceTree = "<group>"; };
-		9F154B0692B448E84864C09F /* libPods-Tangram.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Tangram.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		9240F2B91FBAABA900A630E6 /* TangramDefaultElementFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TangramDefaultElementFactory.m; sourceTree = "<group>"; };
+		9240F2BA1FBAABA900A630E6 /* TangramDefaultItemModelFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TangramDefaultItemModelFactory.m; sourceTree = "<group>"; };
+		9240F2BB1FBAABA900A630E6 /* TangramDefaultElementFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TangramDefaultElementFactory.h; sourceTree = "<group>"; };
+		9240F2BC1FBAABA900A630E6 /* TangramDefaultItemModelFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TangramDefaultItemModelFactory.h; sourceTree = "<group>"; };
+		9240F2BD1FBAABA900A630E6 /* TangramDefaultLayoutFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TangramDefaultLayoutFactory.m; sourceTree = "<group>"; };
+		9240F2BE1FBAABA900A630E6 /* TangramDefaultLayoutFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TangramDefaultLayoutFactory.h; sourceTree = "<group>"; };
+		9240F2C51FBAABCB00A630E6 /* TangramKitLayoutTypeMap.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = TangramKitLayoutTypeMap.plist; sourceTree = "<group>"; };
+		9240F2C61FBAABCB00A630E6 /* TangramHelperCustomMapping.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = TangramHelperCustomMapping.plist; sourceTree = "<group>"; };
+		9240F2C71FBAABCB00A630E6 /* TangramHelperMapping.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = TangramHelperMapping.plist; sourceTree = "<group>"; };
+		9240F2CB1FBAABE400A630E6 /* TangramSafeMethod.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TangramSafeMethod.h; sourceTree = "<group>"; };
+		9240F2CC1FBAABE400A630E6 /* TangramSafeMethod.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TangramSafeMethod.m; sourceTree = "<group>"; };
+		9240F2CF1FBAABF700A630E6 /* TangramView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TangramView.h; sourceTree = "<group>"; };
+		9240F2D01FBAABF700A630E6 /* TangramView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TangramView.m; sourceTree = "<group>"; };
+		9240F2D31FBAAC0700A630E6 /* TangramBus.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TangramBus.h; sourceTree = "<group>"; };
+		9240F2D41FBAAC0700A630E6 /* TangramContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TangramContext.h; sourceTree = "<group>"; };
+		9240F2D51FBAAC0700A630E6 /* TangramBus.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TangramBus.m; sourceTree = "<group>"; };
+		9240F2D61FBAAC0800A630E6 /* TangramBusIndexClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TangramBusIndexClass.m; sourceTree = "<group>"; };
+		9240F2D71FBAAC0800A630E6 /* TangramEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TangramEvent.h; sourceTree = "<group>"; };
+		9240F2D81FBAAC0800A630E6 /* TangramContext.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TangramContext.m; sourceTree = "<group>"; };
+		9240F2D91FBAAC0800A630E6 /* TangramEventQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TangramEventQueue.h; sourceTree = "<group>"; };
+		9240F2DA1FBAAC0800A630E6 /* TangramEventQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TangramEventQueue.m; sourceTree = "<group>"; };
+		9240F2DB1FBAAC0800A630E6 /* TangramBusIndexClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TangramBusIndexClass.h; sourceTree = "<group>"; };
+		9240F2DC1FBAAC0800A630E6 /* TangramBusIndex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TangramBusIndex.h; sourceTree = "<group>"; };
+		9240F2DD1FBAAC0800A630E6 /* TangramBusIndexTopic.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TangramBusIndexTopic.m; sourceTree = "<group>"; };
+		9240F2DE1FBAAC0800A630E6 /* TangramEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TangramEvent.m; sourceTree = "<group>"; };
+		9240F2DF1FBAAC0800A630E6 /* TangramBusIndex.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TangramBusIndex.m; sourceTree = "<group>"; };
+		9240F2E01FBAAC0800A630E6 /* TangramBusIndexTopic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TangramBusIndexTopic.h; sourceTree = "<group>"; };
+		9240F2E11FBAAC0800A630E6 /* TangramEventDispatcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TangramEventDispatcher.h; sourceTree = "<group>"; };
+		9240F2E21FBAAC0800A630E6 /* TangramEventDispatcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TangramEventDispatcher.m; sourceTree = "<group>"; };
+		9240F2F31FBAAC1700A630E6 /* UIView+Tangram.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Tangram.h"; sourceTree = "<group>"; };
+		9240F2F41FBAAC1700A630E6 /* UIView+Tangram.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Tangram.m"; sourceTree = "<group>"; };
+		9240F2F51FBAAC1700A630E6 /* TangramLayoutParseHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TangramLayoutParseHelper.h; sourceTree = "<group>"; };
+		9240F2F61FBAAC1700A630E6 /* TangramLayoutParseHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TangramLayoutParseHelper.m; sourceTree = "<group>"; };
+		9240F2F71FBAAC1700A630E6 /* TangramDefaultDataSourceHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TangramDefaultDataSourceHelper.m; sourceTree = "<group>"; };
+		9240F2F81FBAAC1700A630E6 /* TangramDefaultDataSourceHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TangramDefaultDataSourceHelper.h; sourceTree = "<group>"; };
+		9240F2FF1FBAAC2900A630E6 /* TangramFlowLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TangramFlowLayout.m; sourceTree = "<group>"; };
+		9240F3001FBAAC2900A630E6 /* TangramFixBottomLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TangramFixBottomLayout.m; sourceTree = "<group>"; };
+		9240F3011FBAAC2900A630E6 /* TangramFixLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TangramFixLayout.m; sourceTree = "<group>"; };
+		9240F3021FBAAC2900A630E6 /* TangramSingleColumnLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TangramSingleColumnLayout.m; sourceTree = "<group>"; };
+		9240F3031FBAAC2900A630E6 /* TangramFixTopLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TangramFixTopLayout.h; sourceTree = "<group>"; };
+		9240F3041FBAAC2900A630E6 /* TangramStickyLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TangramStickyLayout.m; sourceTree = "<group>"; };
+		9240F3051FBAAC2A00A630E6 /* TangramFixLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TangramFixLayout.h; sourceTree = "<group>"; };
+		9240F3061FBAAC2A00A630E6 /* TangramFlowLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TangramFlowLayout.h; sourceTree = "<group>"; };
+		9240F3071FBAAC2A00A630E6 /* TangramPageScrollLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TangramPageScrollLayout.h; sourceTree = "<group>"; };
+		9240F3081FBAAC2A00A630E6 /* TangramFixTopLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TangramFixTopLayout.m; sourceTree = "<group>"; };
+		9240F3091FBAAC2A00A630E6 /* TangramFixBottomLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TangramFixBottomLayout.h; sourceTree = "<group>"; };
+		9240F30A1FBAAC2A00A630E6 /* TangramStickyBottomLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TangramStickyBottomLayout.m; sourceTree = "<group>"; };
+		9240F30B1FBAAC2A00A630E6 /* TangramTetradColumnLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TangramTetradColumnLayout.h; sourceTree = "<group>"; };
+		9240F30C1FBAAC2A00A630E6 /* TangramSingleAndDoubleLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TangramSingleAndDoubleLayout.m; sourceTree = "<group>"; };
+		9240F30D1FBAAC2A00A630E6 /* TangramStickyBottomLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TangramStickyBottomLayout.h; sourceTree = "<group>"; };
+		9240F30E1FBAAC2A00A630E6 /* TangramWaterFlowLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TangramWaterFlowLayout.h; sourceTree = "<group>"; };
+		9240F30F1FBAAC2A00A630E6 /* TangramQuintetColumnLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TangramQuintetColumnLayout.m; sourceTree = "<group>"; };
+		9240F3101FBAAC2A00A630E6 /* TangramTribleColumnLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TangramTribleColumnLayout.h; sourceTree = "<group>"; };
+		9240F3111FBAAC2A00A630E6 /* TangramPageScrollLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TangramPageScrollLayout.m; sourceTree = "<group>"; };
+		9240F3121FBAAC2B00A630E6 /* TangramDragableLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TangramDragableLayout.m; sourceTree = "<group>"; };
+		9240F3131FBAAC2B00A630E6 /* TangramWaterFlowLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TangramWaterFlowLayout.m; sourceTree = "<group>"; };
+		9240F3141FBAAC2B00A630E6 /* TangramStickyLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TangramStickyLayout.h; sourceTree = "<group>"; };
+		9240F3151FBAAC2B00A630E6 /* TangramDoubleColumnLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TangramDoubleColumnLayout.h; sourceTree = "<group>"; };
+		9240F3161FBAAC2B00A630E6 /* TangramDragableLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TangramDragableLayout.h; sourceTree = "<group>"; };
+		9240F3171FBAAC2B00A630E6 /* TangramTribleColumnLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TangramTribleColumnLayout.m; sourceTree = "<group>"; };
+		9240F3181FBAAC2B00A630E6 /* TangramDoubleColumnLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TangramDoubleColumnLayout.m; sourceTree = "<group>"; };
+		9240F3191FBAAC2B00A630E6 /* TangramSingleColumnLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TangramSingleColumnLayout.h; sourceTree = "<group>"; };
+		9240F31A1FBAAC2B00A630E6 /* TangramQuintetColumnLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TangramQuintetColumnLayout.h; sourceTree = "<group>"; };
+		9240F31B1FBAAC2B00A630E6 /* TangramTetradColumnLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TangramTetradColumnLayout.m; sourceTree = "<group>"; };
+		9240F31C1FBAAC2C00A630E6 /* TangramSingleAndDoubleLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TangramSingleAndDoubleLayout.h; sourceTree = "<group>"; };
+		9240F33B1FBAAC4500A630E6 /* TangramDefaultItemModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TangramDefaultItemModel.m; sourceTree = "<group>"; };
+		9240F33C1FBAAC4500A630E6 /* TangramDefaultItemModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TangramDefaultItemModel.h; sourceTree = "<group>"; };
+		9240F33F1FBAAC5000A630E6 /* TangramEasyElementProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TangramEasyElementProtocol.h; sourceTree = "<group>"; };
+		9240F3401FBAAC5000A630E6 /* TangramItemModelFactoryProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TangramItemModelFactoryProtocol.h; sourceTree = "<group>"; };
+		9240F3411FBAAC5000A630E6 /* TangramElementHeightProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TangramElementHeightProtocol.h; sourceTree = "<group>"; };
+		9240F3421FBAAC5000A630E6 /* TangramLayoutProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TangramLayoutProtocol.h; sourceTree = "<group>"; };
+		9240F3431FBAAC5000A630E6 /* TangramElementFactoryProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TangramElementFactoryProtocol.h; sourceTree = "<group>"; };
+		9240F3441FBAAC5000A630E6 /* TangramItemModelProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TangramItemModelProtocol.h; sourceTree = "<group>"; };
+		9240F3451FBAAC5000A630E6 /* TangramElementReuseIdentifierProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TangramElementReuseIdentifierProtocol.h; sourceTree = "<group>"; };
+		9240F3461FBAAC5100A630E6 /* TangramLayoutFactoryProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TangramLayoutFactoryProtocol.h; sourceTree = "<group>"; };
+		9240F3521FBAAC6800A630E6 /* TMMuiLazyScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMMuiLazyScrollView.h; sourceTree = "<group>"; };
+		9240F3531FBAAC6800A630E6 /* TMMuiLazyScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMMuiLazyScrollView.m; sourceTree = "<group>"; };
 		D71EEB371CD5ED9E00163A7E /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS9.3.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
 		D71EEB391CD5EDA100163A7E /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS9.3.sdk/System/Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
 		D85037CF1B9C6D8400864DF0 /* Tangram.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework.static; includeInIndex = 0; path = Tangram.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -202,7 +204,6 @@
 			files = (
 				D85038001B9C70BE00864DF0 /* UIKit.framework in Frameworks */,
 				D85037D31B9C6D8400864DF0 /* Foundation.framework in Frameworks */,
-				A3DB80663CD42258E102B352 /* libPods-Tangram.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -228,33 +229,43 @@
 		700ABE761E6563B0004C3E46 /* Util */ = {
 			isa = PBXGroup;
 			children = (
-				70962D871E768D6C000F85EB /* TangramSafeMethod.h */,
-				70962D881E768D6C000F85EB /* TangramSafeMethod.m */,
+				9240F2CB1FBAABE400A630E6 /* TangramSafeMethod.h */,
+				9240F2CC1FBAABE400A630E6 /* TangramSafeMethod.m */,
 			);
-			name = Util;
+			path = Util;
 			sourceTree = "<group>";
 		};
 		700ABE9F1E6569E9004C3E46 /* Factory */ = {
 			isa = PBXGroup;
 			children = (
-				70962D7B1E768D62000F85EB /* TangramDefaultElementFactory.h */,
-				70962D7C1E768D62000F85EB /* TangramDefaultElementFactory.m */,
-				70962D7D1E768D62000F85EB /* TangramDefaultItemModelFactory.h */,
-				70962D7E1E768D62000F85EB /* TangramDefaultItemModelFactory.m */,
-				70962D7F1E768D62000F85EB /* TangramDefaultLayoutFactory.h */,
-				70962D801E768D62000F85EB /* TangramDefaultLayoutFactory.m */,
+				9240F2BB1FBAABA900A630E6 /* TangramDefaultElementFactory.h */,
+				9240F2B91FBAABA900A630E6 /* TangramDefaultElementFactory.m */,
+				9240F2BC1FBAABA900A630E6 /* TangramDefaultItemModelFactory.h */,
+				9240F2BA1FBAABA900A630E6 /* TangramDefaultItemModelFactory.m */,
+				9240F2BE1FBAABA900A630E6 /* TangramDefaultLayoutFactory.h */,
+				9240F2BD1FBAABA900A630E6 /* TangramDefaultLayoutFactory.m */,
 			);
-			name = Factory;
+			path = Factory;
+			sourceTree = "<group>";
+		};
+		9240F3511FBAAC6800A630E6 /* LazyScroll */ = {
+			isa = PBXGroup;
+			children = (
+				9240F3521FBAAC6800A630E6 /* TMMuiLazyScrollView.h */,
+				9240F3531FBAAC6800A630E6 /* TMMuiLazyScrollView.m */,
+			);
+			path = LazyScroll;
 			sourceTree = "<group>";
 		};
 		D71EEA5A1CD5EB9E00163A7E /* Resource */ = {
 			isa = PBXGroup;
 			children = (
-				70962D751E768D52000F85EB /* TangramHelperCustomMapping.plist */,
-				70962D761E768D52000F85EB /* TangramHelperMapping.plist */,
-				70962D771E768D52000F85EB /* TangramKitLayoutTypeMap.plist */,
+				9240F2C61FBAABCB00A630E6 /* TangramHelperCustomMapping.plist */,
+				9240F2C71FBAABCB00A630E6 /* TangramHelperMapping.plist */,
+				9240F2C51FBAABCB00A630E6 /* TangramKitLayoutTypeMap.plist */,
 			);
-			path = Resource;
+			name = Resource;
+			path = Tangram/Resource;
 			sourceTree = "<group>";
 		};
 		D71EEA5E1CD5EB9E00163A7E /* Source */ = {
@@ -268,15 +279,17 @@
 				D71EEA7F1CD5EB9E00163A7E /* Layouts */,
 				D71EEAA01CD5EB9E00163A7E /* Model */,
 				D71EEAA51CD5EB9E00163A7E /* Protocols */,
+				9240F3511FBAAC6800A630E6 /* LazyScroll */,
 			);
-			path = Source;
+			name = Source;
+			path = Tangram/Source;
 			sourceTree = "<group>";
 		};
 		D71EEA5F1CD5EB9E00163A7E /* Core */ = {
 			isa = PBXGroup;
 			children = (
-				70962D8B1E768D76000F85EB /* TangramView.h */,
-				70962D8C1E768D76000F85EB /* TangramView.m */,
+				9240F2CF1FBAABF700A630E6 /* TangramView.h */,
+				9240F2D01FBAABF700A630E6 /* TangramView.m */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -284,22 +297,22 @@
 		D71EEA651CD5EB9E00163A7E /* EventBus */ = {
 			isa = PBXGroup;
 			children = (
-				70962D8F1E768D86000F85EB /* TangramBus.h */,
-				70962D901E768D86000F85EB /* TangramBus.m */,
-				70962D911E768D86000F85EB /* TangramBusIndex.h */,
-				70962D921E768D86000F85EB /* TangramBusIndex.m */,
-				70962D931E768D86000F85EB /* TangramBusIndexClass.h */,
-				70962D941E768D86000F85EB /* TangramBusIndexClass.m */,
-				70962D951E768D86000F85EB /* TangramBusIndexTopic.h */,
-				70962D961E768D86000F85EB /* TangramBusIndexTopic.m */,
-				70962D971E768D86000F85EB /* TangramContext.h */,
-				70962D981E768D86000F85EB /* TangramContext.m */,
-				70962D991E768D86000F85EB /* TangramEvent.h */,
-				70962D9A1E768D86000F85EB /* TangramEvent.m */,
-				70962D9B1E768D86000F85EB /* TangramEventDispatcher.h */,
-				70962D9C1E768D86000F85EB /* TangramEventDispatcher.m */,
-				70962D9D1E768D86000F85EB /* TangramEventQueue.h */,
-				70962D9E1E768D86000F85EB /* TangramEventQueue.m */,
+				9240F2D31FBAAC0700A630E6 /* TangramBus.h */,
+				9240F2D51FBAAC0700A630E6 /* TangramBus.m */,
+				9240F2DC1FBAAC0800A630E6 /* TangramBusIndex.h */,
+				9240F2DF1FBAAC0800A630E6 /* TangramBusIndex.m */,
+				9240F2DB1FBAAC0800A630E6 /* TangramBusIndexClass.h */,
+				9240F2D61FBAAC0800A630E6 /* TangramBusIndexClass.m */,
+				9240F2E01FBAAC0800A630E6 /* TangramBusIndexTopic.h */,
+				9240F2DD1FBAAC0800A630E6 /* TangramBusIndexTopic.m */,
+				9240F2D41FBAAC0700A630E6 /* TangramContext.h */,
+				9240F2D81FBAAC0800A630E6 /* TangramContext.m */,
+				9240F2D71FBAAC0800A630E6 /* TangramEvent.h */,
+				9240F2DE1FBAAC0800A630E6 /* TangramEvent.m */,
+				9240F2E11FBAAC0800A630E6 /* TangramEventDispatcher.h */,
+				9240F2E21FBAAC0800A630E6 /* TangramEventDispatcher.m */,
+				9240F2D91FBAAC0800A630E6 /* TangramEventQueue.h */,
+				9240F2DA1FBAAC0800A630E6 /* TangramEventQueue.m */,
 			);
 			path = EventBus;
 			sourceTree = "<group>";
@@ -307,12 +320,12 @@
 		D71EEA761CD5EB9E00163A7E /* Helper */ = {
 			isa = PBXGroup;
 			children = (
-				70962DAF1E768D95000F85EB /* TangramDefaultDataSourceHelper.h */,
-				70962DB01E768D95000F85EB /* TangramDefaultDataSourceHelper.m */,
-				70962DB11E768D95000F85EB /* TangramLayoutParseHelper.h */,
-				70962DB21E768D95000F85EB /* TangramLayoutParseHelper.m */,
-				70962DB31E768D95000F85EB /* UIView+Tangram.h */,
-				70962DB41E768D95000F85EB /* UIView+Tangram.m */,
+				9240F2F81FBAAC1700A630E6 /* TangramDefaultDataSourceHelper.h */,
+				9240F2F71FBAAC1700A630E6 /* TangramDefaultDataSourceHelper.m */,
+				9240F2F51FBAAC1700A630E6 /* TangramLayoutParseHelper.h */,
+				9240F2F61FBAAC1700A630E6 /* TangramLayoutParseHelper.m */,
+				9240F2F31FBAAC1700A630E6 /* UIView+Tangram.h */,
+				9240F2F41FBAAC1700A630E6 /* UIView+Tangram.m */,
 			);
 			path = Helper;
 			sourceTree = "<group>";
@@ -320,36 +333,36 @@
 		D71EEA7F1CD5EB9E00163A7E /* Layouts */ = {
 			isa = PBXGroup;
 			children = (
-				70962DBB1E768DA4000F85EB /* TangramDoubleColumnLayout.h */,
-				70962DBC1E768DA4000F85EB /* TangramDoubleColumnLayout.m */,
-				70962DBD1E768DA4000F85EB /* TangramDragableLayout.h */,
-				70962DBE1E768DA4000F85EB /* TangramDragableLayout.m */,
-				70962DBF1E768DA4000F85EB /* TangramFixBottomLayout.h */,
-				70962DC01E768DA4000F85EB /* TangramFixBottomLayout.m */,
-				70962DC11E768DA4000F85EB /* TangramFixLayout.h */,
-				70962DC21E768DA4000F85EB /* TangramFixLayout.m */,
-				70962DC31E768DA4000F85EB /* TangramFixTopLayout.h */,
-				70962DC41E768DA4000F85EB /* TangramFixTopLayout.m */,
-				70962DC51E768DA4000F85EB /* TangramFlowLayout.h */,
-				70962DC61E768DA4000F85EB /* TangramFlowLayout.m */,
-				70962DC71E768DA4000F85EB /* TangramPageScrollLayout.h */,
-				70962DC81E768DA4000F85EB /* TangramPageScrollLayout.m */,
-				70962DC91E768DA4000F85EB /* TangramQuintetColumnLayout.h */,
-				70962DCA1E768DA4000F85EB /* TangramQuintetColumnLayout.m */,
-				70962DCB1E768DA4000F85EB /* TangramSingleAndDoubleLayout.h */,
-				70962DCC1E768DA4000F85EB /* TangramSingleAndDoubleLayout.m */,
-				70962DCD1E768DA4000F85EB /* TangramSingleColumnLayout.h */,
-				70962DCE1E768DA4000F85EB /* TangramSingleColumnLayout.m */,
-				70962DCF1E768DA4000F85EB /* TangramStickyBottomLayout.h */,
-				70962DD01E768DA4000F85EB /* TangramStickyBottomLayout.m */,
-				70962DD11E768DA4000F85EB /* TangramStickyLayout.h */,
-				70962DD21E768DA4000F85EB /* TangramStickyLayout.m */,
-				70962DD31E768DA4000F85EB /* TangramTetradColumnLayout.h */,
-				70962DD41E768DA4000F85EB /* TangramTetradColumnLayout.m */,
-				70962DD51E768DA4000F85EB /* TangramTribleColumnLayout.h */,
-				70962DD61E768DA4000F85EB /* TangramTribleColumnLayout.m */,
-				70962DD71E768DA4000F85EB /* TangramWaterFlowLayout.h */,
-				70962DD81E768DA4000F85EB /* TangramWaterFlowLayout.m */,
+				9240F3151FBAAC2B00A630E6 /* TangramDoubleColumnLayout.h */,
+				9240F3181FBAAC2B00A630E6 /* TangramDoubleColumnLayout.m */,
+				9240F3161FBAAC2B00A630E6 /* TangramDragableLayout.h */,
+				9240F3121FBAAC2B00A630E6 /* TangramDragableLayout.m */,
+				9240F3091FBAAC2A00A630E6 /* TangramFixBottomLayout.h */,
+				9240F3001FBAAC2900A630E6 /* TangramFixBottomLayout.m */,
+				9240F3051FBAAC2A00A630E6 /* TangramFixLayout.h */,
+				9240F3011FBAAC2900A630E6 /* TangramFixLayout.m */,
+				9240F3031FBAAC2900A630E6 /* TangramFixTopLayout.h */,
+				9240F3081FBAAC2A00A630E6 /* TangramFixTopLayout.m */,
+				9240F3061FBAAC2A00A630E6 /* TangramFlowLayout.h */,
+				9240F2FF1FBAAC2900A630E6 /* TangramFlowLayout.m */,
+				9240F3071FBAAC2A00A630E6 /* TangramPageScrollLayout.h */,
+				9240F3111FBAAC2A00A630E6 /* TangramPageScrollLayout.m */,
+				9240F31A1FBAAC2B00A630E6 /* TangramQuintetColumnLayout.h */,
+				9240F30F1FBAAC2A00A630E6 /* TangramQuintetColumnLayout.m */,
+				9240F31C1FBAAC2C00A630E6 /* TangramSingleAndDoubleLayout.h */,
+				9240F30C1FBAAC2A00A630E6 /* TangramSingleAndDoubleLayout.m */,
+				9240F3191FBAAC2B00A630E6 /* TangramSingleColumnLayout.h */,
+				9240F3021FBAAC2900A630E6 /* TangramSingleColumnLayout.m */,
+				9240F30D1FBAAC2A00A630E6 /* TangramStickyBottomLayout.h */,
+				9240F30A1FBAAC2A00A630E6 /* TangramStickyBottomLayout.m */,
+				9240F3141FBAAC2B00A630E6 /* TangramStickyLayout.h */,
+				9240F3041FBAAC2900A630E6 /* TangramStickyLayout.m */,
+				9240F30B1FBAAC2A00A630E6 /* TangramTetradColumnLayout.h */,
+				9240F31B1FBAAC2B00A630E6 /* TangramTetradColumnLayout.m */,
+				9240F3101FBAAC2A00A630E6 /* TangramTribleColumnLayout.h */,
+				9240F3171FBAAC2B00A630E6 /* TangramTribleColumnLayout.m */,
+				9240F30E1FBAAC2A00A630E6 /* TangramWaterFlowLayout.h */,
+				9240F3131FBAAC2B00A630E6 /* TangramWaterFlowLayout.m */,
 			);
 			path = Layouts;
 			sourceTree = "<group>";
@@ -357,8 +370,8 @@
 		D71EEAA01CD5EB9E00163A7E /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				70962DF71E768DB0000F85EB /* TangramDefaultItemModel.h */,
-				70962DF81E768DB0000F85EB /* TangramDefaultItemModel.m */,
+				9240F33C1FBAAC4500A630E6 /* TangramDefaultItemModel.h */,
+				9240F33B1FBAAC4500A630E6 /* TangramDefaultItemModel.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -366,14 +379,14 @@
 		D71EEAA51CD5EB9E00163A7E /* Protocols */ = {
 			isa = PBXGroup;
 			children = (
-				70962DFB1E768DB7000F85EB /* TangramEasyElementProtocol.h */,
-				70962DFC1E768DB7000F85EB /* TangramElementFactoryProtocol.h */,
-				70962DFD1E768DB7000F85EB /* TangramElementHeightProtocol.h */,
-				70962DFE1E768DB7000F85EB /* TangramElementReuseIdentifierProtocol.h */,
-				70962DFF1E768DB7000F85EB /* TangramItemModelFactoryProtocol.h */,
-				70962E001E768DB7000F85EB /* TangramItemModelProtocol.h */,
-				70962E011E768DB7000F85EB /* TangramLayoutFactoryProtocol.h */,
-				70962E021E768DB7000F85EB /* TangramLayoutProtocol.h */,
+				9240F33F1FBAAC5000A630E6 /* TangramEasyElementProtocol.h */,
+				9240F3431FBAAC5000A630E6 /* TangramElementFactoryProtocol.h */,
+				9240F3411FBAAC5000A630E6 /* TangramElementHeightProtocol.h */,
+				9240F3451FBAAC5000A630E6 /* TangramElementReuseIdentifierProtocol.h */,
+				9240F3401FBAAC5000A630E6 /* TangramItemModelFactoryProtocol.h */,
+				9240F3441FBAAC5000A630E6 /* TangramItemModelProtocol.h */,
+				9240F3461FBAAC5100A630E6 /* TangramLayoutFactoryProtocol.h */,
+				9240F3421FBAAC5000A630E6 /* TangramLayoutProtocol.h */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
@@ -407,7 +420,6 @@
 				D71EEB371CD5ED9E00163A7E /* Foundation.framework */,
 				D85037FF1B9C70BE00864DF0 /* UIKit.framework */,
 				D85037D21B9C6D8400864DF0 /* Foundation.framework */,
-				9F154B0692B448E84864C09F /* libPods-Tangram.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -438,47 +450,48 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				70962DE91E768DA4000F85EB /* TangramSingleAndDoubleLayout.h in Headers */,
-				70962DF31E768DA4000F85EB /* TangramTribleColumnLayout.h in Headers */,
-				70962DAD1E768D86000F85EB /* TangramEventQueue.h in Headers */,
-				70962E091E768DB7000F85EB /* TangramLayoutFactoryProtocol.h in Headers */,
-				70962DEB1E768DA4000F85EB /* TangramSingleColumnLayout.h in Headers */,
-				70962DA31E768D86000F85EB /* TangramBusIndexClass.h in Headers */,
-				70962D9F1E768D86000F85EB /* TangramBus.h in Headers */,
-				70962D811E768D62000F85EB /* TangramDefaultElementFactory.h in Headers */,
-				70962DDD1E768DA4000F85EB /* TangramFixBottomLayout.h in Headers */,
-				70962DE31E768DA4000F85EB /* TangramFlowLayout.h in Headers */,
-				70962DE51E768DA4000F85EB /* TangramPageScrollLayout.h in Headers */,
-				70962E051E768DB7000F85EB /* TangramElementHeightProtocol.h in Headers */,
-				70962E061E768DB7000F85EB /* TangramElementReuseIdentifierProtocol.h in Headers */,
-				70962DEF1E768DA4000F85EB /* TangramStickyLayout.h in Headers */,
-				70962D891E768D6C000F85EB /* TangramSafeMethod.h in Headers */,
-				70962E071E768DB7000F85EB /* TangramItemModelFactoryProtocol.h in Headers */,
-				70962DA91E768D86000F85EB /* TangramEvent.h in Headers */,
-				70962DE71E768DA4000F85EB /* TangramQuintetColumnLayout.h in Headers */,
-				70962DAB1E768D86000F85EB /* TangramEventDispatcher.h in Headers */,
-				70962DB91E768D95000F85EB /* UIView+Tangram.h in Headers */,
+				9240F2E91FBAAC0800A630E6 /* TangramEventQueue.h in Headers */,
+				9240F3541FBAAC6800A630E6 /* TMMuiLazyScrollView.h in Headers */,
+				9240F32E1FBAAC2C00A630E6 /* TangramTribleColumnLayout.h in Headers */,
+				9240F3381FBAAC2C00A630E6 /* TangramQuintetColumnLayout.h in Headers */,
+				9240F32C1FBAAC2C00A630E6 /* TangramWaterFlowLayout.h in Headers */,
+				9240F34A1FBAAC5100A630E6 /* TangramLayoutProtocol.h in Headers */,
+				9240F3341FBAAC2C00A630E6 /* TangramDragableLayout.h in Headers */,
+				9240F3211FBAAC2C00A630E6 /* TangramFixTopLayout.h in Headers */,
+				9240F3471FBAAC5100A630E6 /* TangramEasyElementProtocol.h in Headers */,
+				9240F3371FBAAC2C00A630E6 /* TangramSingleColumnLayout.h in Headers */,
+				9240F2F01FBAAC0800A630E6 /* TangramBusIndexTopic.h in Headers */,
+				9240F2E31FBAAC0800A630E6 /* TangramBus.h in Headers */,
+				9240F2C11FBAABA900A630E6 /* TangramDefaultElementFactory.h in Headers */,
+				9240F3251FBAAC2C00A630E6 /* TangramPageScrollLayout.h in Headers */,
+				9240F3231FBAAC2C00A630E6 /* TangramFixLayout.h in Headers */,
+				9240F2E41FBAAC0800A630E6 /* TangramContext.h in Headers */,
+				9240F3291FBAAC2C00A630E6 /* TangramTetradColumnLayout.h in Headers */,
+				9240F2F91FBAAC1700A630E6 /* UIView+Tangram.h in Headers */,
+				9240F2F11FBAAC0800A630E6 /* TangramEventDispatcher.h in Headers */,
+				9240F2EB1FBAAC0800A630E6 /* TangramBusIndexClass.h in Headers */,
+				9240F2EC1FBAAC0800A630E6 /* TangramBusIndex.h in Headers */,
+				9240F3491FBAAC5100A630E6 /* TangramElementHeightProtocol.h in Headers */,
+				9240F34B1FBAAC5100A630E6 /* TangramElementFactoryProtocol.h in Headers */,
+				9240F3271FBAAC2C00A630E6 /* TangramFixBottomLayout.h in Headers */,
+				9240F3481FBAAC5100A630E6 /* TangramItemModelFactoryProtocol.h in Headers */,
+				9240F32B1FBAAC2C00A630E6 /* TangramStickyBottomLayout.h in Headers */,
+				9240F2CD1FBAABE400A630E6 /* TangramSafeMethod.h in Headers */,
+				9240F34D1FBAAC5100A630E6 /* TangramElementReuseIdentifierProtocol.h in Headers */,
+				9240F3321FBAAC2C00A630E6 /* TangramStickyLayout.h in Headers */,
+				9240F34C1FBAAC5100A630E6 /* TangramItemModelProtocol.h in Headers */,
 				70962E0E1E768DC7000F85EB /* Tangram-Prefix.pch in Headers */,
-				70962E031E768DB7000F85EB /* TangramEasyElementProtocol.h in Headers */,
-				70962DF51E768DA4000F85EB /* TangramWaterFlowLayout.h in Headers */,
-				70962D831E768D62000F85EB /* TangramDefaultItemModelFactory.h in Headers */,
-				70962DE11E768DA4000F85EB /* TangramFixTopLayout.h in Headers */,
-				70962DF11E768DA4000F85EB /* TangramTetradColumnLayout.h in Headers */,
-				70962D851E768D62000F85EB /* TangramDefaultLayoutFactory.h in Headers */,
-				70962DDB1E768DA4000F85EB /* TangramDragableLayout.h in Headers */,
-				70962DA51E768D86000F85EB /* TangramBusIndexTopic.h in Headers */,
-				70962DF91E768DB0000F85EB /* TangramDefaultItemModel.h in Headers */,
-				70962DD91E768DA4000F85EB /* TangramDoubleColumnLayout.h in Headers */,
-				70962DB71E768D95000F85EB /* TangramLayoutParseHelper.h in Headers */,
-				70962DDF1E768DA4000F85EB /* TangramFixLayout.h in Headers */,
-				70962DA71E768D86000F85EB /* TangramContext.h in Headers */,
-				70962D8D1E768D76000F85EB /* TangramView.h in Headers */,
-				70962DED1E768DA4000F85EB /* TangramStickyBottomLayout.h in Headers */,
-				70962DA11E768D86000F85EB /* TangramBusIndex.h in Headers */,
-				70962DB51E768D95000F85EB /* TangramDefaultDataSourceHelper.h in Headers */,
-				70962E0A1E768DB7000F85EB /* TangramLayoutProtocol.h in Headers */,
-				70962E041E768DB7000F85EB /* TangramElementFactoryProtocol.h in Headers */,
-				70962E081E768DB7000F85EB /* TangramItemModelProtocol.h in Headers */,
+				9240F34E1FBAAC5100A630E6 /* TangramLayoutFactoryProtocol.h in Headers */,
+				9240F2E71FBAAC0800A630E6 /* TangramEvent.h in Headers */,
+				9240F2C21FBAABA900A630E6 /* TangramDefaultItemModelFactory.h in Headers */,
+				9240F2C41FBAABA900A630E6 /* TangramDefaultLayoutFactory.h in Headers */,
+				9240F33E1FBAAC4500A630E6 /* TangramDefaultItemModel.h in Headers */,
+				9240F2FB1FBAAC1700A630E6 /* TangramLayoutParseHelper.h in Headers */,
+				9240F2D11FBAABF700A630E6 /* TangramView.h in Headers */,
+				9240F3241FBAAC2C00A630E6 /* TangramFlowLayout.h in Headers */,
+				9240F33A1FBAAC2C00A630E6 /* TangramSingleAndDoubleLayout.h in Headers */,
+				9240F2FE1FBAAC1700A630E6 /* TangramDefaultDataSourceHelper.h in Headers */,
+				9240F3331FBAAC2C00A630E6 /* TangramDoubleColumnLayout.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -496,7 +509,6 @@
 				D85037CB1B9C6D8400864DF0 /* Headers */,
 				D85037CC1B9C6D8400864DF0 /* Resources */,
 				D85037CD1B9C6D8400864DF0 /* ShellScript */,
-				9551FC47DFC2A7996EC90A73 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -565,10 +577,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9240F2C91FBAABCB00A630E6 /* TangramHelperCustomMapping.plist in Resources */,
 				70962E0D1E768DC7000F85EB /* Info.plist in Resources */,
-				70962D781E768D52000F85EB /* TangramHelperCustomMapping.plist in Resources */,
-				70962D791E768D52000F85EB /* TangramHelperMapping.plist in Resources */,
-				70962D7A1E768D52000F85EB /* TangramKitLayoutTypeMap.plist in Resources */,
+				9240F2CA1FBAABCB00A630E6 /* TangramHelperMapping.plist in Resources */,
+				9240F2C81FBAABCB00A630E6 /* TangramKitLayoutTypeMap.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -604,21 +616,6 @@
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
-		9551FC47DFC2A7996EC90A73 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Tangram/Pods-Tangram-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		D85037CD1B9C6D8400864DF0 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -640,38 +637,39 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				70962DA81E768D86000F85EB /* TangramContext.m in Sources */,
-				70962DAA1E768D86000F85EB /* TangramEvent.m in Sources */,
-				70962DEE1E768DA4000F85EB /* TangramStickyBottomLayout.m in Sources */,
-				70962DFA1E768DB0000F85EB /* TangramDefaultItemModel.m in Sources */,
-				70962DA41E768D86000F85EB /* TangramBusIndexClass.m in Sources */,
-				70962DDA1E768DA4000F85EB /* TangramDoubleColumnLayout.m in Sources */,
-				70962DAC1E768D86000F85EB /* TangramEventDispatcher.m in Sources */,
-				70962DEC1E768DA4000F85EB /* TangramSingleColumnLayout.m in Sources */,
-				70962D8E1E768D76000F85EB /* TangramView.m in Sources */,
-				70962DE81E768DA4000F85EB /* TangramQuintetColumnLayout.m in Sources */,
-				70962DA21E768D86000F85EB /* TangramBusIndex.m in Sources */,
-				70962DA61E768D86000F85EB /* TangramBusIndexTopic.m in Sources */,
-				70962DB61E768D95000F85EB /* TangramDefaultDataSourceHelper.m in Sources */,
-				70962DE21E768DA4000F85EB /* TangramFixTopLayout.m in Sources */,
-				70962DF21E768DA4000F85EB /* TangramTetradColumnLayout.m in Sources */,
-				70962D821E768D62000F85EB /* TangramDefaultElementFactory.m in Sources */,
-				70962D8A1E768D6C000F85EB /* TangramSafeMethod.m in Sources */,
-				70962DE41E768DA4000F85EB /* TangramFlowLayout.m in Sources */,
-				70962DBA1E768D95000F85EB /* UIView+Tangram.m in Sources */,
-				70962DA01E768D86000F85EB /* TangramBus.m in Sources */,
-				70962DE61E768DA4000F85EB /* TangramPageScrollLayout.m in Sources */,
-				70962DB81E768D95000F85EB /* TangramLayoutParseHelper.m in Sources */,
-				70962DF61E768DA4000F85EB /* TangramWaterFlowLayout.m in Sources */,
-				70962DEA1E768DA4000F85EB /* TangramSingleAndDoubleLayout.m in Sources */,
-				70962DDE1E768DA4000F85EB /* TangramFixBottomLayout.m in Sources */,
-				70962D841E768D62000F85EB /* TangramDefaultItemModelFactory.m in Sources */,
-				70962DE01E768DA4000F85EB /* TangramFixLayout.m in Sources */,
-				70962DDC1E768DA4000F85EB /* TangramDragableLayout.m in Sources */,
-				70962DF41E768DA4000F85EB /* TangramTribleColumnLayout.m in Sources */,
-				70962D861E768D62000F85EB /* TangramDefaultLayoutFactory.m in Sources */,
-				70962DAE1E768D86000F85EB /* TangramEventQueue.m in Sources */,
-				70962DF01E768DA4000F85EB /* TangramStickyLayout.m in Sources */,
+				9240F31F1FBAAC2C00A630E6 /* TangramFixLayout.m in Sources */,
+				9240F3311FBAAC2C00A630E6 /* TangramWaterFlowLayout.m in Sources */,
+				9240F31D1FBAAC2C00A630E6 /* TangramFlowLayout.m in Sources */,
+				9240F33D1FBAAC4500A630E6 /* TangramDefaultItemModel.m in Sources */,
+				9240F2E81FBAAC0800A630E6 /* TangramContext.m in Sources */,
+				9240F2F21FBAAC0800A630E6 /* TangramEventDispatcher.m in Sources */,
+				9240F3351FBAAC2C00A630E6 /* TangramTribleColumnLayout.m in Sources */,
+				9240F2E61FBAAC0800A630E6 /* TangramBusIndexClass.m in Sources */,
+				9240F2EA1FBAAC0800A630E6 /* TangramEventQueue.m in Sources */,
+				9240F32F1FBAAC2C00A630E6 /* TangramPageScrollLayout.m in Sources */,
+				9240F2FD1FBAAC1700A630E6 /* TangramDefaultDataSourceHelper.m in Sources */,
+				9240F3201FBAAC2C00A630E6 /* TangramSingleColumnLayout.m in Sources */,
+				9240F3221FBAAC2C00A630E6 /* TangramStickyLayout.m in Sources */,
+				9240F2D21FBAABF700A630E6 /* TangramView.m in Sources */,
+				9240F2EE1FBAAC0800A630E6 /* TangramEvent.m in Sources */,
+				9240F2FA1FBAAC1700A630E6 /* UIView+Tangram.m in Sources */,
+				9240F3551FBAAC6800A630E6 /* TMMuiLazyScrollView.m in Sources */,
+				9240F3391FBAAC2C00A630E6 /* TangramTetradColumnLayout.m in Sources */,
+				9240F2EF1FBAAC0800A630E6 /* TangramBusIndex.m in Sources */,
+				9240F2BF1FBAABA900A630E6 /* TangramDefaultElementFactory.m in Sources */,
+				9240F3301FBAAC2C00A630E6 /* TangramDragableLayout.m in Sources */,
+				9240F32A1FBAAC2C00A630E6 /* TangramSingleAndDoubleLayout.m in Sources */,
+				9240F31E1FBAAC2C00A630E6 /* TangramFixBottomLayout.m in Sources */,
+				9240F2CE1FBAABE400A630E6 /* TangramSafeMethod.m in Sources */,
+				9240F2E51FBAAC0800A630E6 /* TangramBus.m in Sources */,
+				9240F32D1FBAAC2C00A630E6 /* TangramQuintetColumnLayout.m in Sources */,
+				9240F3361FBAAC2C00A630E6 /* TangramDoubleColumnLayout.m in Sources */,
+				9240F3281FBAAC2C00A630E6 /* TangramStickyBottomLayout.m in Sources */,
+				9240F2FC1FBAAC1700A630E6 /* TangramLayoutParseHelper.m in Sources */,
+				9240F2C01FBAABA900A630E6 /* TangramDefaultItemModelFactory.m in Sources */,
+				9240F2C31FBAABA900A630E6 /* TangramDefaultLayoutFactory.m in Sources */,
+				9240F2ED1FBAAC0800A630E6 /* TangramBusIndexTopic.m in Sources */,
+				9240F3261FBAAC2C00A630E6 /* TangramFixTopLayout.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

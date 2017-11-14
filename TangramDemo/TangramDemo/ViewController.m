@@ -288,7 +288,7 @@
     [tangramView reloadData];
 }
 
-#pragma mark -- Private
+#pragma mark - Private
 
 - (UIColor *)randomColor
 {
