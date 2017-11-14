@@ -28,8 +28,11 @@ framework/
 *.moved-aside
 *.xcuserstate
 
-##Demo
+## Demo
 TangramDemo/Pods/
 TangramDemo/Podfile.lock
 TangramDemo/*.xcworkspace
 TangramDemo/*.xcuserstate
+
+## Taobao
+TaobaoEnv
