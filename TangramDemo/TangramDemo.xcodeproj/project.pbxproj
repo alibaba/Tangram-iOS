@@ -18,6 +18,7 @@
 		70EF51B71E66B3B40005B0E2 /* MockViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 70EF51B51E66B3B40005B0E2 /* MockViewController.m */; };
 		70EF51BB1E66C14E0005B0E2 /* TangramSingleImageElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 70EF51BA1E66C14E0005B0E2 /* TangramSingleImageElement.m */; };
 		70EF51C11E66C5280005B0E2 /* TangramMock.json in Resources */ = {isa = PBXBuildFile; fileRef = 70EF51C01E66C5280005B0E2 /* TangramMock.json */; };
+		9200B2C61FB57D6100D44946 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9200B2C51FB57D5600D44946 /* MobileCoreServices.framework */; };
 		A4CF0DBB398D7559240D95E2 /* libPods-TangramDemo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CBC6E1DE041DD5A4906E8D76 /* libPods-TangramDemo.a */; };
 /* End PBXBuildFile section */
 
@@ -44,6 +45,7 @@
 		70EF51BA1E66C14E0005B0E2 /* TangramSingleImageElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TangramSingleImageElement.m; path = Element/TangramSingleImageElement.m; sourceTree = "<group>"; };
 		70EF51C01E66C5280005B0E2 /* TangramMock.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = TangramMock.json; sourceTree = SOURCE_ROOT; };
 		9123C311486E00BBD8282FB5 /* Pods-TangramDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TangramDemo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TangramDemo/Pods-TangramDemo.debug.xcconfig"; sourceTree = "<group>"; };
+		9200B2C51FB57D5600D44946 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		CBC6E1DE041DD5A4906E8D76 /* libPods-TangramDemo.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-TangramDemo.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -52,6 +54,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9200B2C61FB57D6100D44946 /* MobileCoreServices.framework in Frameworks */,
 				A4CF0DBB398D7559240D95E2 /* libPods-TangramDemo.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -138,6 +141,7 @@
 		9949F7CE469A9B907F3608E9 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				9200B2C51FB57D5600D44946 /* MobileCoreServices.framework */,
 				7032D5301E8BA9DF00411F9B /* SystemConfiguration.framework */,
 				CBC6E1DE041DD5A4906E8D76 /* libPods-TangramDemo.a */,
 			);
