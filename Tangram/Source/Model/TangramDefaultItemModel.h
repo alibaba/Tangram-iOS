@@ -9,7 +9,7 @@
 #import "TangramItemModelProtocol.h"
 #import "TMMuiLazyScrollView.h"
 
-@interface TangramDefaultItemModel : TMMuiRectModel<TangramItemModelProtocol,NSCoding>
+@interface TangramDefaultItemModel : TMMuiRectModel<TangramItemModelProtocol>
 
 // type
 @property (nonatomic, strong) NSString *type;
@@ -17,6 +17,8 @@
 @property (nonatomic, strong) NSArray *margin;
 // If the value of `display` is block in FlowLayout, the view will be shown in a whole line.
 @property (nonatomic, strong) NSString *display;
+// Insert squence in layout
+@property (nonatomic, strong) NSString *position;
 // The number of occupying columns, Only use in FlowLayout .
 @property (nonatomic, assign) NSUInteger colspan;
 // AspectRatio for model.The priority of this property is below `heightFromStyle` and `widthFromStyle`
@@ -35,14 +37,14 @@
 @property (nonatomic, strong) NSString *specificReuseIdentifier;
 // Whether disable reuse.
 @property (nonatomic, assign) BOOL disableReuse;
-// Insert squence in layout
-@property (nonatomic, strong) NSString *position;
 // Whether a model for nested card.(For nested card,experiment function)
 @property (nonatomic, assign) BOOL innerItemModel;
 // The identifier for the outer layout of this nested card.(For nested card,experiment function)
 @property (nonatomic, strong) NSString *inLayoutIdentifier;
 // Layout identifier(For nested card,experiment function)
 @property (nonatomic, strong) NSString *layoutIdentifierForLayoutModel;
+
+@property (nonatomic, assign) CGFloat zIndex;
 
 - (NSArray *)bizKeys;
 
@@ -52,12 +54,16 @@
 
 - (void)setStyleValue:(id)value forKey:(NSString *)key;
 
-//Get a business param
+// Get a business param
 - (id)bizValueForKey:(NSString *)key;
-//Get a business param, if not match the desired class type, here will return nil.
+// Get a business param, if not match the desired class type, here will return nil.
 - (id)bizValueForKey:(NSString *)key desiredClass:(__unsafe_unretained Class)aClass;
-//Get a style param
+// Get a style param
 - (id)styleValueForKey:(NSString *)key;
-//Get a style param, if not match the desired class type, here will return nil.
+// Get a style param, if not match the desired class type, here will return nil.
 - (id)styleValueForKey:(NSString *)key desiredClass:(__unsafe_unretained Class)aClass;
+
+// Do NOT use this directly.
+- (NSMutableDictionary *)feedMap;
+
 @end

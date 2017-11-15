@@ -48,21 +48,22 @@
 {
     return [[self.margin tm_safeObjectAtIndex:3] floatValue];
 }
+
 //Default it is `inline`
 - (NSString *)display
 {
     if (_display.length > 0) {
         return _display;
-    }
-    else{
+    } else {
         return @"inline";
     }
-    
 }
+
 - (TangramItemType *)itemType
 {
     return self.type;
 }
+
 - (NSUInteger )colspan
 {
     if (_colspan > 1) {
@@ -70,7 +71,8 @@
     }
     return 1;
 }
-//子类可选择性覆盖以下三个方法
+
+// For overriding
 - (CGRect)itemFrame
 {
     CGRect rect = self.modelRect;
@@ -88,6 +90,7 @@
     }
     return rect;
 }
+
 - (void)setItemFrame:(CGRect)itemFrame
 {
     self.modelRect = itemFrame;
@@ -116,30 +119,27 @@
     }
     return self.type;
 }
+
 - (id)bizValueForKey:(NSString *)key;
 {
     return [self.bizDict tm_safeObjectForKey:key];
 }
+
 - (id)bizValueForKey:(NSString *)key desiredClass:(__unsafe_unretained Class)aClass
 {
-    id value = [self.bizDict tm_safeObjectForKey:key];
-    if ([value isKindOfClass:aClass]) {
-        return value;
-    }
-    return nil;
+    return [self.bizDict tm_safeObjectForKey:key class:aClass];
 }
+
 - (id)styleValueForKey:(NSString *)key
 {
     return [self.styleDict objectForKey:key];
 }
+
 - (id)styleValueForKey:(NSString *)key desiredClass:(__unsafe_unretained Class)aClass
 {
-    id value = [self.styleDict tm_safeObjectForKey:key];
-    if ([value isKindOfClass:aClass]) {
-        return value;
-    }
-    return nil;
+    return [self.styleDict tm_safeObjectForKey:key class:aClass];
 }
+
 - (NSArray *)bizKeys
 {
     return [self.bizDict allKeys];
@@ -149,6 +149,7 @@
 {
     return [self.styleDict allKeys];
 }
+
 - (NSMutableDictionary *)bizDict
 {
     if (nil == _bizDict) {
@@ -164,40 +165,20 @@
     }
     return _styleDict;
 }
+
 - (void)setBizValue:(id)value forKey:(NSString *)key
 {
-    if (value && key.length > 0) {
-        [self.bizDict setObject:value forKey:key];
-    }
+    [self.bizDict tm_safeSetObject:value forKey:key];
 }
 
 - (void)setStyleValue:(id)value forKey:(NSString *)key
 {
-    if (value && key.length > 0) {
-        [self.styleDict setObject:value forKey:key];
-    }
+    [self.styleDict tm_safeSetObject:value forKey:key];
 }
 
-- (id)initWithCoder:(NSCoder *)aDecoder
+- (NSMutableDictionary *)feedMap
 {
-    self = [super init];
-    if (self) {
-        self.bizDict = [aDecoder decodeObjectForKey:@"bizDict"];
-        self.styleDict = [aDecoder decodeObjectForKey:@"styleDict"];
-        self.type = [aDecoder decodeObjectForKey:@"type"];
-        self.linkElementName = [aDecoder decodeObjectForKey:@"linkElementName"];
-        self.margin = [aDecoder decodeObjectForKey:@"margin"];
-    }
-    return self;
+    return self.bizDict;
 }
 
-- (void)encodeWithCoder:(NSCoder *)aCoder
-{
-    [aCoder encodeObject:self.bizDict forKey:@"bizDict"];
-    [aCoder encodeObject:self.styleDict forKey:@"styleDict"];
-    [aCoder encodeObject:self.linkElementName forKey:@"linkElementName"];
-    [aCoder encodeObject:self.type forKey:@"type"];
-    [aCoder encodeObject:self.margin forKey:@"margin"];
-
-}
 @end
