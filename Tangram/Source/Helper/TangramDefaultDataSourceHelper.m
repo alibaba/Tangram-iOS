@@ -12,10 +12,9 @@
 #import "TangramItemModelProtocol.h"
 #import "TangramEasyElementProtocol.h"
 #import "TangramLayoutParseHelper.h"
-#import "TangramSafeMethod.h"
+#import "TMUtils.h"
 #import "TangramDefaultItemModelFactory.h"
 #import "TangramDefaultItemModel.h"
-#import "TangramSafeMethod.h"
 #import "TangramEasyElementProtocol.h"
 #import "TangramDefaultDataSourceHelper.h"
 
@@ -58,7 +57,7 @@
 
 +(UIView<TangramLayoutProtocol> *)layoutWithDictionary: (NSDictionary *)dict tangramBus:(TangramBus *)tangramBus
 {
-    NSString *type = [dict tgrm_stringForKey:@"type"];
+    NSString *type = [dict tm_stringForKey:@"type"];
     if (type.length <= 0) {
         return nil;
     }
@@ -82,9 +81,9 @@
     for (NSDictionary *dict in dictArray) {
         UIView<TangramLayoutProtocol> *layout = [[TangramDefaultDataSourceHelper sharedInstance].layoutFactoryClass layoutByDict:dict];
         [self fillLayoutProperty:layout withDict:dict tangramBus:tangramBus];
-        [layouts tgrm_addObjectCheck:layout];
+        [layouts tm_safeAddObject:layout];
         for (int i = 0 ; i< layout.itemModels.count; i++) {
-            TangramDefaultItemModel *itemModel = [layout.itemModels tgrm_objectAtIndexCheck:i];
+            TangramDefaultItemModel *itemModel = [layout.itemModels tm_safeObjectAtIndex:i];
             if ([itemModel isKindOfClass:[TangramDefaultItemModel class]]) {
                 itemModel.index = i;
             }
@@ -96,13 +95,13 @@
 
 +(NSObject<TangramItemModelProtocol> *)modelWithDictionary : (NSDictionary *)dict
 {
-    NSString *type = [dict tgrm_stringForKey:@"type"];
+    NSString *type = [dict tm_stringForKey:@"type"];
     if (type.length <= 0) {
         return nil;
     }
     NSObject<TangramItemModelProtocol> *itemModel = nil;
     itemModel = [[TangramDefaultDataSourceHelper sharedInstance].itemModelFactoryClass itemModelByDict:dict];
-    if ([[dict tgrm_stringForKey:@"kind"] isEqualToString:@"row"]) {
+    if ([[dict tm_stringForKey:@"kind"] isEqualToString:@"row"]) {
         if ([(Class)([TangramDefaultDataSourceHelper sharedInstance].layoutFactoryClass) instanceMethodForSelector:@selector(layoutClassNameByType:)]) {
             itemModel.linkElementName = [[TangramDefaultDataSourceHelper sharedInstance].layoutFactoryClass layoutClassNameByType:itemModel.itemType];
         }
@@ -113,7 +112,7 @@
 +(NSArray *)modelsWithDictArray : (NSArray *)dictArray {
     NSMutableArray *mutArray = [NSMutableArray array];
     for (NSDictionary *dict in dictArray) {
-        [mutArray tgrm_addObjectCheck:[self modelWithDictionary:dict]];
+        [mutArray tm_safeAddObject:[self modelWithDictionary:dict]];
     }
     return [mutArray copy];
 }
@@ -124,12 +123,12 @@
         return  [[NSMutableArray alloc]init];
     }
     NSMutableArray *itemModels = [[NSMutableArray alloc]init];
-    NSArray *itemModelArray = [dict tgrm_arrayForKey:@"items"];
+    NSArray *itemModelArray = [dict tm_arrayForKey:@"items"];
     for (NSUInteger i = 0 ; i < itemModelArray.count ; i++) {
-        NSDictionary *dict = [itemModelArray tgrm_dictionaryAtIndex:i];
+        NSDictionary *dict = [itemModelArray tm_dictionaryAtIndex:i];
         NSObject<TangramItemModelProtocol> *model =  [self modelWithDictionary:dict];
         if (model) {
-            [itemModels tgrm_addObjectCheck:model];
+            [itemModels tm_safeAddObject:model];
         }
         if ([model isKindOfClass:[TangramDefaultItemModel class]]) {
             ((TangramDefaultItemModel *)model).index = i;
@@ -161,7 +160,7 @@
                 && [layout respondsToSelector:@selector(subLayoutDict)]
                 && [layout respondsToSelector:@selector(subLayoutIdentifiers)]
                 && model.inLayoutIdentifier.length > 0) {
-                [((UIView<TangramEasyElementProtocol> *)element) setAtLayout:[layout.subLayoutDict tgrm_objectForKeyCheck:model.inLayoutIdentifier]];
+                [((UIView<TangramEasyElementProtocol> *)element) setAtLayout:[layout.subLayoutDict tm_safeObjectForKey:model.inLayoutIdentifier]];
             }
             else{
                 [((UIView<TangramEasyElementProtocol> *)element) setAtLayout:layout];
@@ -194,7 +193,7 @@
                 && [layout respondsToSelector:@selector(subLayoutDict)]
                 && [layout respondsToSelector:@selector(subLayoutIdentifiers)]
                 && model.inLayoutIdentifier.length > 0) {
-                [((UIView<TangramEasyElementProtocol> *)element) setAtLayout:[layout.subLayoutDict tgrm_objectForKeyCheck:model.inLayoutIdentifier]];
+                [((UIView<TangramEasyElementProtocol> *)element) setAtLayout:[layout.subLayoutDict tm_safeObjectForKey:model.inLayoutIdentifier]];
             }
             else{
                 [((UIView<TangramEasyElementProtocol> *)element) setAtLayout:layout];
@@ -215,13 +214,13 @@
     //layout在自己内部做处理其他数据
     layout = [TangramLayoutParseHelper layoutConfigByOriginLayout:layout withDict:dict];
     //解析HeaderModel & FooterModel
-    if ([dict tgrm_dictionaryForKey:@"header"] != nil && [layout respondsToSelector:@selector(setHeaderItemModel:)]) {
-        TangramDefaultItemModel *headerModel = [TangramDefaultDataSourceHelper modelWithDictionary:[dict tgrm_dictionaryForKey:@"header"]];
+    if ([dict tm_dictionaryForKey:@"header"] != nil && [layout respondsToSelector:@selector(setHeaderItemModel:)]) {
+        TangramDefaultItemModel *headerModel = [TangramDefaultDataSourceHelper modelWithDictionary:[dict tm_dictionaryForKey:@"header"]];
         headerModel.display = @"block";
         layout.headerItemModel = headerModel;
     }
-    if ([dict tgrm_dictionaryForKey:@"footer"] != nil && [layout respondsToSelector:@selector(setHeaderItemModel:)]) {
-        TangramDefaultItemModel *footerModel = [TangramDefaultDataSourceHelper modelWithDictionary:[dict tgrm_dictionaryForKey:@"footer"]];
+    if ([dict tm_dictionaryForKey:@"footer"] != nil && [layout respondsToSelector:@selector(setHeaderItemModel:)]) {
+        TangramDefaultItemModel *footerModel = [TangramDefaultDataSourceHelper modelWithDictionary:[dict tm_dictionaryForKey:@"footer"]];
         footerModel.display = @"block";
         layout.footerItemModel = footerModel;
     }
@@ -231,19 +230,19 @@
     NSMutableArray *itemModelToBeAdded = [[NSMutableArray alloc]init];
     NSMutableArray *itemModelToBeRemoved = [[NSMutableArray alloc]init];
     for (NSUInteger i = 0 ; i < layout.itemModels.count ; i++) {
-        NSObject<TangramItemModelProtocol> *model = [layout.itemModels tgrm_objectAtIndexCheck:i];
+        NSObject<TangramItemModelProtocol> *model = [layout.itemModels tm_safeObjectAtIndex:i];
         //Analyze whether its nested layout.
         if ([model respondsToSelector:@selector(layoutIdentifierForLayoutModel)] &&  model.layoutIdentifierForLayoutModel && model.layoutIdentifierForLayoutModel.length > 0) {
-            NSDictionary *modelDict = [[dict tgrm_arrayForKey:@"items"] tgrm_dictionaryAtIndex:i];
-            if ( 0 >= [modelDict tgrm_arrayForKey:@"items"].count) {
-                [itemModelToBeRemoved tgrm_addObjectCheck:model];
+            NSDictionary *modelDict = [[dict tm_arrayForKey:@"items"] tm_dictionaryAtIndex:i];
+            if ( 0 >= [modelDict tm_arrayForKey:@"items"].count) {
+                [itemModelToBeRemoved tm_safeAddObject:model];
                 continue;
             }
             //Generate layout
             UIView<TangramLayoutProtocol> *innerLayout = [self layoutWithDictionary:modelDict  tangramBus:tangramBus];
             if (innerLayout && innerLayout.identifier.length > 0) {
                 [mutableInnerLayoutDict setObject:innerLayout forKey:innerLayout.identifier];
-                [mutableInnerLayoutIdentifierArray tgrm_addObjectCheck:innerLayout.identifier];
+                [mutableInnerLayoutIdentifierArray tm_safeAddObject:innerLayout.identifier];
             }
             
             NSArray *innerLayoutItemModels = innerLayout.itemModels;
@@ -285,7 +284,7 @@
     NSUInteger count = 0;
     if (layoutArray.count > 0) {
         for (NSUInteger i = 0 ; i < layoutArray.count; i++) {
-            UIView *layout = [layoutArray tgrm_objectAtIndexCheck:i];
+            UIView *layout = [layoutArray tm_safeObjectAtIndex:i];
             if([layout isKindOfClass:[UIView class]])
             {
                 count += [layout subviews].count;
@@ -299,7 +298,7 @@
     NSUInteger count = 0;
     if (layoutArray.count > 0) {
         for (NSUInteger i = 0 ; i < layoutArray.count; i++) {
-            UIView<TangramLayoutProtocol> *layout = [layoutArray tgrm_objectAtIndexCheck:i];
+            UIView<TangramLayoutProtocol> *layout = [layoutArray tm_safeObjectAtIndex:i];
             if( [layout conformsToProtocol:@protocol(TangramLayoutProtocol)] && [layout isKindOfClass:[UIView class]])
             {
                 count += [layout itemModels].count;

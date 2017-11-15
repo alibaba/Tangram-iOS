@@ -8,7 +8,7 @@
 
 #import "TangramDefaultItemModelFactory.h"
 #import "TangramDefaultItemModel.h"
-#import "TangramSafeMethod.h"
+#import "TMUtils.h"
 
 @interface TangramDefaultItemModelFactory()
 
@@ -36,7 +36,7 @@
         NSString *tangramMapPath = [[NSBundle mainBundle]pathForResource:@"TangramHelperMapping" ofType:@"plist"];
         NSArray *mapArray = [NSArray arrayWithContentsOfFile:tangramMapPath];
         for (NSDictionary *dict in mapArray) {
-            NSString *elementMapString = [dict tgrm_stringForKey:@"modelMap"];
+            NSString *elementMapString = [dict tm_stringForKey:@"modelMap"];
             NSString *elementMapPath = [[NSBundle mainBundle] pathForResource:elementMapString ofType:@"plist"];
             [self.elementTypeMap addEntriesFromDictionary:[TangramDefaultItemModelFactory decodeElementTypeMap:[NSArray arrayWithContentsOfFile:elementMapPath]]];
         }
@@ -46,14 +46,14 @@
 
 + (NSObject<TangramItemModelProtocol> *)itemModelByDict:(NSDictionary *)dict
 {
-    NSString *type = [dict tgrm_stringForKey:@"type"];
+    NSString *type = [dict tm_stringForKey:@"type"];
 //    if (type.length <= 0) {
 //        return nil;
 //    }
     TangramDefaultItemModel *itemModel = [[TangramDefaultItemModel alloc]init];
     //布局参数解析
     itemModel.type = type;
-    NSDictionary *styleDict =[dict tgrm_dictionaryForKey:@"style"];
+    NSDictionary *styleDict =[dict tm_dictionaryForKey:@"style"];
     NSObject *margin =[styleDict objectForKey:@"margin"];
     if ([margin isKindOfClass:[NSString class]]) {
         NSString *marginString = [(NSString *)margin stringByReplacingOccurrencesOfString:@"[" withString:@""];
@@ -61,10 +61,10 @@
         NSArray *marginArray = [marginString componentsSeparatedByString:@","];
         if (marginArray && 4 == marginArray.count) {
             itemModel.margin = @[
-                                 @([marginArray tgrm_floatAtIndex:0]),
-                                 @([marginArray tgrm_floatAtIndex:1]),
-                                 @([marginArray tgrm_floatAtIndex:2]),
-                                 @([marginArray tgrm_floatAtIndex:3]),
+                                 @([marginArray tm_floatAtIndex:0]),
+                                 @([marginArray tm_floatAtIndex:1]),
+                                 @([marginArray tm_floatAtIndex:2]),
+                                 @([marginArray tm_floatAtIndex:3]),
                                  ];
         }
     }
@@ -75,41 +75,41 @@
     else{
         itemModel.margin = @[@0, @0, @0, @0];
     }
-    if ([[styleDict tgrm_stringForKey:@"display"] isEqualToString:@"block"]) {
+    if ([[styleDict tm_stringForKey:@"display"] isEqualToString:@"block"]) {
         itemModel.display = @"block";
     }
     else{
         itemModel.display = @"inline";
     }
     //针对style中的height和width
-    if ([styleDict tgrm_floatForKey:@"height"] > 0.f) {
-        itemModel.heightFromStyle = [styleDict tgrm_floatForKey:@"height"]/375.f*[UIScreen mainScreen].bounds.size.width;
+    if ([styleDict tm_floatForKey:@"height"] > 0.f) {
+        itemModel.heightFromStyle = [styleDict tm_floatForKey:@"height"]/375.f*[UIScreen mainScreen].bounds.size.width;
     }
-    if ([styleDict tgrm_floatForKey:@"width"] > 0.f) {
-        itemModel.widthFromStyle = [styleDict tgrm_floatForKey:@"width"]/375.f*[UIScreen mainScreen].bounds.size.width;
+    if ([styleDict tm_floatForKey:@"width"] > 0.f) {
+        itemModel.widthFromStyle = [styleDict tm_floatForKey:@"width"]/375.f*[UIScreen mainScreen].bounds.size.width;
     }
-    else if ([[styleDict tgrm_stringForKey:@"width"] isEqualToString:@"-1"]) {
+    else if ([[styleDict tm_stringForKey:@"width"] isEqualToString:@"-1"]) {
         //width 配-1 意味着屏幕宽度
         itemModel.widthFromStyle = [UIScreen mainScreen].bounds.size.width;
     }
-    if ([styleDict tgrm_floatForKey:@"aspectRatio"] > 0.f) {
-        itemModel.modelAspectRatio  = [styleDict tgrm_floatForKey:@"aspectRatio"];
+    if ([styleDict tm_floatForKey:@"aspectRatio"] > 0.f) {
+        itemModel.modelAspectRatio  = [styleDict tm_floatForKey:@"aspectRatio"];
     }
-    if ([styleDict tgrm_floatForKey:@"ratio"] > 0.f) {
-        itemModel.modelAspectRatio = [styleDict tgrm_floatForKey:@"ratio"];
+    if ([styleDict tm_floatForKey:@"ratio"] > 0.f) {
+        itemModel.modelAspectRatio = [styleDict tm_floatForKey:@"ratio"];
     }
-    itemModel.colspan = [styleDict tgrm_integerForKey:@"colspan"];
-    itemModel.position = [dict tgrm_stringForKey:@"position"];
-//    itemModel.ctrClickParam = [dict tgrm_stringForKey:@"ctrClickParam"];
-    itemModel.specificReuseIdentifier = [styleDict tgrm_stringForKey:@"reuseId"];
-    itemModel.disableReuse = [styleDict tgrm_boolForKey:@"disableReuse"];
+    itemModel.colspan = [styleDict tm_integerForKey:@"colspan"];
+    itemModel.position = [dict tm_stringForKey:@"position"];
+//    itemModel.ctrClickParam = [dict tm_stringForKey:@"ctrClickParam"];
+    itemModel.specificReuseIdentifier = [styleDict tm_stringForKey:@"reuseId"];
+    itemModel.disableReuse = [styleDict tm_boolForKey:@"disableReuse"];
     
     for (NSString *key in [dict allKeys]) {
         if ([key isEqualToString:@"type"] || [key isEqualToString:@"style"] ) {
             continue;
         }
         else{
-            [itemModel setBizValue:[dict tgrm_objectForKeyCheck:key] forKey:key];
+            [itemModel setBizValue:[dict tm_safeObjectForKey:key] forKey:key];
         }
     }
     for (NSString *key in [styleDict allKeys]) {
@@ -118,13 +118,13 @@
             continue;
         }
         else{
-            [itemModel setStyleValue:[styleDict tgrm_objectForKeyCheck:key] forKey:key];
+            [itemModel setStyleValue:[styleDict tm_safeObjectForKey:key] forKey:key];
         }
     }
-    if ([[dict tgrm_stringForKey:@"kind"] isEqualToString:@"row"]) {
-        itemModel.layoutIdentifierForLayoutModel = [dict tgrm_stringForKey:@"id"];
+    if ([[dict tm_stringForKey:@"kind"] isEqualToString:@"row"]) {
+        itemModel.layoutIdentifierForLayoutModel = [dict tm_stringForKey:@"id"];
     }
-    itemModel.linkElementName = [[TangramDefaultItemModelFactory sharedInstance].elementTypeMap tgrm_stringForKey:itemModel.type];
+    itemModel.linkElementName = [[TangramDefaultItemModelFactory sharedInstance].elementTypeMap tm_stringForKey:itemModel.type];
 
     return itemModel;
 }
@@ -132,8 +132,8 @@
 {
     NSMutableDictionary *mapDict = [[NSMutableDictionary alloc]init];
     for (NSDictionary *dict in mapArray) {
-        NSString *key = [dict tgrm_stringForKey:@"type"];
-        NSString *value = [dict tgrm_stringForKey:@"element"];
+        NSString *key = [dict tm_stringForKey:@"type"];
+        NSString *value = [dict tm_stringForKey:@"element"];
         if (key.length > 0 && value.length > 0) {
             NSAssert(![[mapDict allKeys] containsObject:key], @"There are repeat registration for element!Please check type!");
             [mapDict setObject:value forKey:key];

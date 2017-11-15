@@ -13,7 +13,7 @@
 #import "TangramWaterFlowLayout.h"
 #import "TangramPageScrollLayout.h"
 #import "TangramSingleAndDoubleLayout.h"
-#import "TangramSafeMethod.h"
+#import "TMUtils.h"
 //#import "TMImageView.h"
 
 @implementation TangramLayoutParseHelper
@@ -22,13 +22,13 @@
 {
     //对于所有layout都适用的属性，不用放在plist的style中明确写出
     //已知的一定会加载的属性有：id,bgColor,bgImgURL
-    layout.identifier = [dict tgrm_stringForKey:@"id"];
-    NSDictionary *styleDict = [dict tgrm_dictionaryForKey:@"style"];
-    NSString *backgroundColor = [styleDict tgrm_stringForKey:@"bgColor"];
+    layout.identifier = [dict tm_stringForKey:@"id"];
+    NSDictionary *styleDict = [dict tm_dictionaryForKey:@"style"];
+    NSString *backgroundColor = [styleDict tm_stringForKey:@"bgColor"];
     if (backgroundColor.length > 0) {
         layout.backgroundColor = [TangramLayoutParseHelper colorFromHexString:backgroundColor];
     }
-    NSString *bgImgURL = [styleDict tgrm_stringForKey:@"bgImgUrl"];
+    NSString *bgImgURL = [styleDict tm_stringForKey:@"bgImgUrl"];
     if (bgImgURL.length > 0 && [layout respondsToSelector:@selector(setBgImgURL:)]) {
         layout.bgImgURL = bgImgURL;
     }
@@ -56,11 +56,11 @@
 
 + (UIView<TangramLayoutProtocol> *)praseFlowLayout:(TangramFlowLayout *)layout withDict:(NSDictionary *)dict
 {
-    NSDictionary *styleDict = [dict tgrm_dictionaryForKey:@"style"];
-    layout.cols = [styleDict tgrm_arrayForKey:@"cols"];
-    NSArray *margin = [styleDict tgrm_arrayForKey:@"margin"];
+    NSDictionary *styleDict = [dict tm_dictionaryForKey:@"style"];
+    layout.cols = [styleDict tm_arrayForKey:@"cols"];
+    NSArray *margin = [styleDict tm_arrayForKey:@"margin"];
     layout.margin = margin;
-    NSString *originMarginString = [styleDict tgrm_stringForKey:@"margin"];
+    NSString *originMarginString = [styleDict tm_stringForKey:@"margin"];
     if (margin.count  != 4 && originMarginString.length > 3) {
         NSString *splitString = [originMarginString substringWithRange:NSMakeRange(1, originMarginString.length-2)];
         NSArray *splitMarginArray = [splitString componentsSeparatedByString:@","];
@@ -68,9 +68,9 @@
             layout.margin = splitMarginArray;
         }
     }
-    NSArray *padding = [styleDict tgrm_arrayForKey:@"padding"];
+    NSArray *padding = [styleDict tm_arrayForKey:@"padding"];
     layout.padding = padding;
-    NSString *originPaddingString = [styleDict tgrm_stringForKey:@"padding"];
+    NSString *originPaddingString = [styleDict tm_stringForKey:@"padding"];
     if (padding.count  != 4 && originPaddingString.length > 3) {
         NSString *splitString = [originPaddingString substringWithRange:NSMakeRange(1, originPaddingString.length-2)];
         NSArray *splitPaddingArray = [splitString componentsSeparatedByString:@","];
@@ -78,31 +78,31 @@
             layout.padding = splitPaddingArray;
         }
     }
-    layout.aspectRatio = [styleDict tgrm_stringForKey:@"aspectRatio"];
-    layout.vGap = [styleDict tgrm_floatForKey:@"vGap"];
-    layout.hGap = [styleDict tgrm_floatForKey:@"hGap"];
-    layout.autoFill = [styleDict tgrm_boolForKey:@"autoFill"];
-    layout.layoutLoadAPI = [dict tgrm_stringForKey:@"load"];
-    layout.loadType = [dict tgrm_integerForKey:@"loadType"];
-    layout.loadParams = [dict tgrm_dictionaryForKey:@"loadParams"];
-    if ([[styleDict tgrm_stringForKey:@"bgScaleType"] isEqualToString:@"fitStart"]) {
+    layout.aspectRatio = [styleDict tm_stringForKey:@"aspectRatio"];
+    layout.vGap = [styleDict tm_floatForKey:@"vGap"];
+    layout.hGap = [styleDict tm_floatForKey:@"hGap"];
+    layout.autoFill = [styleDict tm_boolForKey:@"autoFill"];
+    layout.layoutLoadAPI = [dict tm_stringForKey:@"load"];
+    layout.loadType = [dict tm_integerForKey:@"loadType"];
+    layout.loadParams = [dict tm_dictionaryForKey:@"loadParams"];
+    if ([[styleDict tm_stringForKey:@"bgScaleType"] isEqualToString:@"fitStart"]) {
         layout.bgScaleType = TangramFlowLayoutBgImageScaleTypeFitStart;
     }
     else{
         layout.bgScaleType = TangramFlowLayoutBgImageScaleTypeFitXY;
     }
     if ([layout isKindOfClass:[TangramSingleAndDoubleLayout class]]) {
-        ((TangramSingleAndDoubleLayout *)layout).rows = [styleDict tgrm_arrayForKey:@"rows"];
+        ((TangramSingleAndDoubleLayout *)layout).rows = [styleDict tm_arrayForKey:@"rows"];
     }
     return layout;
 }
 
 + (UIView<TangramLayoutProtocol> *)prasePageScrollLayout:(TangramPageScrollLayout *)layout withDict:(NSDictionary *)dict
 {
-    NSDictionary *styleDict = [dict tgrm_dictionaryForKey:@"style"];
-    NSArray *margin = [styleDict tgrm_arrayForKey:@"margin"];
+    NSDictionary *styleDict = [dict tm_dictionaryForKey:@"style"];
+    NSArray *margin = [styleDict tm_arrayForKey:@"margin"];
     layout.margin = margin;
-    NSString *originMarginString = [styleDict tgrm_stringForKey:@"margin"];
+    NSString *originMarginString = [styleDict tm_stringForKey:@"margin"];
     if (margin.count  != 4 && originMarginString.length > 3) {
         NSString *splitString = [originMarginString substringWithRange:NSMakeRange(1, originMarginString.length-2)];
         NSArray *splitMarginArray = [splitString componentsSeparatedByString:@","];
@@ -110,9 +110,9 @@
             layout.margin = splitMarginArray;
         }
     }
-    NSArray *padding = [styleDict tgrm_arrayForKey:@"padding"];
+    NSArray *padding = [styleDict tm_arrayForKey:@"padding"];
     layout.padding = padding;
-    NSString *originPaddingString = [styleDict tgrm_stringForKey:@"padding"];
+    NSString *originPaddingString = [styleDict tm_stringForKey:@"padding"];
     if (padding.count  != 4 && originPaddingString.length > 3) {
         NSString *splitString = [originPaddingString substringWithRange:NSMakeRange(1, originPaddingString.length-2)];
         NSArray *splitPaddingArray = [splitString componentsSeparatedByString:@","];
@@ -120,43 +120,43 @@
             layout.padding = splitPaddingArray;
         }
     }
-    layout.aspectRatio = [styleDict tgrm_stringForKey:@"aspectRatio"];
-    layout.indicatorGap = [styleDict tgrm_floatForKey:@"indicatorGap"];
-    layout.indicatorImg1 = [styleDict tgrm_stringForKey:@"indicatorImg1"];
-    layout.indicatorImg2 = [styleDict tgrm_stringForKey:@"indicatorImg2"];
-    layout.autoScrollTime = [styleDict tgrm_floatForKey:@"autoScroll"]/1000.0;
-    layout.layoutLoadAPI = [dict tgrm_stringForKey:@"load"];
-    if ([styleDict tgrm_stringForKey:@"infinite"].length > 0) {
+    layout.aspectRatio = [styleDict tm_stringForKey:@"aspectRatio"];
+    layout.indicatorGap = [styleDict tm_floatForKey:@"indicatorGap"];
+    layout.indicatorImg1 = [styleDict tm_stringForKey:@"indicatorImg1"];
+    layout.indicatorImg2 = [styleDict tm_stringForKey:@"indicatorImg2"];
+    layout.autoScrollTime = [styleDict tm_floatForKey:@"autoScroll"]/1000.0;
+    layout.layoutLoadAPI = [dict tm_stringForKey:@"load"];
+    if ([styleDict tm_stringForKey:@"infinite"].length > 0) {
         layout.infiniteLoop = YES;
     }
-    if ([[styleDict tgrm_stringForKey:@"indicatorPosition"] isEqualToString:@"inside"]) {
+    if ([[styleDict tm_stringForKey:@"indicatorPosition"] isEqualToString:@"inside"]) {
         layout.indicatorPosition = IndicatorPositionInside;
     }
     else  {
         layout.indicatorPosition = IndicatorPositionOutside;
     }
-    if ([[styleDict tgrm_stringForKey:@"indicatorGravity"] isEqualToString:@"left"]) {
+    if ([[styleDict tm_stringForKey:@"indicatorGravity"] isEqualToString:@"left"]) {
         layout.indicatorGravity = IndicatorGravityLeft;
     }
-    else if ([[styleDict tgrm_stringForKey:@"indicatorGravity"] isEqualToString:@"right"])
+    else if ([[styleDict tm_stringForKey:@"indicatorGravity"] isEqualToString:@"right"])
     {
         layout.indicatorGravity = IndicatorGravityRight;
     }
     else{
         layout.indicatorGravity = IndicatorGravityCenter;
     }
-    layout.loadMoreImgUrl = [styleDict tgrm_stringForKey:@"loadMoreImgUrl"];
-    if ([[styleDict tgrm_stringForKey:@"indicatorStyle"] isEqualToString:@"stripe"]) {
+    layout.loadMoreImgUrl = [styleDict tm_stringForKey:@"loadMoreImgUrl"];
+    if ([[styleDict tm_stringForKey:@"indicatorStyle"] isEqualToString:@"stripe"]) {
         layout.indicatorStyleType = IndicatorStyleStripe;
     }
     else{
         layout.indicatorStyleType = IndicatorStyleDot;
     }
-    layout.hasMoreAction = [styleDict tgrm_stringForKey:@"hasMoreAction"];
-    layout.pageMargin = [styleDict tgrm_arrayForKey:@"pageMargin"];
-    layout.pageWidth = [UIScreen mainScreen].bounds.size.width * [styleDict tgrm_floatForKey:@"pageRatio"];
-    BOOL disableScale = [styleDict tgrm_boolForKey:@"disableScale"];
-    CGFloat pageWidthInConfig = [styleDict tgrm_floatForKey:@"pageWidth"];
+    layout.hasMoreAction = [styleDict tm_stringForKey:@"hasMoreAction"];
+    layout.pageMargin = [styleDict tm_arrayForKey:@"pageMargin"];
+    layout.pageWidth = [UIScreen mainScreen].bounds.size.width * [styleDict tm_floatForKey:@"pageRatio"];
+    BOOL disableScale = [styleDict tm_boolForKey:@"disableScale"];
+    CGFloat pageWidthInConfig = [styleDict tm_floatForKey:@"pageWidth"];
     if (pageWidthInConfig > 0.f) {
         if (disableScale) {
             layout.pageWidth = pageWidthInConfig;
@@ -165,38 +165,38 @@
             layout.pageWidth = pageWidthInConfig/375.f*[UIScreen mainScreen].bounds.size.width;
         }
     }
-    CGFloat pageHeightInConfig = [styleDict tgrm_floatForKey:@"pageHeight"];
+    CGFloat pageHeightInConfig = [styleDict tm_floatForKey:@"pageHeight"];
     if (disableScale) {
         layout.pageHeight = pageHeightInConfig;
     }
     else{
         layout.pageHeight = pageHeightInConfig/375.f*[UIScreen mainScreen].bounds.size.width;
     }
-    layout.hGap = [styleDict tgrm_floatForKey:@"hGap"];
-    if ([[styleDict tgrm_stringForKey:@"hasIndicator"] isEqualToString:@"false"]) {
+    layout.hGap = [styleDict tm_floatForKey:@"hGap"];
+    if ([[styleDict tm_stringForKey:@"hasIndicator"] isEqualToString:@"false"]) {
         layout.hasIndicator = NO;
     }
     else{
         layout.hasIndicator = YES;
     }
-    layout.indicatorAutoHide = [styleDict tgrm_boolForKey:@"indicatorAutoHide"];
-    layout.indicatorColor = [styleDict tgrm_stringForKey:@"indicatorColor"];
-    layout.defaultIndicatorColor = [styleDict tgrm_stringForKey:@"defaultIndicatorColor"];
-    layout.indicatorRadius = [styleDict tgrm_floatForKey:@"indicatorRadius"];
-    layout.indicatorMargin = [styleDict tgrm_floatForKey:@"indicatorMargin"];
+    layout.indicatorAutoHide = [styleDict tm_boolForKey:@"indicatorAutoHide"];
+    layout.indicatorColor = [styleDict tm_stringForKey:@"indicatorColor"];
+    layout.defaultIndicatorColor = [styleDict tm_stringForKey:@"defaultIndicatorColor"];
+    layout.indicatorRadius = [styleDict tm_floatForKey:@"indicatorRadius"];
+    layout.indicatorMargin = [styleDict tm_floatForKey:@"indicatorMargin"];
     if (layout.indicatorMargin == 0.f) {
         layout.indicatorMargin = 3.f;
     }
-    layout.scrollMarginLeft = [styleDict tgrm_floatForKey:@"scrollMarginLeft"];
-    layout.scrollMarginRight = [styleDict tgrm_floatForKey:@"scrollMarginRight"];
+    layout.scrollMarginLeft = [styleDict tm_floatForKey:@"scrollMarginLeft"];
+    layout.scrollMarginRight = [styleDict tm_floatForKey:@"scrollMarginRight"];
     
     return layout;
 }
 
 + (UIView<TangramLayoutProtocol> *)praseFixLayout:(TangramFixLayout *)layout withDict:(NSDictionary *)dict
 {
-    NSDictionary *styleDict = [dict tgrm_dictionaryForKey:@"style"];
-    NSString *alignInStyle = [styleDict tgrm_stringForKey:@"align"];
+    NSDictionary *styleDict = [dict tm_dictionaryForKey:@"style"];
+    NSString *alignInStyle = [styleDict tm_stringForKey:@"align"];
     if ([alignInStyle isEqualToString:@"top_left"]) {
         layout.alignType = TopLeft;
     }
@@ -209,9 +209,9 @@
     else if ([alignInStyle isEqualToString:@"bottom_right"]) {
         layout.alignType = BottomRight;
     }
-    layout.offsetX = [styleDict tgrm_floatForKey:@"x"];
-    layout.offsetY = [styleDict tgrm_floatForKey:@"y"];
-    NSString *showTypeInStyle = [styleDict tgrm_stringForKey:@"showType"];
+    layout.offsetX = [styleDict tm_floatForKey:@"x"];
+    layout.offsetY = [styleDict tm_floatForKey:@"y"];
+    NSString *showTypeInStyle = [styleDict tm_stringForKey:@"showType"];
     if ([showTypeInStyle isEqualToString:@"showOnEnter"]) {
         layout.showType = FixLayoutShowOnEnter;
     }
@@ -219,17 +219,17 @@
     {
         layout.showType = FixLayoutShowOnLeave;
     }
-    if ([[styleDict tgrm_stringForKey:@"appearanceType"] isEqualToString:@"scroll"]) {
+    if ([[styleDict tm_stringForKey:@"appearanceType"] isEqualToString:@"scroll"]) {
         layout.appearanceType = TangramFixAppearanceScroll;
     }
     else{
         layout.appearanceType = TangramFixAppearanceInline;
     }
-    layout.animationDuration = [styleDict tgrm_floatForKey:@"animationDuration" defaultValue:0.f]/1000.f;
-    layout.hGap = [styleDict tgrm_floatForKey:@"hGap" defaultValue:0.f];
-    NSArray *padding = [styleDict tgrm_arrayForKey:@"padding"];
+    layout.animationDuration = [styleDict tm_floatForKey:@"animationDuration"]/1000.f;
+    layout.hGap = [styleDict tm_floatForKey:@"hGap"];
+    NSArray *padding = [styleDict tm_arrayForKey:@"padding"];
     layout.padding = padding;
-    NSString *originPaddingString = [styleDict tgrm_stringForKey:@"padding"];
+    NSString *originPaddingString = [styleDict tm_stringForKey:@"padding"];
     if (padding.count  != 4 && originPaddingString.length > 3) {
         NSString *splitString = [originPaddingString substringWithRange:NSMakeRange(1, originPaddingString.length-2)];
         NSArray *splitPaddingArray = [splitString componentsSeparatedByString:@","];
@@ -237,15 +237,20 @@
             layout.padding = splitPaddingArray;
         }
     }
-    layout.retainScrollState = [styleDict tgrm_boolForKey:@"retainScrollState" defaultValue:YES];
+    id tmpValue = [styleDict tm_safeObjectForKey:@"retainScrollState"];
+    if (tmpValue && ([tmpValue isKindOfClass:[NSNumber class]] || [tmpValue isKindOfClass:[NSString class]])) {
+        layout.retainScrollState = [tmpValue boolValue];
+    } else {
+        layout.retainScrollState = YES;
+    }
     return layout;
 }
 
 + (UIView<TangramLayoutProtocol> *)praseStickyLayout:(TangramStickyLayout *)layout withDict:(NSDictionary *)dict
 {
-    NSDictionary *styleDict = [dict tgrm_dictionaryForKey:@"style"];
-    NSArray *margin = [styleDict tgrm_arrayForKey:@"margin"];
-    NSString *originMarginString = [styleDict tgrm_stringForKey:@"margin"];
+    NSDictionary *styleDict = [dict tm_dictionaryForKey:@"style"];
+    NSArray *margin = [styleDict tm_arrayForKey:@"margin"];
+    NSString *originMarginString = [styleDict tm_stringForKey:@"margin"];
     if (margin.count  != 4 && originMarginString.length > 3) {
         NSString *splitString = [originMarginString substringWithRange:NSMakeRange(1, originMarginString.length-2)];
         NSArray *splitMarginArray = [splitString componentsSeparatedByString:@","];
@@ -253,27 +258,27 @@
             layout.margin = splitMarginArray;
         }
     }
-    NSString *stickyStatus = [styleDict tgrm_stringForKey:@"sticky"];
+    NSString *stickyStatus = [styleDict tm_stringForKey:@"sticky"];
     if ([stickyStatus isEqualToString:@"end"]) {
         layout.stickyBottom = YES;
     }
     else{
         layout.stickyBottom = NO;
     }
-    layout.extraOffset = [styleDict tgrm_floatForKey:@"offset"];
+    layout.extraOffset = [styleDict tm_floatForKey:@"offset"];
     return layout;
 }
 
 + (UIView<TangramLayoutProtocol> *)praseWaterFlowLayout:(TangramWaterFlowLayout *)layout withDict:(NSDictionary *)dict
 {
-    NSDictionary *styleDict = [dict tgrm_dictionaryForKey:@"style"];
-    layout.vGap = [styleDict tgrm_floatForKey:@"vGap"];
-    layout.hGap = [styleDict tgrm_floatForKey:@"hGap"];
-    layout.layoutLoadAPI = [dict tgrm_stringForKey:@"load"];
-    layout.loadType = [dict tgrm_integerForKey:@"loadType"];
-    NSArray *margin = [styleDict tgrm_arrayForKey:@"margin"];
+    NSDictionary *styleDict = [dict tm_dictionaryForKey:@"style"];
+    layout.vGap = [styleDict tm_floatForKey:@"vGap"];
+    layout.hGap = [styleDict tm_floatForKey:@"hGap"];
+    layout.layoutLoadAPI = [dict tm_stringForKey:@"load"];
+    layout.loadType = [dict tm_integerForKey:@"loadType"];
+    NSArray *margin = [styleDict tm_arrayForKey:@"margin"];
     layout.margin = margin;
-    NSString *originMarginString = [styleDict tgrm_stringForKey:@"margin"];
+    NSString *originMarginString = [styleDict tm_stringForKey:@"margin"];
     if (margin.count  != 4 && originMarginString.length > 3) {
         NSString *splitString = [originMarginString substringWithRange:NSMakeRange(1, originMarginString.length-2)];
         NSArray *splitMarginArray = [splitString componentsSeparatedByString:@","];

@@ -1,7 +1,8 @@
-//  Tmall4iPhone
 //
-//  Created by jiajun on 8/13/15.
-//  Copyright (c) 2015 alibaba. All rights reserved.
+//  TangramView.m
+//  Tangram
+//
+//  Copyright (c) 2015-2017 alibaba. All rights reserved.
 //
 
 #import "TangramView.h"
@@ -12,7 +13,9 @@
 #import "TangramFixLayout.h"
 #import "TangramEvent.h"
 #import "TangramContext.h"
-#import "TangramSafeMethod.h"
+#import "UIView+Tangram.h"
+#import "TMUtils.h"
+
 
 @interface TangramViewDelegateHandler : NSObject<TangramViewDelegate>
 
@@ -20,9 +23,9 @@
 
 @property   (nonatomic, assign) CGFloat  scrollHeight;
 
-
-
 @end
+
+//****************************************************************
 
 @interface TangramView () <TMMuiLazyScrollViewDelegate, TMMuiLazyScrollViewDataSource>
 
@@ -55,6 +58,8 @@
 @property   (nonatomic, strong) NSMutableArray          *dragableLayoutArray;
 // Record views need to be removed in FixLayout LayoutArray
 @property   (nonatomic, strong) NSMutableArray          *toBeRemovedViewArray;
+
+@property   (atomic, assign)    BOOL                    shouldReload;
 // Times received of reload
 @property   (atomic, assign)    int                     numberOfReloadRequests;
 // First time received reload
@@ -68,33 +73,13 @@
 // total top offset . For FixLayout and StickyLayout
 @property   (nonatomic, assign) CGFloat                 totalTopOffset;
 
-
-
 @end
+
+//****************************************************************
 
 @implementation TangramView
 
 #pragma mark - Setter & Getter
-
-- (CGFloat)width
-{
-    return self.frame.size.width;
-}
-
-- (void)setWidth:(CGFloat)width
-{
-    self.frame = CGRectMake(self.frame.origin.x, self.frame.origin.y, width, self.frame.size.height);
-}
-
-- (CGFloat)height
-{
-    return self.frame.size.height;
-}
-
-- (void)setHeight:(CGFloat)height
-{
-    self.frame = CGRectMake(self.frame.origin.x, self.frame.origin.y, self.frame.size.width, height);
-}
 - (TangramViewDelegateHandler *)delegateHandler
 {
     if (nil == _delegateHandler) {
@@ -110,9 +95,8 @@
     _clDelegate = clDelegate;
     if (_clDelegate) {
         [super setDelegate:self.delegateHandler];
-    }
-    else
-    {
+    } else {
+        // will reach here during dealloc
         [super setDelegate:clDelegate];
     }
     
@@ -235,13 +219,13 @@
     if (self.layoutKeyArray && 0 < self.layoutKeyArray.count) {
         NSUInteger numberOfLayouts = self.layoutKeyArray.count;
         for (int i=0; i< numberOfLayouts; i++) {
-            NSString *layoutKey = [self.layoutKeyArray tgrm_stringAtIndex:i];
-            NSUInteger numberOfItemsInLayout = [self.numberOfItemsInlayout tgrm_integerForKey:layoutKey];
+            NSString *layoutKey = [self.layoutKeyArray tm_stringAtIndex:i];
+            NSUInteger numberOfItemsInLayout = [self.numberOfItemsInlayout tm_integerForKey:layoutKey];
             // Save flat Index for first element in layout
-            [self.layoutStartNumberIndex tgrm_setObjectCheck:@(number) forKey:layoutKey];
+            [self.layoutStartNumberIndex tm_safeSetObject:@(number) forKey:layoutKey];
             // Save the layout reference to flat index
             for (int i=0; i<numberOfItemsInLayout; i++) {
-                [self.itemLayoutIndex tgrm_setObjectCheck:layoutKey forKey:[NSString stringWithFormat:@"%ld", (long)(number + i)]];
+                [self.itemLayoutIndex tm_safeSetObject:layoutKey forKey:[NSString stringWithFormat:@"%ld", (long)(number + i)]];
             }
             number += numberOfItemsInLayout;
         }
@@ -253,17 +237,24 @@
 {
     TMMuiRectModel *rectModel = nil;
     NSString *scrollIndex = [NSString stringWithFormat:@"%ld", (long)index];
-    NSString *layoutKey = [self.itemLayoutIndex tgrm_objectForKeyCheck:scrollIndex];
-    UIView<TangramLayoutProtocol> *layout = [self.layoutDict tgrm_objectForKeyCheck:layoutKey];
+    NSString *layoutKey = [self.itemLayoutIndex tm_safeValueForKey:scrollIndex];
+    UIView<TangramLayoutProtocol> *layout = [self.layoutDict tm_safeValueForKey:layoutKey];
     if (layout) {
-        NSUInteger layoutStartNumber = [[self.layoutStartNumberIndex tgrm_objectForKeyCheck:layoutKey] unsignedIntegerValue];
+        NSUInteger layoutStartNumber = [[self.layoutStartNumberIndex tm_safeValueForKey:layoutKey] unsignedIntegerValue];
         NSUInteger itemModelNumber = index - layoutStartNumber;
-        NSObject<TangramItemModelProtocol> *model = [layout.itemModels tgrm_objectAtIndexCheck:itemModelNumber];
+        NSObject<TangramItemModelProtocol> *model = [layout.itemModels tm_safeObjectAtIndex:itemModelNumber];
         if (model) {
-            NSString *muiID = [NSString stringWithFormat:@"%@_%@_%@_%ld",
-                               layout.layoutType, model.itemType, model.reuseIdentifier, (long)index];
-            [self.muiIDIndexIndex setObject:scrollIndex forKey:muiID];
-            [self.muiIDModelIndex setObject:model forKey:muiID];
+            NSString *layoutIdentifier = layout.identifier;
+            if ([model respondsToSelector:@selector(innerItemModel)] && model.innerItemModel && model.inLayoutIdentifier && model.inLayoutIdentifier.length > 0
+                && [layout respondsToSelector:@selector(subLayoutIdentifiers)] &&
+                [layout.subLayoutIdentifiers containsObject:model.inLayoutIdentifier]) {
+                UIView<TangramLayoutProtocol> *subLayout = [layout.subLayoutDict tm_safeObjectForKey:model.inLayoutIdentifier];
+                layoutIdentifier = subLayout.identifier;
+            }
+            NSString *muiID = [NSString stringWithFormat:@"%@_%@_%@_%@_%ld",
+                               layout.layoutType, model.itemType, model.reuseIdentifier,layoutIdentifier,(long)index];
+            [self.muiIDIndexIndex tm_safeSetObject:scrollIndex forKey:muiID];
+            [self.muiIDModelIndex tm_safeSetObject:model forKey:muiID];
             if ([model isKindOfClass:[TMMuiRectModel class]]) {
                 rectModel = (TMMuiRectModel *)model;
             }
@@ -274,13 +265,13 @@
             CGFloat absTop  = CGRectGetMinY(model.itemFrame) + CGRectGetMinY(layout.frame);
             CGFloat absLeft = CGRectGetMinX(model.itemFrame) + CGRectGetMinX(layout.frame);
             //如果是layout内部的subLayout，需要特殊处理
-//            if ([model respondsToSelector:@selector(innerItemModel)] && model.innerItemModel && model.inLayoutIdentifier && model.inLayoutIdentifier.length > 0
-//                && [layout respondsToSelector:@selector(subLayoutIdentifiers)] &&
-//                [layout.subLayoutIdentifiers containsObject:model.inLayoutIdentifier]) {
-//                UIView<TangramLayoutProtocol> *subLayout = [layout.subLayoutDict tgrm_objectForKeyCheck:model.inLayoutIdentifier];
-//                absTop += subLayout.frame.origin.y;
-//                absLeft += subLayout.frame.origin.x;
-//            }
+            if ([model respondsToSelector:@selector(innerItemModel)] && model.innerItemModel && model.inLayoutIdentifier && model.inLayoutIdentifier.length > 0
+                && [layout respondsToSelector:@selector(subLayoutIdentifiers)] &&
+                [layout.subLayoutIdentifiers containsObject:model.inLayoutIdentifier]) {
+                UIView<TangramLayoutProtocol> *subLayout = [layout.subLayoutDict tm_safeObjectForKey:model.inLayoutIdentifier];
+                absTop += subLayout.top;
+                absLeft += subLayout.left;
+            }
             rectModel.absRect = CGRectMake(absLeft, absTop, CGRectGetWidth(model.itemFrame), CGRectGetHeight(model.itemFrame));
             if ([model respondsToSelector:@selector(setAbsRect:)]) {
                 model.absRect = rectModel.absRect;
@@ -299,11 +290,11 @@
     if (self.clDataSource
         && [self.clDataSource conformsToProtocol:@protocol(TangramViewDatasource)]
         && [self.clDataSource respondsToSelector:@selector(itemInTangramView:withModel:forLayout:atIndex:)]) {
-        NSObject<TangramItemModelProtocol> *model = [self.muiIDModelIndex tgrm_objectForKeyCheck:muiID];
-        NSString *scrollIndex = [self.muiIDIndexIndex tgrm_objectForKeyCheck:muiID];
-        NSString *layoutKey = [self.itemLayoutIndex tgrm_objectForKeyCheck:scrollIndex];
-        UIView<TangramLayoutProtocol> *layout = [self.layoutDict tgrm_objectForKeyCheck:layoutKey];
-        NSString *layoutStartIndex = [self.layoutStartNumberIndex tgrm_stringForKey:layoutKey];
+        NSObject<TangramItemModelProtocol> *model = [self.muiIDModelIndex tm_safeValueForKey:muiID];
+        NSString *scrollIndex = [self.muiIDIndexIndex tm_safeValueForKey:muiID];
+        NSString *layoutKey = [self.itemLayoutIndex tm_safeValueForKey:scrollIndex];
+        UIView<TangramLayoutProtocol> *layout = [self.layoutDict tm_safeValueForKey:layoutKey];
+        NSString *layoutStartIndex = [self.layoutStartNumberIndex tm_stringForKey:layoutKey];
         NSUInteger indexInLayout = [scrollIndex integerValue] - [layoutStartIndex integerValue];
         if (layout && model) {
             item = [self.clDataSource itemInTangramView:self withModel:model forLayout:layout atIndex:indexInLayout];
@@ -314,7 +305,7 @@
             && model.inLayoutIdentifier && model.inLayoutIdentifier.length > 0
             && [layout respondsToSelector:@selector(subLayoutIdentifiers)] &&
             [layout.subLayoutIdentifiers containsObject:model.inLayoutIdentifier]) {
-            UIView<TangramLayoutProtocol> *subLayout = [layout.subLayoutDict tgrm_objectForKeyCheck:model.inLayoutIdentifier];
+            UIView<TangramLayoutProtocol> *subLayout = [layout.subLayoutDict tm_safeObjectForKey:model.inLayoutIdentifier];
             if([subLayout respondsToSelector:@selector(headerItemModel)] && subLayout.headerItemModel == model
                && [layout respondsToSelector:@selector(addHeaderView:)])
             {
@@ -341,7 +332,12 @@
         }
         else if (![layout.subviews containsObject:item]) {
             //[item removeFromSuperview];
-            [layout addSubview:item];
+            if ([layout respondsToSelector:@selector(addSubView:withModel:)]) {
+                [layout addSubView:item withModel:model];
+            }
+            else{
+                [layout addSubview:item];
+            }
         }
         //强制让fix/dragable/sticky布局里面的组件 不做复用处理
         if ([layout isKindOfClass:[TangramFixLayout class]] || [layout isKindOfClass:[TangramDragableLayout class]] || [layout isKindOfClass:[TangramStickyLayout class]]) {
@@ -374,7 +370,7 @@
         }
     }
     if (cleanElement) {
-        //[super removeAllLayout];
+        [super removeAllLayouts];
         self.contentSize = CGSizeMake(self.width, self.height);
     }
     [self reloadData];
@@ -409,30 +405,34 @@
         [self.dragableLayoutArray removeAllObjects];
         for (int i=0; i< numberOfLayouts; i++) {
             NSString *layoutKey = [NSString stringWithFormat:@"%d", i];
+            // BUSMARK - get layout
             UIView<TangramLayoutProtocol> *layout = [self.clDataSource layoutInTangramView:self atIndex:i];
-            [self.layoutDict tgrm_setObjectCheck:layout forKey:layoutKey];
-            [self.layoutKeyArray tgrm_addObjectCheck:layoutKey];
+            [self.layoutDict tm_safeSetValue:layout forKey:layoutKey];
+            [self.layoutKeyArray tm_safeAddObject:layoutKey];
             NSUInteger numberOfItemsInLayout = [self.clDataSource numberOfItemsInTangramView:self forLayout:layout];
             if(numberOfItemsInLayout == 0 && [layout respondsToSelector:@selector(loadAPI)] && [layout loadAPI].length > 0)
             {
                 continue;
             }
-            [self.numberOfItemsInlayout tgrm_setObjectCheck:@(numberOfItemsInLayout) forKey:layoutKey];
+            if ([layout respondsToSelector:@selector(setEnableMarginDeduplication:)]) {
+                [layout setEnableMarginDeduplication:self.enableMarginDeduplication];
+            }
+            [self.numberOfItemsInlayout tm_safeSetValue:@(numberOfItemsInLayout) forKey:layoutKey];
             if ([layout respondsToSelector:@selector(position)] && layout.position && layout.position.length > 0)
             {
                 if ([layout.position isEqualToString:@"top-fixed"] || [layout.position isEqualToString:@"bottom-fixed"] || [layout.position isEqualToString:@"fixed"] ) {
-                    [self.fixLayoutArray tgrm_addObjectCheck:layout];
+                    [self.fixLayoutArray tm_safeAddObject:layout];
                 }
                 if ([layout.position isEqualToString:@"sticky"]) {
-                    [self.stickyLayoutArray tgrm_addObjectCheck:layout];
+                    [self.stickyLayoutArray tm_safeAddObject:layout];
                 }
                 if ([layout.position isEqualToString:@"float"]){
-                    [self.dragableLayoutArray tgrm_addObjectCheck:layout];
+                    [self.dragableLayoutArray tm_safeAddObject:layout];
                 }
             }
             NSMutableArray *modelArray = [[NSMutableArray alloc] init];
             for (int j=0; j<numberOfItemsInLayout; j++) {
-                [modelArray tgrm_addObjectCheck:[self.clDataSource itemModelInTangramView:self forLayout:layout atIndex:j]];
+                [modelArray tm_safeAddObject:[self.clDataSource itemModelInTangramView:self forLayout:layout atIndex:j]];
             }
             [layout setItemModels:[NSArray arrayWithArray:modelArray]];
         }
@@ -452,6 +452,7 @@
     [self.fixLayoutArray removeAllObjects];
     [self.stickyLayoutArray removeAllObjects];
     if (cleanElement) {
+        [super removeAllLayouts];
         self.contentSize = CGSizeMake(self.width, self.height);
     }
 }
@@ -503,7 +504,7 @@
         NSUInteger numberOfItemsInLayout = [self.clDataSource numberOfItemsInTangramView:self forLayout:layout];
         NSMutableArray *modelArray = [[NSMutableArray alloc] init];
         for (int j=0; j<numberOfItemsInLayout; j++) {
-            [modelArray tgrm_addObjectCheck:[self.clDataSource itemModelInTangramView:self forLayout:layout atIndex:j]];
+            [modelArray tm_safeAddObject:[self.clDataSource itemModelInTangramView:self forLayout:layout atIndex:j]];
         }
         [layout setItemModels:[NSArray arrayWithArray:modelArray]];
         [layout calculateLayout];
@@ -518,19 +519,19 @@
     }
     NSString *layoutKey = nil;
     for (NSString *key in [self.layoutDict allKeys]) {
-        if ([self.layoutDict tgrm_objectForKeyCheck:key] == layout) {
+        if ([self.layoutDict tm_safeObjectForKey:key] == layout) {
             layoutKey = key;
         }
     }
     if (layoutKey) {
-        NSString *layoutStartNumberString = [self.layoutStartNumberIndex tgrm_stringForKey:layoutKey];
+        NSString *layoutStartNumberString = [self.layoutStartNumberIndex tm_stringForKey:layoutKey];
         NSUInteger startNumber = [layoutStartNumberString integerValue] + 1;
         NSUInteger endNumber = self.layoutKeyArray.count;
         for (; startNumber <= endNumber; startNumber++) {
             NSString *layoutKeyNumberString = [NSString stringWithFormat:@"%ld", (long)startNumber];
-            UIView<TangramLayoutProtocol> *layout = [self.layoutDict tgrm_objectForKeyCheck:layoutKeyNumberString];
+            UIView<TangramLayoutProtocol> *layout = [self.layoutDict tm_safeObjectForKey:layoutKeyNumberString];
             if (layout) {
-                layout.frame = CGRectMake(layout.frame.origin.x, layout.frame.origin.y + offset, layout.frame.size.width, layout.frame.size.height);
+                layout.top += offset;
             }
         }
     }
@@ -541,18 +542,21 @@
 {
     CGFloat layoutTop = 0.f;
     CGFloat lastLayoutTop = 0.f;
+    CGFloat lastLayoutMarginBottom = 0.f;
     CGFloat contentHeight = 0.f;
     CGFloat contentWidth = 0.f;
     CGFloat topOffset = 0.f;
+    NSMutableDictionary *zIndexLayoutDict = [[NSMutableDictionary alloc]init];
     for (UIView<TangramLayoutProtocol> *layout in self.stickyLayoutArray) {
         ((TangramStickyLayout *)layout).enterFloatStatus = NO;
     }
     for (int i=0; i< self.layoutKeyArray.count; i++) {
-        NSString *layoutKey = [self.layoutKeyArray tgrm_stringAtIndex:i];
-        UIView<TangramLayoutProtocol> *layout = [self.layoutDict tgrm_objectForKeyCheck:layoutKey];
+        NSString *layoutKey = [self.layoutKeyArray tm_stringAtIndex:i];
+        UIView<TangramLayoutProtocol> *layout = [self.layoutDict tm_safeObjectForKey:layoutKey];
         NSUInteger numberOfItemsInLayout = [self.clDataSource numberOfItemsInTangramView:self forLayout:layout];
-        [self.numberOfItemsInlayout tgrm_setObjectCheck:@(numberOfItemsInLayout) forKey:layoutKey];
+        [self.numberOfItemsInlayout tm_safeSetValue:@(numberOfItemsInLayout) forKey:layoutKey];
         CGFloat marginTop       = 0.f;
+        // Make sure there are something in itemModel of layout
         if ([layout conformsToProtocol:@protocol(TangramLayoutProtocol)]
             && [layout respondsToSelector:@selector(marginTop)] && layout.itemModels.count > 0) {
             marginTop = [layout marginTop];
@@ -572,6 +576,7 @@
             && [layout respondsToSelector:@selector(marginLeft)] && layout.itemModels.count > 0) {
             marginLeft = [layout marginLeft];
         }
+        // BUSMARK - Add TangramView
         [self addSubview:layout];
         
         //CGFloat contentHeight = self.contentSize.height;
@@ -593,7 +598,7 @@
                     }
                     break;
                 case TopRight:
-                    originPoint.x = self.width - layout.frame.size.width - ((TangramFixLayout *)layout).offsetX;
+                    originPoint.x = self.width - layout.width - ((TangramFixLayout *)layout).offsetX;
                     originPoint.y += ((TangramFixLayout *)layout).offsetY;
                     originPoint.y += self.fixExtraOffset;
                     if (topOffset < originPoint.y) {
@@ -603,15 +608,15 @@
                     break;
                 case BottomLeft:
                     originPoint.x += ((TangramFixLayout *)layout).offsetX;
-                    originPoint.y = self.height - layout.frame.size.height - ((TangramFixLayout *)layout).offsetY;
+                    originPoint.y = self.height - layout.height - ((TangramFixLayout *)layout).offsetY;
                     break;
                 case BottomRight:
-                    originPoint.x = self.width - layout.frame.size.width - ((TangramFixLayout *)layout).offsetX;
-                    originPoint.y = self.height - layout.frame.size.height - ((TangramFixLayout *)layout).offsetY;
+                    originPoint.x = self.width - layout.width - ((TangramFixLayout *)layout).offsetX;
+                    originPoint.y = self.height - layout.height - ((TangramFixLayout *)layout).offsetY;
                     break;
             }
             ((TangramFixLayout *)layout).originPoint = originPoint;
-            layout.frame = CGRectMake(originPoint.x , originPoint.y, layout.frame.size.width, layout.frame.size.height);
+            layout.frame = CGRectMake(originPoint.x , originPoint.y, layout.width, layout.height);
             switch (((TangramFixLayout *)layout).showType) {
                 case FixLayoutShowOnLeave:
                     ((TangramFixLayout *)layout).showY = layoutTop;
@@ -637,21 +642,77 @@
         }
         //如果不是，那么算高度
         else{
-            layout.frame = CGRectMake(marginLeft, marginTop + layoutTop,
-                                      CGRectGetWidth(self.frame) - marginLeft - marginRight, layout.frame.size.height);
+            
+            if (self.enableMarginDeduplication) {
+                //marginTop和上一个marginBottom取大的
+                layout.frame = CGRectMake(marginLeft, MAX(marginTop,lastLayoutMarginBottom) + layoutTop,
+                                          CGRectGetWidth(self.frame) - marginLeft - marginRight, layout.frame.size.height);
+            }
+            else{
+                layout.frame = CGRectMake(marginLeft, marginTop + layoutTop,
+                                          CGRectGetWidth(self.frame) - marginLeft - marginRight, layout.frame.size.height);
+            }
             [self sendSubviewToBack:layout];
             if(calculate)
             {
                 //BUSMARK - layout布局
                 [layout calculateLayout];
             }
+            if (self.enableMarginDeduplication) {
+                //如果启动了Margin去重，不算bottom，另算
+                layoutTop = CGRectGetMaxY(layout.frame);
+                //去重的话，需要记录一下上一个的marginBottom，下次要做对比
+                lastLayoutMarginBottom = layout.marginBottom;
+            }
+            else{
+                layoutTop = CGRectGetMaxY(layout.frame) + marginBottom;
+            }
             lastLayoutTop = CGRectGetMinY(layout.frame);
-            layoutTop = CGRectGetMaxY(layout.frame) + marginBottom;
             contentHeight   = CGRectGetMaxY(layout.frame) + layout.marginBottom;
         }
         contentWidth    = MAX(self.contentSize.width, CGRectGetWidth(layout.frame));
-        
+        if ([layout respondsToSelector:@selector(zIndex)] && layout.zIndex > 0) {
+//            layout.layer.zPosition = layout.zIndex;
+            NSMutableArray *zIndexMutableArray = [zIndexLayoutDict tm_safeObjectForKey:[NSString stringWithFormat:@"%ld",(long)(layout.zIndex)] class:[NSMutableArray class]];
+            if (zIndexMutableArray == nil) {
+                zIndexMutableArray = [[NSMutableArray alloc]init];
+            }
+            [zIndexMutableArray tm_safeAddObject:layout];
+            [zIndexLayoutDict tm_safeSetObject:zIndexMutableArray forKey:[NSString stringWithFormat:@"%ld",(long)(layout.zIndex)]];
+        }
+        else{
+            NSMutableArray *zIndexMutableArray = [zIndexLayoutDict tm_safeObjectForKey:@"0" class:[NSMutableArray class]];
+            if (zIndexMutableArray == nil) {
+                zIndexMutableArray = [[NSMutableArray alloc]init];
+            }
+            [zIndexMutableArray tm_safeAddObject:layout];
+            [zIndexLayoutDict tm_safeSetObject:zIndexMutableArray forKey:@"0"];
+        }
+        if ([layout.identifier isEqualToString:@"newer_banner_container-2"]) {
+            layout.userInteractionEnabled = NO;
+        }
     }
+    NSArray *zIndexArray  = [[zIndexLayoutDict allKeys] sortedArrayUsingComparator:^NSComparisonResult(id  _Nonnull obj1, id  _Nonnull obj2) {
+        
+        NSInteger firstNumber = [obj1 integerValue];
+        NSInteger secondNumber = [obj2 integerValue];
+        if (firstNumber > secondNumber) {
+            return  NSOrderedDescending;
+        }
+        else if(firstNumber < secondNumber){
+            return NSOrderedAscending ;
+        }
+        else{
+            return NSOrderedSame;
+        }
+    }];
+    for (NSString *zIndex in zIndexArray) {
+        NSMutableArray *zIndexMutableArray = [zIndexLayoutDict tm_safeObjectForKey:zIndex class:[NSMutableArray class]];
+        for (UIView *layout in zIndexMutableArray) {
+            [self bringSubviewToFront:layout];
+        }
+    }
+
     self.contentSize = CGSizeMake(contentWidth, contentHeight);
     if (self.contentSize.width > self.width) {
         self.contentSize = CGSizeMake(self.width, self.contentSize.height);
@@ -669,11 +730,15 @@
             }
             //topOffset(实际偏移顶部的距离) 已经比extraOffset大了，那么已经不需要再网上加额外的offset了
             //有两个以及以上的吸顶有可能出现这种情况
-//            if (topOffset >= ((TangramStickyLayout *)layout).extraOffset) {
-//                ((TangramStickyLayout *)layout).extraOffset = 0.f;
-//            }
-            topOffset += (((TangramStickyLayout *)layout).extraOffset + layout.frame.size.height);
+            if (topOffset >= ((TangramStickyLayout *)layout).extraOffset) {
+                ((TangramStickyLayout *)layout).extraOffset = 0.f;
+            }
+            topOffset += (((TangramStickyLayout *)layout).extraOffset + layout.height);
         }
+        [self bringSubviewToFront:layout];
+    }
+    for (UIView<TangramLayoutProtocol> *layout in self.fixLayoutArray) {
+        [self bringSubviewToFront:layout];
     }
     //这个动作，是为了保证让Fixlayout的frame不因为contentOffset的突然改变而改变固定和浮动布局的位置
     //Research Mark
@@ -687,10 +752,10 @@
     NSInteger mid = ceilf((CGFloat)(min + max) / 2.f);
     while (mid > min && mid < max) {
         //获取layout的rect
-        UIView *layout = (UIView *)[self.layoutDict tgrm_objectForKeyCheck:[NSString stringWithFormat:@"%ld",(long)mid]];
+        UIView *layout = (UIView *)[self.layoutDict tm_safeObjectForKey:[NSString stringWithFormat:@"%ld",(long)mid]];
         CGFloat itemTop = CGRectGetMinY(layout.frame);
         if (itemTop <= baseLine) {
-            UIView *nextLayout = (UIView *)[self.layoutDict tgrm_objectForKeyCheck:[NSString stringWithFormat:@"%ld",(long)mid+1]];
+            UIView *nextLayout = (UIView *)[self.layoutDict tm_safeObjectForKey:[NSString stringWithFormat:@"%ld",(long)(mid+1)]];
             CGFloat nextTop = CGRectGetMinY(nextLayout.frame);
             if (nextTop > baseLine) {
                 break;
@@ -721,10 +786,10 @@
 {
     // BUSMARK - 查找layout 即将进入 或者 已经进入
     NSUInteger min = [self.hostTangramView layoutIndexByHeight:scrollView.contentOffset.y];
-    NSUInteger max = [self.hostTangramView layoutIndexByHeight:scrollView.contentOffset.y + scrollView.frame.size.height];
+    NSUInteger max = [self.hostTangramView layoutIndexByHeight:scrollView.contentOffset.y + scrollView.height];
     [self.hostTangramView.visibleLayoutIdentifierSet removeAllObjects];
     for (NSUInteger i = min; i <= max; i++) {
-        UIView<TangramLayoutProtocol> *layout = [self.hostTangramView.layoutDict tgrm_objectForKeyCheck:[NSString stringWithFormat:@"%ld",(long)i]];
+        UIView<TangramLayoutProtocol> *layout = [self.hostTangramView.layoutDict tm_safeObjectForKey:[NSString stringWithFormat:@"%ld",(long)i]];
         if (layout.identifier && layout.identifier.length > 0) {
             [self.hostTangramView.visibleLayoutIdentifierSet addObject:layout.identifier];
         }
@@ -733,17 +798,17 @@
     //这样子取交集可能会有问题：如果layout的identifier重新生成？
     [appearLayoutSet minusSet:self.hostTangramView.lastVisibleLayoutIdentifierSet];
     for (NSUInteger i = min; i <= max; i++) {
-        UIView<TangramLayoutProtocol> *layout = [self.hostTangramView.layoutDict tgrm_objectForKeyCheck:[NSString stringWithFormat:@"%ld",(long)i]];
+        UIView<TangramLayoutProtocol> *layout = [self.hostTangramView.layoutDict tm_safeObjectForKey:[NSString stringWithFormat:@"%ld",(long)i]];
         NSUInteger times = 0;
         if ([appearLayoutSet containsObject:layout.identifier])
         {
             //执行delegate
-            times = [self.hostTangramView.layoutEnterTimesDict tgrm_integerForKey:layout.identifier];
+            times = [self.hostTangramView.layoutEnterTimesDict tm_integerForKey:layout.identifier];
             //[layout.layoutEventDelegate layoutDidEnter:layout times:times];
             TangramEvent *layoutEnterEvent = [[TangramEvent alloc]initWithTopic:@"layoutEnter" withTangramView:self.hostTangramView posterIdentifier:layout.identifier andPoster:layout];
             [layoutEnterEvent setParam:[NSNumber numberWithUnsignedInteger:times] forKey:@"times"];
             [self.hostTangramView.tangramBus postEvent:layoutEnterEvent];
-            [self.hostTangramView.layoutEnterTimesDict tgrm_setObjectCheck:[NSNumber numberWithUnsignedInteger:times + 1] forKey:layout.identifier];
+            [self.hostTangramView.layoutEnterTimesDict tm_safeSetObject:[NSNumber numberWithUnsignedInteger:times + 1] forKey:layout.identifier];
         }
     }
     //完毕，写入lastVisibleLayoutSet
@@ -753,7 +818,7 @@
     // 如果要固定住，需要满足：layout的layoutType返回值是fix，layout中Model的reuseIdentifier的返回的字符串length = 0
     // fix的marginTop和marginBottom在这里是指固定离顶端/底端的距离
     CGFloat topOffset = 0;
-    CGFloat bottomOffset = scrollView.frame.size.height;
+    CGFloat bottomOffset = scrollView.height;
     for (UIView<TangramLayoutProtocol> *layout in self.hostTangramView.fixLayoutArray) {
         if (((TangramFixLayout *)layout).showY > 0 && ((TangramFixLayout *)layout).showType != FixLayoutShowAlways) {
             if (scrollView.contentOffset.y >= ((TangramFixLayout *)layout).showY) {
@@ -776,15 +841,15 @@
         if ([layout.position isEqualToString:@"top-fixed"] ||
             (([layout.position isEqualToString:@"fixed"]) && (((TangramFixLayout *)layout).alignType == TopLeft || ((TangramFixLayout *)layout).alignType == TopRight))) {
             layout.frame = CGRectMake(layout.frame.origin.x,scrollView.contentOffset.y + ((TangramFixLayout *)layout).originPoint.y, layout.frame.size.width, layout.frame.size.height);
-            if (topOffset < layout.frame.size.height + ((TangramFixLayout *)layout).originPoint.y) {
-                topOffset = layout.frame.size.height + ((TangramFixLayout *)layout).originPoint.y;
+            if (topOffset < layout.height + ((TangramFixLayout *)layout).originPoint.y) {
+                topOffset = layout.height + ((TangramFixLayout *)layout).originPoint.y;
             }
         }
         else {
-            layout.frame = CGRectMake(layout.frame.origin.x,scrollView.frame.size.height- layout.frame.size.height + scrollView.contentOffset.y -  ((TangramFixLayout *)layout).offsetY, layout.frame.size.width, layout.frame.size.height);
-            bottomOffset -= (layout.frame.size.height + ((TangramFixLayout *)layout).offsetY);
-            if (bottomOffset > (scrollView.frame.size.height - layout.frame.size.height - ((TangramFixLayout *)layout).offsetY)) {
-                bottomOffset  = (scrollView.frame.size.height - layout.frame.size.height - ((TangramFixLayout *)layout).offsetY);
+            layout.frame = CGRectMake(layout.frame.origin.x,scrollView.height- layout.height + scrollView.contentOffset.y -  ((TangramFixLayout *)layout).offsetY, layout.frame.size.width, layout.frame.size.height);
+            bottomOffset -= (layout.height + ((TangramFixLayout *)layout).offsetY);
+            if (bottomOffset > (scrollView.height - layout.height - ((TangramFixLayout *)layout).offsetY)) {
+                bottomOffset  = (scrollView.height - layout.height - ((TangramFixLayout *)layout).offsetY);
             }
         }
     }
@@ -794,15 +859,15 @@
             && scrollView.contentOffset.y >= ((TangramStickyLayout *)layout).originalY - topOffset - ((TangramStickyLayout *)layout).extraOffset) {
             ((TangramStickyLayout *)layout).enterFloatStatus = YES;
             layout.frame = CGRectMake(layout.frame.origin.x,scrollView.contentOffset.y + topOffset + layout.marginTop + ((TangramStickyLayout *)layout).extraOffset , layout.frame.size.width, layout.frame.size.height);
-            topOffset += (layout.frame.size.height + layout.marginTop + layout.marginBottom + ((TangramStickyLayout *)layout).extraOffset) ;
+            topOffset += (layout.height + layout.marginTop + layout.marginBottom + ((TangramStickyLayout *)layout).extraOffset) ;
         }
         //吸底判断
         else if(((TangramStickyLayout *)layout).stickyBottom == YES
-                && scrollView.contentOffset.y + scrollView.frame.size.height >= ((TangramStickyLayout *)layout).originalY + layout.frame.size.height)
+                && scrollView.contentOffset.y + scrollView.height >= ((TangramStickyLayout *)layout).originalY + layout.height)
         {
             ((TangramStickyLayout *)layout).enterFloatStatus = YES;
-            layout.frame = CGRectMake(layout.frame.origin.x,scrollView.contentOffset.y + scrollView.frame.size.height - layout.frame.size.height - layout.marginBottom, layout.frame.size.width, layout.frame.size.height);
-            bottomOffset -= (layout.frame.size.height + layout.marginTop + layout.marginBottom);
+            layout.frame = CGRectMake(layout.frame.origin.x,scrollView.contentOffset.y + scrollView.height - layout.height - layout.marginBottom, layout.frame.size.width, layout.frame.size.height);
+            bottomOffset -= (layout.height + layout.marginTop + layout.marginBottom);
         }
         else
         {
@@ -921,4 +986,3 @@
 }
 
 @end
-

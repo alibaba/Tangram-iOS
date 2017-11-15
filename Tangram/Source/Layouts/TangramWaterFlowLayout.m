@@ -10,7 +10,7 @@
 //#import "NSArrayEX.h"
 //#import "UIViewEX.h"
 //#import "NSDictionaryEX.h"
-#import "TangramSafeMethod.h"
+#import "TMUtils.h"
 #import "TangramItemModelProtocol.h"
 #import "TangramView.h"
 #import "UIImageView+WebCache.h"
@@ -76,7 +76,7 @@
 //    NSMutableArray *mutableItemModels = [itemModels mutableCopy];
 //    for (NSObject<TangramItemModelProtocol> *model in mutableItemModels) {
 //        if ([model respondsToSelector:@selector(position)] &&  [[model position] isKindOfClass:[NSString class]] &&[model position].length > 0) {
-//            [toBeAddedItemModels tgrm_addObjectCheck:model];
+//            [toBeAddedItemModels tm_safeAddObject:model];
 //        }
 //    }
 //    for (NSObject<TangramItemModelProtocol> *model in toBeAddedItemModels) {
@@ -107,22 +107,22 @@
 }
 - (CGFloat)marginTop
 {
-    return [[self.margin tgrm_objectAtIndexCheck:0] floatValue];
+    return [[self.margin tm_safeObjectAtIndex:0] floatValue];
 }
 
 - (CGFloat)marginRight
 {
-    return [[self.margin tgrm_objectAtIndexCheck:1] floatValue];
+    return [[self.margin tm_safeObjectAtIndex:1] floatValue];
 }
 
 - (CGFloat)marginBottom
 {
-    return [[self.margin tgrm_objectAtIndexCheck:2] floatValue];
+    return [[self.margin tm_safeObjectAtIndex:2] floatValue];
 }
 
 - (CGFloat)marginLeft
 {
-    return [[self.margin tgrm_objectAtIndexCheck:3] floatValue];
+    return [[self.margin tm_safeObjectAtIndex:3] floatValue];
 }
 
 - (NSMutableDictionary *)bottomRects
@@ -163,7 +163,7 @@
     CGFloat cellX   = self.marginLeft;
     CGFloat cellY   = 0.f;
     for (NSUInteger i = 0; i < self.itemModels.count; i++) {
-        NSObject<TangramItemModelProtocol> *itemModel = [self.itemModels tgrm_objectAtIndexCheck:i];
+        NSObject<TangramItemModelProtocol> *itemModel = [self.itemModels tm_safeObjectAtIndex:i];
         cellX   = CGRectGetMinX(self.minRect);
         //第一行不会受vGap的影响
         if (i  / self.numberOfColumns == 0) {

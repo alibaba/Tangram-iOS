@@ -1,10 +1,10 @@
 //
 //  TangramLayoutProtocol.h
-//  Tmall4iPhone
+//  Tangram
 //
-//  Created by jiajun on 8/13/15.
-//  Copyright (c) 2015 alibaba. All rights reserved.
+//  Copyright (c) 2015-2017 alibaba. All rights reserved.
 //
+
 #import <Foundation/Foundation.h>
 #import "TangramItemModelProtocol.h"
 #import "TangramBus.h"
@@ -46,6 +46,10 @@ typedef NSString TangramLayoutType;
 - (TangramLayoutLoadType)loadType;
 - (NSDictionary *)loadParams;
 
+- (void)setSubLayoutIndex:(NSString *)layoutIndex;
+
+- (void)setEnableMarginDeduplication:(BOOL)enableMarginDeduplication;
+
 // Set Background Url
 - (void)setBgImgURL:(NSString *)imgURL;
 
@@ -63,6 +67,10 @@ typedef NSString TangramLayoutType;
 // return identifiers of sub layouts.
 - (NSArray *)subLayoutIdentifiers;
 - (void)setSubLayoutIdentifiers:(NSString *)layoutIdentifier;
+// To be layout.layer.zPosition
+- (CGFloat)zIndex;
+- (BOOL)disableUserInteraction;
+- (void)addSubView:(UIView *)view withModel:(NSObject<TangramItemModelProtocol> *)model;
 ///////////////////////////////For nested cards end
 
 @end

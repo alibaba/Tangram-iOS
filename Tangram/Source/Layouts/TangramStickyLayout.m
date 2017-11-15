@@ -9,7 +9,7 @@
 #import "TangramStickyLayout.h"
 #import "TangramView.h"
 #import "UIImageView+WebCache.h"
-#import "TangramSafeMethod.h"
+#import "TMUtils.h"
 
 @interface TangramStickyLayout ()
 
@@ -36,7 +36,7 @@
 {
     CGFloat height = 0.f;
     //吸顶只会取第一个
-    NSObject<TangramItemModelProtocol> *model = [self.itemModels tgrm_objectAtIndexCheck:0];
+    NSObject<TangramItemModelProtocol> *model = [self.itemModels tm_safeObjectAtIndex:0];
     if ([model respondsToSelector:@selector(marginLeft)]) {
         [model setItemFrame:CGRectMake(model.itemFrame.origin.x + model.marginLeft, model.itemFrame.origin.y,CGRectGetWidth(self.frame), model.itemFrame.size.height)];
     }
@@ -87,22 +87,22 @@
 }
 - (CGFloat)marginTop
 {
-    return [[self.margin tgrm_objectAtIndexCheck:0] floatValue];
+    return [[self.margin tm_safeObjectAtIndex:0] floatValue];
 }
 
 - (CGFloat)marginRight
 {
-    return [[self.margin tgrm_objectAtIndexCheck:1] floatValue];
+    return [[self.margin tm_safeObjectAtIndex:1] floatValue];
 }
 
 - (CGFloat)marginBottom
 {
-    return [[self.margin tgrm_objectAtIndexCheck:2] floatValue];
+    return [[self.margin tm_safeObjectAtIndex:2] floatValue];
 }
 
 - (CGFloat)marginLeft
 {
-    return [[self.margin tgrm_objectAtIndexCheck:3] floatValue];
+    return [[self.margin tm_safeObjectAtIndex:3] floatValue];
 
 }
 

@@ -10,7 +10,7 @@
 #import "TangramItemModelProtocol.h"
 #import "UIImageView+WebCache.h"
 #import "TangramView.h"
-#import "TangramSafeMethod.h"
+#import "TMUtils.h"
 
 @interface TangramSingleAndDoubleLayout()
 
@@ -50,11 +50,11 @@
 
 - (void)calculateLayout
 {
-    NSObject<TangramItemModelProtocol> *first   = [self.itemModels tgrm_objectAtIndexCheck:0];
-    NSObject<TangramItemModelProtocol> *second  = [self.itemModels tgrm_objectAtIndexCheck:1];
-    NSObject<TangramItemModelProtocol> *third   = [self.itemModels tgrm_objectAtIndexCheck:2];
-    NSObject<TangramItemModelProtocol> *fourth  = [self.itemModels tgrm_objectAtIndexCheck:3];
-    NSObject<TangramItemModelProtocol> *fifth   = [self.itemModels tgrm_objectAtIndexCheck:4];
+    NSObject<TangramItemModelProtocol> *first   = [self.itemModels tm_safeObjectAtIndex:0];
+    NSObject<TangramItemModelProtocol> *second  = [self.itemModels tm_safeObjectAtIndex:1];
+    NSObject<TangramItemModelProtocol> *third   = [self.itemModels tm_safeObjectAtIndex:2];
+    NSObject<TangramItemModelProtocol> *fourth  = [self.itemModels tm_safeObjectAtIndex:3];
+    NSObject<TangramItemModelProtocol> *fifth   = [self.itemModels tm_safeObjectAtIndex:4];
     CGFloat contentWidth    = self.width - first.marginLeft - first.marginRight;
     CGFloat bottom          = 0.f;
     BOOL useRows = NO;
@@ -72,7 +72,7 @@
          }
         // 第一个
         CGFloat elementWidth = ceilf(lastContentWidth) / 2;
-        CGFloat ratio = [[self.cols tgrm_objectAtIndexCheck:0] integerValue];
+        CGFloat ratio = [[self.cols tm_safeObjectAtIndex:0] integerValue];
         if (0 < ratio && 100 >= ratio) {
             elementWidth = ceilf(contentWidth * ratio / 100);
         }
@@ -87,7 +87,7 @@
         - second.marginTop - second.marginBottom;
         if (third) {
             // 如果有第二行，则以第三个组件的margin值计算高度，第四个做缩放
-            CGFloat ratio = [[self.rows tgrm_objectAtIndexCheck:0] floatValue];
+            CGFloat ratio = [[self.rows tm_safeObjectAtIndex:0] floatValue];
             // 上下比例
             if (ratio > 0 && ratio <= 100) {
                 //和android统一，这里暂时不使用Margin折叠...
@@ -114,7 +114,7 @@
              lastContentWidth = contentWidth - CGRectGetWidth(first.itemFrame);
             if(useRows)
             {
-                CGFloat ratio = [[self.rows tgrm_objectAtIndexCheck:1] floatValue];
+                CGFloat ratio = [[self.rows tm_safeObjectAtIndex:1] floatValue];
                 // 上下比例
                 if (ratio > 0 && ratio <= 100) {
                     rightHeight = (first.marginTop + CGRectGetHeight(first.itemFrame) + first.marginBottom
@@ -128,9 +128,9 @@
             }
             // 第三个
             CGFloat elementWidth = ceilf(lastContentWidth) / 3;
-            CGFloat ratio = [[self.cols tgrm_objectAtIndexCheck:2] integerValue];
+            CGFloat ratio = [[self.cols tm_safeObjectAtIndex:2] integerValue];
             // 整体宽度的百分比
-            if ([self.cols tgrm_objectAtIndexCheck:2] && 0 < ratio && 100 >= ratio) {
+            if ([self.cols tm_safeObjectAtIndex:2] && 0 < ratio && 100 >= ratio) {
                 elementWidth = ceilf(contentWidth * ratio / 100);
             }
             [third setItemFrame:CGRectMake(first.marginRight+ third.marginLeft + CGRectGetMaxX(first.itemFrame), third.marginTop+second.marginBottom + CGRectGetMaxY(second.itemFrame),elementWidth, rightHeight)];
@@ -138,9 +138,9 @@
             // 第四个
             lastContentWidth = lastContentWidth - elementWidth;
             elementWidth = ceilf(lastContentWidth) / 2;
-            ratio = [[self.cols tgrm_objectAtIndexCheck:3] integerValue];
+            ratio = [[self.cols tm_safeObjectAtIndex:3] integerValue];
             // 整体宽度的百分比
-            if ([self.cols tgrm_objectAtIndexCheck:3] && 0 < ratio && 100 >= ratio) {
+            if ([self.cols tm_safeObjectAtIndex:3] && 0 < ratio && 100 >= ratio) {
                 elementWidth = ceilf(contentWidth * ratio / 100);
             }
             // 基准高度是由第三个组件的margin算出来的，所以第四个要单独算过
@@ -151,9 +151,9 @@
             //第五个
             lastContentWidth = lastContentWidth - elementWidth;
             elementWidth = lastContentWidth;
-            ratio = [[self.cols tgrm_objectAtIndexCheck:4] integerValue];
+            ratio = [[self.cols tm_safeObjectAtIndex:4] integerValue];
             // 整体宽度的百分比
-            if ([self.cols tgrm_objectAtIndexCheck:4] && 0 < ratio && 100 >= ratio) {
+            if ([self.cols tm_safeObjectAtIndex:4] && 0 < ratio && 100 >= ratio) {
                 elementWidth = ceilf(contentWidth * ratio / 100);
             }
             CGFloat fifthHeight = first.marginTop + CGRectGetHeight(first.itemFrame) + first.marginBottom
@@ -168,7 +168,7 @@
             lastContentWidth = contentWidth - CGRectGetWidth(first.itemFrame);
             if(useRows)
             {
-                CGFloat ratio = [[self.rows tgrm_objectAtIndexCheck:1] floatValue];
+                CGFloat ratio = [[self.rows tm_safeObjectAtIndex:1] floatValue];
                 // 上下比例
                 if (ratio > 0 && ratio <= 100) {
                     rightHeight = (first.marginTop + CGRectGetHeight(first.itemFrame) + first.marginBottom
@@ -182,7 +182,7 @@
             }
             // 第三个
             CGFloat elementWidth = ceilf(lastContentWidth) / 2;
-            CGFloat ratio = [[self.cols tgrm_objectAtIndexCheck:2] integerValue];
+            CGFloat ratio = [[self.cols tm_safeObjectAtIndex:2] integerValue];
             // 整体宽度的百分比
             if (0 < ratio && 100 >= ratio) {
                 elementWidth = ceilf(contentWidth * ratio / 100);
@@ -193,7 +193,7 @@
             // 第四个，最后一个了
             lastContentWidth = lastContentWidth - elementWidth;
             elementWidth = lastContentWidth;
-            ratio = [[self.cols tgrm_objectAtIndexCheck:3] integerValue];
+            ratio = [[self.cols tm_safeObjectAtIndex:3] integerValue];
             // 整体宽度的百分比
             if (0 < ratio && 100 >= ratio) {
                 elementWidth = ceilf(contentWidth * ratio / 100);
@@ -209,7 +209,7 @@
             contentWidth = self.width - first.marginLeft - first.marginRight - third.marginLeft - third.marginRight;
             lastContentWidth = contentWidth - CGRectGetWidth(first.itemFrame);
             CGFloat elementWidth = lastContentWidth;
-            CGFloat ratio = [[self.cols tgrm_objectAtIndexCheck:2] integerValue];
+            CGFloat ratio = [[self.cols tm_safeObjectAtIndex:2] integerValue];
             // 整体宽度的百分比
             if (0 < ratio && 100 >= ratio) {
                 elementWidth = ceilf(contentWidth * ratio / 100);

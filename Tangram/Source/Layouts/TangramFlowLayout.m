@@ -11,9 +11,8 @@
 #import "TangramView.h"
 #import "UIImageView+WebCache.h"
 #import "SDWebImageManager.h"
-#import "TangramSafeMethod.h"
+#import "TMUtils.h"
 #import "TangramEvent.h"
-#import "TangramSafeMethod.h"
 
 @interface TangramFlowLayout()
 
@@ -106,7 +105,7 @@
 //        [mutableItemModels insertObject:self.headerItemModel atIndex:0];
 //    }
 //    if (self.footerItemModel && ![self.itemModels containsObject:self.footerItemModel]) {
-//        [mutableItemModels tgrm_addObjectCheck:self.footerItemModel];
+//        [mutableItemModels tm_safeAddObject:self.footerItemModel];
 //    }
 //    _itemModels = [mutableItemModels copy];
 //}
@@ -126,7 +125,7 @@
     _footerItemModel = footerItemModel;
     NSMutableArray *mutableItemModels = [self.itemModels mutableCopy];
     if (self.footerItemModel && ![self.itemModels containsObject:self.footerItemModel]) {
-        [mutableItemModels tgrm_addObjectCheck:self.footerItemModel];
+        [mutableItemModels tm_safeAddObject:self.footerItemModel];
     }
     _itemModels = [mutableItemModels copy];
 }
@@ -147,22 +146,22 @@
 }
 - (CGFloat)marginTop
 {
-    return [[self.margin tgrm_objectAtIndexCheck:0] floatValue];
+    return [[self.margin tm_safeObjectAtIndex:0] floatValue];
 }
 
 - (CGFloat)marginRight
 {
-    return [[self.margin tgrm_objectAtIndexCheck:1] floatValue];
+    return [[self.margin tm_safeObjectAtIndex:1] floatValue];
 }
 
 - (CGFloat)marginBottom
 {
-    return [[self.margin tgrm_objectAtIndexCheck:2] floatValue];
+    return [[self.margin tm_safeObjectAtIndex:2] floatValue];
 }
 
 - (CGFloat)marginLeft
 {
-    return [[self.margin tgrm_objectAtIndexCheck:3] floatValue];
+    return [[self.margin tm_safeObjectAtIndex:3] floatValue];
 }
 
 - (void)addHeaderView:(UIView *)headerView
@@ -218,7 +217,7 @@
     //    }
     NSUInteger itemCountBeforeBlock = 0;
     for (NSUInteger i = 0; i < self.itemModels.count ; i++) {
-        NSObject<TangramItemModelProtocol> *itemModel = [self.itemModels tgrm_objectAtIndexCheck:i];
+        NSObject<TangramItemModelProtocol> *itemModel = [self.itemModels tm_safeObjectAtIndex:i];
         //如果是subLayout内部的itemModel，则跳过
         if ([itemModel respondsToSelector:@selector(innerItemModel)] && itemModel.innerItemModel &&
             [itemModel respondsToSelector:@selector(inLayoutIdentifier)] && ![itemModel.inLayoutIdentifier isEqualToString:self.identifier]) {
@@ -281,7 +280,7 @@
             }
             //第二行之后的j肯定比number要大了
             else {
-                itemModel = [self.itemModels tgrm_objectAtIndexCheck:j];
+                itemModel = [self.itemModels tm_safeObjectAtIndex:j];
             }
             if ([itemModel respondsToSelector:@selector(innerItemModel)] && itemModel.innerItemModel &&
                 [itemModel respondsToSelector:@selector(inLayoutIdentifier)] && ![itemModel.inLayoutIdentifier isEqualToString:self.identifier]) {
@@ -310,12 +309,12 @@
             }
         }
         //算完上面之后加上右边的padding
-        if ([self.padding tgrm_floatAtIndex:3] > 0.f) {
-            totalGap += [self.padding tgrm_floatAtIndex:3];
+        if ([self.padding tm_floatAtIndex:3] > 0.f) {
+            totalGap += [self.padding tm_floatAtIndex:3];
         }
         //再加上左边的padding
-        if ([self.padding tgrm_floatAtIndex:1] > 0.f) {
-            totalGap += [self.padding tgrm_floatAtIndex:1];
+        if ([self.padding tm_floatAtIndex:1] > 0.f) {
+            totalGap += [self.padding tm_floatAtIndex:1];
         }
         if (lastItemModelInRow && [lastItemModelInRow respondsToSelector:@selector(marginRight)]) {
             totalGap += lastItemModelInRow.marginRight;
@@ -341,13 +340,13 @@
             // 默认：剩下宽度的平分
             CGFloat elementWidth = lastContentWidth / (columns - indexInRow);
             // 如果设置了百分比：整体宽度的百分比
-            CGFloat ratio = [[self.cols tgrm_objectAtIndexCheck:indexInRow] floatValue];
+            CGFloat ratio = [[self.cols tm_safeObjectAtIndex:indexInRow] floatValue];
             if (indexInRow < self.cols.count
                 && 0 < ratio && 100 >= ratio) {
                 elementWidth = contentWidth * ratio / 100;
             }
             
-            NSObject<TangramItemModelProtocol> *itemModel = [self.itemModels tgrm_objectAtIndexCheck:jj];
+            NSObject<TangramItemModelProtocol> *itemModel = [self.itemModels tm_safeObjectAtIndex:jj];
             if ([itemModel respondsToSelector:@selector(innerItemModel)] && itemModel.innerItemModel &&
                 [itemModel respondsToSelector:@selector(inLayoutIdentifier)] && ![itemModel.inLayoutIdentifier isEqualToString:self.identifier]) {
                 jj++;
@@ -355,7 +354,7 @@
             }
             if (isFirstColumn)
             {
-                [self.firstElementModelInRow tgrm_addObjectCheck:itemModel];
+                [self.firstElementModelInRow tm_safeAddObject:itemModel];
             }
             // Block，则需要独占1行，特殊处理
             if ([@"block" isEqualToString:itemModel.display]) {
@@ -370,12 +369,12 @@
                         itemMarginRight = [itemModel marginRight];
                     }
                     //如果有padding[0]，需要再减去左边的padding
-                    if ([self.padding tgrm_floatAtIndex:3] > 0.f) {
-                        itemMarginLeft += [self.padding tgrm_floatAtIndex:3];
+                    if ([self.padding tm_floatAtIndex:3] > 0.f) {
+                        itemMarginLeft += [self.padding tm_floatAtIndex:3];
                     }
                     //需要减去右边的padding
-                    if ([self.padding tgrm_floatAtIndex:1] > 0.f) {
-                        itemMarginRight += [self.padding tgrm_floatAtIndex:1];
+                    if ([self.padding tm_floatAtIndex:1] > 0.f) {
+                        itemMarginRight += [self.padding tm_floatAtIndex:1];
                     }
                     CGFloat width = CGRectGetWidth(self.frame) - itemMarginLeft - itemMarginRight;
                     [self setItemWidth:width withModel:itemModel];
@@ -394,13 +393,13 @@
                     }
                     //这里的组件一定是第一行第一列的
                     //因为是第一行，如果有padding[0]，第一行会被加padding
-                    if ([self.padding tgrm_floatAtIndex:0] > 0.f) {
-                        itemMarginTop += [self.padding tgrm_floatAtIndex:0];
+                    if ([self.padding tm_floatAtIndex:0] > 0.f) {
+                        itemMarginTop += [self.padding tm_floatAtIndex:0];
                     }
                     //
                     //因为是第一列，如果有padding[3]，第一列会被加padding
-                    if ([self.padding tgrm_floatAtIndex:3] > 0.f) {
-                        itemMarginLeft += [self.padding tgrm_floatAtIndex:3];
+                    if ([self.padding tm_floatAtIndex:3] > 0.f) {
+                        itemMarginLeft += [self.padding tm_floatAtIndex:3];
                     }
                     if (lastItemModel) {
                         //这种情况是在第一行没有被填满的情况下，插入了一个block
@@ -428,8 +427,8 @@
                     }
                     //这里的组件一定不是第一行的，但是一定是第一列(因为block的行只有一列)
                     //因为是第一列，如果有padding[3]，第一列会被加padding
-                    if ([self.padding tgrm_floatAtIndex:3] > 0.f) {
-                        itemMarginLeft += [self.padding tgrm_floatAtIndex:3];
+                    if ([self.padding tm_floatAtIndex:3] > 0.f) {
+                        itemMarginLeft += [self.padding tm_floatAtIndex:3];
                     }
                     [self setItemTop:lastItemModelBottom + itemMarginTop +CGRectGetMaxY(lastItemModel.itemFrame)+self.vGap withModel:itemModel];
                     [self setItemLeft:itemMarginLeft withModel:itemModel];
@@ -464,12 +463,12 @@
                     itemMarginBottom = [itemModel marginBottom];
                 }
                 //如果有padding[0]，第一行会被加padding
-                if (i == 0 && [self.padding tgrm_floatAtIndex:0] > 0.f) {
-                    itemMarginTop += [self.padding tgrm_floatAtIndex:0];
+                if (i == 0 && [self.padding tm_floatAtIndex:0] > 0.f) {
+                    itemMarginTop += [self.padding tm_floatAtIndex:0];
                 }
                 //如果是最后一行的，加下padding
-                if (i == maxRows - 1 && [self.padding tgrm_floatAtIndex:2] > 0.f) {
-                    itemMarginBottom += [self.padding tgrm_floatAtIndex:2];
+                if (i == maxRows - 1 && [self.padding tm_floatAtIndex:2] > 0.f) {
+                    itemMarginBottom += [self.padding tm_floatAtIndex:2];
                 }
                 baseHeight = itemMarginTop + CGRectGetHeight(itemModel.itemFrame) + itemMarginBottom;
             }
@@ -483,12 +482,12 @@
                     itemMarginBottom = [itemModel marginBottom];
                 }
                 //如果有padding[0]，第一行会被加padding
-                if (i == 0 && [self.padding tgrm_floatAtIndex:0] > 0.f) {
-                    itemMarginTop += [self.padding tgrm_floatAtIndex:0];
+                if (i == 0 && [self.padding tm_floatAtIndex:0] > 0.f) {
+                    itemMarginTop += [self.padding tm_floatAtIndex:0];
                 }
                 //如果是最后一行的，加下padding
-                if (i == maxRows - 1 && [self.padding tgrm_floatAtIndex:2] > 0.f) {
-                    itemMarginBottom += [self.padding tgrm_floatAtIndex:2];
+                if (i == maxRows - 1 && [self.padding tm_floatAtIndex:2] > 0.f) {
+                    itemMarginBottom += [self.padding tm_floatAtIndex:2];
                 }
                 CGRect tempRect = itemModel.itemFrame;
                 tempRect.size.height = baseHeight - itemMarginTop - itemMarginBottom;
@@ -508,12 +507,12 @@
                     }
                     //这里的组件一定是第一行第一列的
                     //如果有padding[0]，第一行会被加padding
-                    if ([self.padding tgrm_floatAtIndex:0] > 0.f) {
-                        itemMarginTop += [self.padding tgrm_floatAtIndex:0];
+                    if ([self.padding tm_floatAtIndex:0] > 0.f) {
+                        itemMarginTop += [self.padding tm_floatAtIndex:0];
                     }
                     //如果有padding[3]，第一列会被加padding
-                    if ([self.padding tgrm_floatAtIndex:3] > 0.f) {
-                        itemMarginLeft += [self.padding tgrm_floatAtIndex:3];
+                    if ([self.padding tm_floatAtIndex:3] > 0.f) {
+                        itemMarginLeft += [self.padding tm_floatAtIndex:3];
                     }
                     [self setItemTop:itemMarginTop + startY withModel:itemModel];
                     [self setItemLeft:itemMarginLeft withModel:itemModel];
@@ -532,8 +531,8 @@
                     }
                     //这里的组件一定是不是第一列的，但一定是第一行的
                     //因为是第一行，如果有padding[0]，第一行会被加padding
-                    if ([self.padding tgrm_floatAtIndex:0] > 0.f) {
-                        itemMarginTop += [self.padding tgrm_floatAtIndex:0];
+                    if ([self.padding tm_floatAtIndex:0] > 0.f) {
+                        itemMarginTop += [self.padding tm_floatAtIndex:0];
                     }
                     CGFloat gap = (lastItemModelInRow) ? (lastItemModelRight + itemMarginLeft) : itemMarginLeft;
                     [self setItemTop:itemMarginTop + startY withModel:itemModel];
@@ -557,8 +556,8 @@
                 if (self.numberOfColumns == maxColumns - jj) {
                     //一定是第一列，不是第一行的
                     //所以如果有padding[3]，第一列会被加padding
-                    if ([self.padding tgrm_floatAtIndex:3] > 0.f) {
-                        itemMarginLeft += [self.padding tgrm_floatAtIndex:3];
+                    if ([self.padding tm_floatAtIndex:3] > 0.f) {
+                        itemMarginLeft += [self.padding tm_floatAtIndex:3];
                     }
                     [self setItemTop:lastItemModelBottom + itemMarginTop + CGRectGetMaxY(lastItemModel.itemFrame)+self.vGap withModel:itemModel];
                     [self setItemLeft:itemMarginLeft withModel:itemModel];
@@ -592,8 +591,8 @@
                 tmpLastItemMarginBottom = [tmpLastItemModel marginBottom];
             }
             //如果是最后一行，把下面的marginBottom加上
-            if (i == maxRows - 1 && [self.padding tgrm_floatAtIndex:2] > 0.f) {
-                itemMarginBottom += [self.padding tgrm_floatAtIndex:2];
+            if (i == maxRows - 1 && [self.padding tm_floatAtIndex:2] > 0.f) {
+                itemMarginBottom += [self.padding tm_floatAtIndex:2];
             }
             //lastItemModelInRow 指 当前行 上一个itemModel
             lastItemModelInRow = itemModel;
@@ -625,8 +624,8 @@
         if ([lastItemModel respondsToSelector:@selector(marginBottom)]) {
             lastItemMarginBottom = [lastItemModel marginBottom];
             //如果是最后一行，需要加上 下padding
-            if ([self.padding tgrm_floatAtIndex:2] > 0.f) {
-                lastItemMarginBottom += [self.padding tgrm_floatAtIndex:2];
+            if ([self.padding tm_floatAtIndex:2] > 0.f) {
+                lastItemMarginBottom += [self.padding tm_floatAtIndex:2];
             }
         }
         self.height =  CGRectGetMaxY(lastItemModel.itemFrame)  + lastItemMarginBottom;
@@ -748,21 +747,21 @@
 //此方法调用前需要保证itemModel的width是有值的
 //- (void)buildInnerSubLayoutByModel:(NSObject<TangramItemModelProtocol> *)itemModel
 //{
-//    UIView<TangramLayoutProtocol> *layout = [self.subLayoutDict tgrm_objectForKeyCheck:itemModel.layoutIdentifierForLayoutModel];
+//    UIView<TangramLayoutProtocol> *layout = [self.subLayoutDict tm_safeObjectForKey:itemModel.layoutIdentifierForLayoutModel];
 //    if (!layout || 0 == layout.itemModels.count) {
 //        return;
 //    }
 //    layout.width = itemModel.itemFrame.size.width;
 //    [layout calculateLayout];
 //    itemModel.itemFrame = CGRectMake(itemModel.itemFrame.origin.x, itemModel.itemFrame.origin.y, itemModel.itemFrame.size.width, layout.height);
-//    [self.layoutModelDict setObjectCheck:itemModel forKey:itemModel.layoutIdentifierForLayoutModel];
+//    [self.layoutModelDict tm_safeSetObject:itemModel forKey:itemModel.layoutIdentifierForLayoutModel];
 //}
 
 //- (void)addSubLayouts
 //{
 //    for (NSString *identifier in self.subLayoutIdentifiers) {
-//        UIView<TangramItemModelProtocol> *layout = [self.subLayoutDict tgrm_objectForKeyCheck:identifier];
-//        NSObject<TangramItemModelProtocol> *layoutModel = [self.layoutModelDict tgrm_objectForKeyCheck:identifier];
+//        UIView<TangramItemModelProtocol> *layout = [self.subLayoutDict tm_safeObjectForKey:identifier];
+//        NSObject<TangramItemModelProtocol> *layoutModel = [self.layoutModelDict tm_safeObjectForKey:identifier];
 //        layout.frame = layoutModel.itemFrame;
 //        [self addSubview:layout];
 //    }
@@ -783,7 +782,7 @@
 //    NSMutableDictionary *mutableSubLayoutDict = [self.subLayoutDict mutableCopy];
 //    for (NSString *innerLayoutIdentifier in pastlayoutIdentifiersSet) {
 //        [mutableSubLayoutIdentifiers removeObject:innerLayoutIdentifier];
-//        UIView<TangramLayoutProtocol> *subLayout = [self.subLayoutDict tgrm_objectForKeyCheck:innerLayoutIdentifier];
+//        UIView<TangramLayoutProtocol> *subLayout = [self.subLayoutDict tm_safeObjectForKey:innerLayoutIdentifier];
 //        [subLayout removeFromSuperview];
 //        [mutableSubLayoutDict removeObjectForKey:innerLayoutIdentifier];
 //    }

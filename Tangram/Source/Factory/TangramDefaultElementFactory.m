@@ -7,7 +7,7 @@
 //
 
 #import "TangramDefaultElementFactory.h"
-#import "TangramSafeMethod.h"
+#import "TMUtils.h"
 #import "TangramDefaultItemModel.h"
 #import <objc/runtime.h>
 

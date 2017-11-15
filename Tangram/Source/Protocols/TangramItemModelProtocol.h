@@ -1,9 +1,8 @@
 //
 //  TangramItemModelProtocol.h
-//  Tmall4iPhone
+//  Tangram
 //
-//  Created by jiajun on 8/13/15.
-//  Copyright (c) 2015 alibaba. All rights reserved.
+//  Copyright (c) 2015-2017 alibaba. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
@@ -53,5 +52,9 @@ typedef NSString TangramItemType;
 -(NSString *)position;
 // The number of colums an element will fill.
 -(NSUInteger )colspan;
+// Bound View ClassName, if has value, get height from view's static method
+-(NSString *)linkElementClassName;
+
+-(CGFloat )zIndex;
 
 @end

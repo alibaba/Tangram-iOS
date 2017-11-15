@@ -96,7 +96,7 @@
 
 - (void)responseToClickEvent:(TangramContext *)context
 {
-    NSString *action = [context.event.params tgrm_stringForKey:@"action"];
+    NSString *action = [context.event.params tm_stringForKey:@"action"];
     NSLog(@"Click Action: %@",action);
 }
 - (NSUInteger)numberOfLayoutsInTangramView:(TangramView *)view

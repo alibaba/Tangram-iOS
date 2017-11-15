@@ -1,13 +1,12 @@
 //
 //  TangramDefaultItemModel.m
-//  Pods
+//  Tangram
 //
-//  Created by xiaoxia on 2017/1/10.
-//
+//  Copyright (c) 2015-2017 alibaba. All rights reserved.
 //
 
 #import "TangramDefaultItemModel.h"
-#import "TangramSafeMethod.h"
+#import "TMUtils.h"
 #import "TangramElementHeightProtocol.h"
 #import "TangramElementReuseIdentifierProtocol.h"
 
@@ -32,22 +31,22 @@
 }
 - (CGFloat)marginTop
 {
-    return [[self.margin tgrm_objectAtIndexCheck:0] floatValue];
+    return [[self.margin tm_safeObjectAtIndex:0] floatValue];
 }
 
 - (CGFloat)marginRight
 {
-    return [[self.margin tgrm_objectAtIndexCheck:1] floatValue];
+    return [[self.margin tm_safeObjectAtIndex:1] floatValue];
 }
 
 - (CGFloat)marginBottom
 {
-    return [[self.margin tgrm_objectAtIndexCheck:2] floatValue];
+    return [[self.margin tm_safeObjectAtIndex:2] floatValue];
 }
 
 - (CGFloat)marginLeft
 {
-    return [[self.margin tgrm_objectAtIndexCheck:3] floatValue];
+    return [[self.margin tm_safeObjectAtIndex:3] floatValue];
 }
 //Default it is `inline`
 - (NSString *)display
@@ -119,11 +118,11 @@
 }
 - (id)bizValueForKey:(NSString *)key;
 {
-    return [self.bizDict tgrm_objectForKeyCheck:key];
+    return [self.bizDict tm_safeObjectForKey:key];
 }
 - (id)bizValueForKey:(NSString *)key desiredClass:(__unsafe_unretained Class)aClass
 {
-    id value = [self.bizDict tgrm_objectForKeyCheck:key];
+    id value = [self.bizDict tm_safeObjectForKey:key];
     if ([value isKindOfClass:aClass]) {
         return value;
     }
@@ -135,7 +134,7 @@
 }
 - (id)styleValueForKey:(NSString *)key desiredClass:(__unsafe_unretained Class)aClass
 {
-    id value = [self.styleDict tgrm_objectForKeyCheck:key];
+    id value = [self.styleDict tm_safeObjectForKey:key];
     if ([value isKindOfClass:aClass]) {
         return value;
     }

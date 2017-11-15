@@ -15,7 +15,7 @@
 //#import "NSDictionaryEX.h"
 //#import "NSStringEX.h"
 #import "TangramContext.h"
-#import "TangramSafeMethod.h"
+#import "TMUtils.h"
 #import "TangramEvent.h"
 
 @interface TangramFixLayout()
@@ -113,17 +113,17 @@
     if (self.appearanceType == TangramFixAppearanceScroll) {
         NSObject<TangramItemModelProtocol> *lastModel = nil;
         for (int i = 0; i < self.itemModels.count; i++) {
-            NSObject<TangramItemModelProtocol> *model = [self.itemModels tgrm_objectAtIndexCheck:i];
+            NSObject<TangramItemModelProtocol> *model = [self.itemModels tm_safeObjectAtIndex:i];
             if ([model respondsToSelector:@selector(marginLeft)]) {
                 if (i == 0) {
-                    [model setItemFrame:CGRectMake([self.padding tgrm_floatAtIndex:3] + model.marginLeft, model.itemFrame.origin.y ,model.itemFrame.size.width, model.itemFrame.size.height)];
+                    [model setItemFrame:CGRectMake([self.padding tm_floatAtIndex:3] + model.marginLeft, model.itemFrame.origin.y ,model.itemFrame.size.width, model.itemFrame.size.height)];
                 }
                 else{
                     [model setItemFrame:CGRectMake(lastModel.itemFrame.origin.x + lastModel.itemFrame.size.width + model.marginLeft + self.hGap, model.itemFrame.origin.y,model.itemFrame.size.width, model.itemFrame.size.height)];
                 }
             }
             if ([model respondsToSelector:@selector(marginTop)]) {
-                [model setItemFrame:CGRectMake(model.itemFrame.origin.x, model.itemFrame.origin.y + model.marginTop + [self.padding tgrm_floatAtIndex:0], model.itemFrame.size.width, model.itemFrame.size.height)];
+                [model setItemFrame:CGRectMake(model.itemFrame.origin.x, model.itemFrame.origin.y + model.marginTop + [self.padding tm_floatAtIndex:0], model.itemFrame.size.width, model.itemFrame.size.height)];
             }
             if ([lastModel respondsToSelector:@selector(marginRight)]) {
                  [model setItemFrame:CGRectMake(model.itemFrame.origin.x + lastModel.marginRight, model.itemFrame.origin.y , model.itemFrame.size.width, model.itemFrame.size.height)];
@@ -135,17 +135,17 @@
         }
         self.scrollView.frame = CGRectMake(0, 0, self.superview.frame.size.width, height);
         if ([lastModel respondsToSelector:@selector(marginRight)]) {
-            self.scrollView.contentSize = CGSizeMake(lastModel.itemFrame.origin.x + lastModel.itemFrame.size.width + lastModel.marginRight + [self.padding tgrm_floatAtIndex:1], height);
+            self.scrollView.contentSize = CGSizeMake(lastModel.itemFrame.origin.x + lastModel.itemFrame.size.width + lastModel.marginRight + [self.padding tm_floatAtIndex:1], height);
         }
         else{
-            self.scrollView.contentSize = CGSizeMake(lastModel.itemFrame.origin.x + lastModel.itemFrame.size.width + [self.padding tgrm_floatAtIndex:1], height);
+            self.scrollView.contentSize = CGSizeMake(lastModel.itemFrame.origin.x + lastModel.itemFrame.size.width + [self.padding tm_floatAtIndex:1], height);
         }
         
         self.width = self.superview.frame.size.width;
     }
     else{
         //保持老逻辑不动
-        NSObject<TangramItemModelProtocol> *model = [self.itemModels tgrm_objectAtIndexCheck:0];
+        NSObject<TangramItemModelProtocol> *model = [self.itemModels tm_safeObjectAtIndex:0];
         if ([model respondsToSelector:@selector(marginLeft)]) {
             [model setItemFrame:CGRectMake(model.itemFrame.origin.x + model.marginLeft, model.itemFrame.origin.y,CGRectGetWidth(self.frame), model.itemFrame.size.height)];
         }
@@ -157,7 +157,7 @@
         }
         self.width = model.itemFrame.size.width;
     }
-    self.height = height + [self.padding tgrm_floatAtIndex:2];
+    self.height = height + [self.padding tm_floatAtIndex:2];
     self.layoutHeight = self.height;
     if (self.bgImgURL && self.bgImgURL.length > 0) {
         self.bgImageView.frame = CGRectMake(0, 0, self.width, self.height);
@@ -200,22 +200,22 @@
 }
 - (CGFloat)marginTop
 {
-    return [[self.margin tgrm_objectAtIndexCheck:0] floatValue];
+    return [[self.margin tm_safeObjectAtIndex:0] floatValue];
 }
 
 - (CGFloat)marginRight
 {
-    return [[self.margin tgrm_objectAtIndexCheck:1] floatValue];
+    return [[self.margin tm_safeObjectAtIndex:1] floatValue];
 }
 
 - (CGFloat)marginBottom
 {
-    return [[self.margin tgrm_objectAtIndexCheck:2] floatValue];
+    return [[self.margin tm_safeObjectAtIndex:2] floatValue];
 }
 
 - (CGFloat)marginLeft
 {
-    return [[self.margin tgrm_objectAtIndexCheck:3] floatValue];
+    return [[self.margin tm_safeObjectAtIndex:3] floatValue];
 }
 - (void)heightChangedWithElement:(UIView *)element model:(NSObject<TangramItemModelProtocol> *)model
 {
@@ -238,7 +238,7 @@
 - (void)showLayout:(TangramContext *)context
 {
     //必须是这个layout 才做对应的事情
-    NSObject *layout = [context.event.params tgrm_objectForKeyCheck:@"layout"];
+    NSObject *layout = [context.event.params tm_safeObjectForKey:@"layout"];
     if (layout != self) {
         return;
     }
@@ -267,7 +267,7 @@
 - (void)hideLayout:(TangramContext *)context
 {
     //必须是这个layout 才做对应的事情
-    NSObject *layout =  [context.event.params tgrm_objectForKeyCheck:@"layout"];
+    NSObject *layout =  [context.event.params tm_safeObjectForKey:@"layout"];
     if (layout != self) {
         return;
     }

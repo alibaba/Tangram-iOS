@@ -13,7 +13,7 @@
 #import "UIImageView+WebCache.h"
 #import "TangramEvent.h"
 #import "UIView+Tangram.h"
-#import "TangramSafeMethod.h"
+#import "TMUtils.h"
 #import <Foundation/Foundation.h>
 
 @interface TangramPageScrollLayoutTimerAction : NSObject
@@ -108,7 +108,7 @@
     if (self.hasMoreAction.length > 0 && self.willPush == NO && [scrollView.subviews containsObject:self.loadMoreImageView] && scrollView.contentOffset.x > loadX && !scrollView.dragging)
     {
         self.willPush = YES;
-        scrollView.contentInset = UIEdgeInsetsMake(0, [self.pageMargin tgrm_floatAtIndex:3] - self.scrollView.frame.origin.x, 0, self.scrollView.frame.size.width - self.scrollView.frame.origin.x - self.frame.size.width + self.loadMoreImageView.frame.size.width);
+        scrollView.contentInset = UIEdgeInsetsMake(0, [self.pageMargin tm_floatAtIndex:3] - self.scrollView.frame.origin.x, 0, self.scrollView.frame.size.width - self.scrollView.frame.origin.x - self.frame.size.width + self.loadMoreImageView.frame.size.width);
         scrollView.pagingEnabled = NO;
         [scrollView setContentOffset:CGPointMake(loadX - self.loadMoreImageView.frame.size.width, scrollView.contentOffset.y)];
         
@@ -118,7 +118,7 @@
             TangramEvent *event = [[TangramEvent alloc]initWithTopic:@"pageLayoutJumpMorePage" withTangramView:self.inTangramView posterIdentifier:@"pageScrollLayout" andPoster:strongSelf];
             [strongSelf.tangramBus postEvent:event];
              //使用TangramBus发出事件
-            scrollView.contentInset = UIEdgeInsetsMake(0, [strongSelf.pageMargin tgrm_floatAtIndex:3] - strongSelf.scrollView.frame.origin.x, 0, strongSelf.scrollView.frame.origin.x + strongSelf.scrollView.frame.size.width - strongSelf.frame.size.width);
+            scrollView.contentInset = UIEdgeInsetsMake(0, [strongSelf.pageMargin tm_floatAtIndex:3] - strongSelf.scrollView.frame.origin.x, 0, strongSelf.scrollView.frame.origin.x + strongSelf.scrollView.frame.size.width - strongSelf.frame.size.width);
             if (strongSelf.pageWidth > 0) {
                 scrollView.pagingEnabled = YES;
             }
@@ -261,7 +261,7 @@
     _footerItemModel = footerItemModel;
     NSMutableArray *mutableItemModels = [self.itemModels mutableCopy];
     if (self.footerItemModel && ![self.itemModels containsObject:self.footerItemModel]) {
-        [mutableItemModels tgrm_addObjectCheck:self.footerItemModel];
+        [mutableItemModels tm_safeAddObject:self.footerItemModel];
     }
     _itemModels = [mutableItemModels copy];
 }
@@ -356,7 +356,7 @@
     }
     //设定坐标
     CGFloat elementHeight = 0.f;
-    //elementHeight += [self.padding tgrm_floatAtIndex:0];
+    //elementHeight += [self.padding tm_floatAtIndex:0];
     NSObject<TangramItemModelProtocol> *lastElementModel = nil;
     if (self.aspectRatio.length > 0 && [self.aspectRatio floatValue] > 0.f ) {
         self.height = self.width / [self.aspectRatio floatValue];
@@ -365,11 +365,11 @@
     //获取头部的大小
     CGFloat headerHeight = 0.f;
     if (self.headerItemModel) {
-        CGFloat contentWidth = self.width - self.headerItemModel.marginLeft - self.headerItemModel.marginRight - [self.padding tgrm_floatAtIndex:1] - [self.padding tgrm_floatAtIndex:3];
+        CGFloat contentWidth = self.width - self.headerItemModel.marginLeft - self.headerItemModel.marginRight - [self.padding tm_floatAtIndex:1] - [self.padding tm_floatAtIndex:3];
         CGRect tempRect = self.headerItemModel.itemFrame;
         tempRect.size.width = contentWidth;
-        tempRect.origin.x   = self.headerItemModel.marginLeft + [self.padding tgrm_floatAtIndex:3];
-        tempRect.origin.y   = self.headerItemModel.marginTop + [self.padding tgrm_floatAtIndex:0];
+        tempRect.origin.x   = self.headerItemModel.marginLeft + [self.padding tm_floatAtIndex:3];
+        tempRect.origin.y   = self.headerItemModel.marginTop + [self.padding tm_floatAtIndex:0];
         self.headerItemModel.itemFrame = tempRect;
         headerHeight = CGRectGetMaxY(self.headerItemModel.itemFrame);
     }
@@ -380,11 +380,11 @@
         scrollFirstItemIndex = 1;
     }
     for (NSUInteger i = 0 ; i < self.itemModels.count ; i++) {
-        NSObject<TangramItemModelProtocol> *model = [self.itemModels tgrm_objectAtIndexCheck:i];
+        NSObject<TangramItemModelProtocol> *model = [self.itemModels tm_safeObjectAtIndex:i];
         if (model == self.headerItemModel || model == self.footerItemModel) {
             continue;
         }
-        CGFloat contentWidth = self.width - model.marginLeft - model.marginRight - [self.padding tgrm_floatAtIndex:1] - [self.padding tgrm_floatAtIndex:3] ;
+        CGFloat contentWidth = self.width - model.marginLeft - model.marginRight - [self.padding tm_floatAtIndex:1] - [self.padding tm_floatAtIndex:3] ;
         //有pagewidth，强制页面宽度
         if (self.pageWidth > 0.f) {
             contentWidth = self.pageWidth;
@@ -402,7 +402,7 @@
         }
         tempRect.origin.y   = model.marginTop + headerHeight;
         if (!self.headerItemModel) {
-            tempRect.origin.y += [self.padding tgrm_floatAtIndex:0];
+            tempRect.origin.y += [self.padding tm_floatAtIndex:0];
         }
         //有页面高度，强制页面高度
         if (self.pageHeight > 0.f) {
@@ -416,7 +416,7 @@
         self.scrollView.pagingEnabled = NO;
     }
     self.height = elementHeight;
-    self.scrollView.frame = CGRectMake([self.padding tgrm_floatAtIndex:3], 0, self.width - self.marginRight - self.marginLeft - [self.padding tgrm_floatAtIndex:3] - [self.padding tgrm_floatAtIndex:1], elementHeight);
+    self.scrollView.frame = CGRectMake([self.padding tm_floatAtIndex:3], 0, self.width - self.marginRight - self.marginLeft - [self.padding tm_floatAtIndex:3] - [self.padding tm_floatAtIndex:1], elementHeight);
     self.scrollView.contentSize = CGSizeMake(CGRectGetMaxX(lastElementModel.itemFrame) + lastElementModel.marginRight + self.scrollMarginLeft + self.scrollMarginRight, elementHeight) ;
     //设定加载更多的图片，只是在后面贴了一张图而已
     if(self.hasMoreAction.length > 0 && self.loadMoreImgUrl > 0 && self.scrollView.contentSize.width > self.width)
@@ -478,16 +478,16 @@
     [self bringSubviewToFront:self.pageControl];
     //对footer进行布局
     if (self.footerItemModel) {
-        CGFloat contentWidth = self.width - self.footerItemModel.marginLeft - self.footerItemModel.marginRight - [self.padding tgrm_floatAtIndex:1] - [self.padding tgrm_floatAtIndex:3];
+        CGFloat contentWidth = self.width - self.footerItemModel.marginLeft - self.footerItemModel.marginRight - [self.padding tm_floatAtIndex:1] - [self.padding tm_floatAtIndex:3];
         CGRect tempRect = self.footerItemModel.itemFrame;
         tempRect.size.width = contentWidth;
-        tempRect.origin.x   = self.footerItemModel.marginLeft + [self.padding tgrm_floatAtIndex:3];
+        tempRect.origin.x   = self.footerItemModel.marginLeft + [self.padding tm_floatAtIndex:3];
         tempRect.origin.y   = self.height + self.footerItemModel.marginTop;
         self.footerItemModel.itemFrame = tempRect;
-        self.height = CGRectGetMaxY(self.footerItemModel.itemFrame) + self.footerItemModel.marginBottom + [self.padding tgrm_floatAtIndex:2];
+        self.height = CGRectGetMaxY(self.footerItemModel.itemFrame) + self.footerItemModel.marginBottom + [self.padding tm_floatAtIndex:2];
     }
     else{
-        self.height += [self.padding tgrm_floatAtIndex:2];
+        self.height += [self.padding tm_floatAtIndex:2];
     }
     [self startTimer];
    // [self buildIndicator];
@@ -550,7 +550,7 @@
         self.lastItemModel = (NSObject<TangramItemModelProtocol> *)[self duplicateObject:[self.itemModels lastObject]];
         NSMutableArray *mutableItemModels = [itemModels mutableCopy];
         [mutableItemModels insertObject:self.lastItemModel atIndex:0];
-        [mutableItemModels tgrm_addObjectCheck:self.firstItemModel];
+        [mutableItemModels tm_safeAddObject:self.firstItemModel];
         _itemModels = [mutableItemModels copy];
         //realCount仅在无限循环时使用
         self.realCount = itemModels.count;
@@ -560,7 +560,7 @@
 //        [mutableItemModels insertObject:self.headerItemModel atIndex:0];
 //    }
 //    if (self.footerItemModel && ![self.itemModels containsObject:self.footerItemModel]) {
-//        [mutableItemModels addObjectCheck:self.footerItemModel];
+//        [mutableItemModels tm_safeAddObject:self.footerItemModel];
 //    }
     _itemModels = [mutableItemModels copy];
     
@@ -579,22 +579,22 @@
 }
 - (CGFloat)marginTop
 {
-    return [[self.margin tgrm_objectAtIndexCheck:0] floatValue];
+    return [[self.margin tm_safeObjectAtIndex:0] floatValue];
 }
 
 - (CGFloat)marginRight
 {
-    return [[self.margin tgrm_objectAtIndexCheck:1] floatValue];
+    return [[self.margin tm_safeObjectAtIndex:1] floatValue];
 }
 
 - (CGFloat)marginBottom
 {
-    return [[self.margin tgrm_objectAtIndexCheck:2] floatValue];
+    return [[self.margin tm_safeObjectAtIndex:2] floatValue];
 }
 
 - (CGFloat)marginLeft
 {
-    return [[self.margin tgrm_objectAtIndexCheck:3] floatValue];
+    return [[self.margin tm_safeObjectAtIndex:3] floatValue];
 }
 
 -(NSString *)position
