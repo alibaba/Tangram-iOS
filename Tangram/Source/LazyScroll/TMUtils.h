@@ -24,6 +24,7 @@
 - (id)tm_safeObjectForKey:(id)key;
 - (id)tm_safeObjectForKey:(id)key class:(Class)aClass;
 - (NSInteger)tm_integerForKey:(id)key;
+- (NSArray *)tm_arrayForKey:(id)key;
 
 @end
 

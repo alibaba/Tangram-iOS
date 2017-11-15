@@ -2,17 +2,15 @@
 //  TangramEventQueue.m
 //  Tangram
 //
-//  Created by jiajun on 5/1/16.
-//  Copyright © 2016 Taobao lnc. All rights reserved.
+//  Copyright (c) 2016-2017 Taobao lnc. All rights reserved.
 //
 
 #import "TangramEventQueue.h"
 #import "TangramEvent.h"
-#import "TangramSafeMethod.h"
 
 @interface TangramEventQueue ()
 
-@property   (nonatomic, strong) NSMutableArray      *queue;
+@property (nonatomic, strong) NSMutableArray *queue;
 
 @end
 
@@ -36,20 +34,23 @@
 - (void)pushEvent:(TangramEvent *)event
 {
     if ([event isKindOfClass:[TangramEvent class]]) {
-        [self.queue tgrm_addObjectCheck:event];
+        [self.queue addObject:event];
     }
 }
 
-- (TangramEvent *)pop
+- (TangramEvent *)popEvent
 {
-    if (![self.queue isKindOfClass:[NSArray class]]) {
+    if (self.length == 0) {
         return nil;
     }
     TangramEvent *firstEvent = [self.queue firstObject];
     if (firstEvent) {
         [self.queue removeObjectAtIndex:0];
     }
-    return firstEvent;
+    if ([firstEvent isKindOfClass:[TangramEvent class]]) {
+        return firstEvent;
+    }
+    return nil;
 }
 
 @end

@@ -2,19 +2,19 @@
 //  TangramEventDispatcher.m
 //  Tangram
 //
-//  Created by jiajun on 5/1/16.
-//  Copyright © 2016 Taobao lnc. All rights reserved.
+//  Copyright (c) 2016-2017 Taobao lnc. All rights reserved.
 //
 
 #import "TangramEventDispatcher.h"
+#import "TangramAction.h"
 #import "TangramEvent.h"
 #import "TangramBusIndexClass.h"
 #import "TangramBusIndexTopic.h"
 
 @interface TangramEventDispatcher ()
 
-@property   (nonatomic, strong) TangramBusIndexClass        *classIndex;
-@property   (nonatomic, strong) TangramBusIndexTopic        *topicIndex;
+@property (nonatomic, strong) TangramBusIndexClass *classIndex;
+@property (nonatomic, strong) TangramBusIndexTopic *topicIndex;
 
 @end
 
@@ -23,11 +23,10 @@
 #pragma mark - Public
 - (void)dispatchEvent:(TangramEvent *)event
 {
-    // 在索引里查找Acton
     NSMutableArray *actionList = [[NSMutableArray alloc] init];
 
     NSArray *topicActions = [self.topicIndex actionsOnEvent:event];
-    if (topicActions) {
+    if (topicActions && topicActions.count > 0) {
         [actionList addObjectsFromArray:topicActions];
     }
     
@@ -47,8 +46,7 @@
 {
     if (identifier && 0 < identifier.length) {
         [self.classIndex addAction:action forTopic:topic andPoster:identifier];
-    }
-    else {
+    } else {
         [self.topicIndex addAction:action forTopic:topic andPoster:nil];
     }
 }

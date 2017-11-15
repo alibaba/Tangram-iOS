@@ -2,13 +2,14 @@
 //  TangramEventQueue.h
 //  Tangram
 //
-//  Created by jiajun on 5/1/16.
-//  Copyright © 2016 Taobao lnc. All rights reserved.
+//  Copyright (c) 2016-2017 Taobao lnc. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
 
 @class TangramEvent;
+
+
 @interface TangramEventQueue : NSObject
 
 /**
@@ -19,11 +20,11 @@
 /**
  * Add a event to queue.
  */
-- (void)pushEvent:(TangramEvent *)event;
+- (void)pushEvent:(nonnull TangramEvent *)event;
 
 /**
- * Get a event
+ * Get a event.
  */
-- (TangramEvent *)pop;
+- (nullable TangramEvent *)popEvent;
 
 @end

@@ -2,17 +2,16 @@
 //  TangramBusIndexTopic.m
 //  Tangram
 //
-//  Created by jiajun on 5/1/16.
-//  Copyright © 2016 Taobao lnc. All rights reserved.
+//  Copyright (c) 2016-2017 Taobao lnc. All rights reserved.
 //
 
 #import "TangramBusIndexTopic.h"
 #import "TangramEvent.h"
-#import "TangramSafeMethod.h"
+#import "TMUtils.h"
 
 @interface TangramBusIndexTopic ()
 
-@property   (nonatomic, strong) NSMutableDictionary     *index;
+@property (nonatomic, strong) NSMutableDictionary *index;
 
 @end
 
@@ -28,27 +27,17 @@
 
 - (NSArray *)actionsOnEvent:(TangramEvent *)event
 {
-    return [self.index tgrm_arrayForKey:event.topic];
+    return [self.index tm_arrayForKey:event.topic];
 }
 
 - (void)addAction:(TangramAction *)action forTopic:(NSString *)topic andPoster:(NSString *)identifier
 {
-    NSMutableArray *mutableActions = nil;
-    NSArray *actions = [self.index tgrm_arrayForKey:topic];
+    NSMutableArray *actions = [self.index tm_safeObjectForKey:topic class:[NSMutableArray class]];
     if (nil == actions) {
-        mutableActions = [[NSMutableArray alloc] init];
+        actions = [[NSMutableArray alloc] init];
     }
-    else if ([actions isKindOfClass:[NSMutableArray class]]) {
-        mutableActions = (NSMutableArray *)actions;
-    }
-    else if ([actions isKindOfClass:[NSArray class]]) {
-        mutableActions = [actions mutableCopy];
-    }
-    else {
-        mutableActions = [[NSMutableArray alloc] init];
-    }
-    [mutableActions tgrm_addObjectCheck:action];
-    [self.index tgrm_setObjectCheck:mutableActions forKey:topic];
+    [actions tm_safeAddObject:action];
+    [self.index tm_safeSetObject:actions forKey:topic];
 }
 
 @end

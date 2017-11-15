@@ -2,18 +2,17 @@
 //  TangramBusIndexClass.m
 //  Tangram
 //
-//  Created by jiajun on 5/1/16.
-//  Copyright © 2016 Taobao lnc. All rights reserved.
+//  Copyright (c) 2016-2017 Taobao lnc. All rights reserved.
 //
 
 #import "TangramBusIndexClass.h"
 #import "TangramEvent.h"
-#import "TangramSafeMethod.h"
+#import "TMUtils.h"
 
 
 @interface TangramBusIndexClass ()
 
-@property   (nonatomic, strong) NSMutableDictionary     *index;
+@property (nonatomic, strong) NSMutableDictionary *index;
 
 @end
 
@@ -27,37 +26,26 @@
     return _index;
 }
 
-
 - (NSArray *)actionsOnEvent:(TangramEvent *)event
 {
     NSArray *actions = nil;
     if (event.identifier) {
         NSString *key = [event.topic stringByAppendingFormat:@"_%@", event.identifier];
-        actions = [self.index tgrm_arrayForKey:key];
+        actions = [self.index tm_arrayForKey:key];
     }
     return actions;
 }
 
 - (void)addAction:(TangramAction *)action forTopic:(NSString *)topic andPoster:(NSString *)identifier
 {
-    NSMutableArray *mutableActions = nil;
     if (identifier && 0 < identifier.length) {
         NSString *key = [topic stringByAppendingFormat:@"_%@", identifier];
-        NSArray *actions = [self.index tgrm_arrayForKey:key];
+        NSMutableArray *actions = [self.index tm_safeObjectForKey:key class:[NSMutableArray class]];
         if (nil == actions) {
-            mutableActions = [[NSMutableArray alloc] init];
+            actions = [[NSMutableArray alloc] init];
         }
-        else if ([actions isKindOfClass:[NSMutableArray class]]) {
-            mutableActions = (NSMutableArray *)actions;
-        }
-        else if ([actions isKindOfClass:[NSArray class]]) {
-            mutableActions = [actions mutableCopy];
-        }
-        else {
-            mutableActions = [[NSMutableArray alloc] init];
-        }
-        [mutableActions tgrm_addObjectCheck:action];
-        [self.index setObject:mutableActions forKey:key];
+        [actions tm_safeAddObject:action];
+        [self.index tm_safeSetObject:actions forKey:key];
     }
 }
 

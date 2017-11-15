@@ -51,10 +51,10 @@
 - (id)tm_safeObjectForKey:(id)key class:(Class)aClass
 {
     id value = [self tm_safeObjectForKey:key];
-    if (![value isKindOfClass:aClass]) {
-        return nil;
+    if ([value isKindOfClass:aClass]) {
+        return value;
     }
-    return value;
+    return nil;
 }
 
 - (NSInteger)tm_integerForKey:(id)key
@@ -64,6 +64,11 @@
         return [value integerValue];
     }
     return 0;
+}
+
+- (NSArray *)tm_arrayForKey:(id)key
+{
+    return [self tm_safeObjectForKey:key class:[NSArray class]];
 }
 
 @end

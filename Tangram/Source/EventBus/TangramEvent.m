@@ -2,21 +2,18 @@
 //  TangramEvent.m
 //  Tangram
 //
-//  Created by jiajun on 5/1/16.
-//  Copyright © 2016 Taobao lnc. All rights reserved.
+//  Copyright (c) 2016-2017 Taobao lnc. All rights reserved.
 //
 
 #import "TangramEvent.h"
 #import "TangramContext.h"
-#import "TangramSafeMethod.h"
+#import "TangramView.h"
+#import "TMUtils.h"
 
-@interface TangramEvent ()
-
-@property   (nonatomic, strong) NSDictionary            *params;
-@property   (nonatomic, strong) NSDictionary            *meta;
-
-@property   (nonatomic, strong) NSMutableDictionary     *mParams;
-@property   (nonatomic, strong) NSMutableDictionary     *mMeta;
+@interface TangramEvent () {
+    NSMutableDictionary *_params;
+    NSMutableDictionary *_meta;
+}
 
 @end
 
@@ -25,54 +22,44 @@
 #pragma mark - Getter & Setter
 - (NSDictionary *)params
 {
-    if (nil == _params) {
-        _params = [NSDictionary dictionaryWithDictionary:_mParams];
-    }
-    return _params;
+    return _params ? [_params copy] : nil;
 }
 
 - (NSDictionary *)meta
 {
-    if (nil == _meta) {
-        _meta = [NSDictionary dictionaryWithDictionary:self.mMeta];
-    }
-    return _meta;
+    return _meta ? [_meta copy] : nil;
 }
 
 - (void)setParam:(id)param forKey:(NSString *)key
 {
-    if (nil == _mParams) {
-        _mParams = [[NSMutableDictionary alloc] init];
+    if (nil == _params) {
+        _params = [[NSMutableDictionary alloc] init];
     }
-    if (param && key) {
-        [_mParams setObject:param forKey:key];
-    }
-    _params = [NSDictionary dictionaryWithDictionary:_mParams];
+    [_params tm_safeSetObject:param forKey:key];
 }
 
 - (void)setMeta:(id)meta forKey:(NSString *)key
 {
-    if (nil == _mMeta) {
-        _mMeta = [[NSMutableDictionary alloc] init];
+    if (nil == _meta) {
+        _meta = [[NSMutableDictionary alloc] init];
     }
-    if (meta && key) {
-        [_mMeta setObject:meta forKey:key];
-    }
-    _meta = [NSDictionary dictionaryWithDictionary:_mMeta];
+    [_meta tm_safeSetObject:meta forKey:key];
 }
 
 #pragma mark - Public
-- (instancetype)initWithTopic:(NSString *)topic withTangramView:(TangramView *)tangram
-             posterIdentifier:(NSString *)identifier andPoster:(id)poster
+
+- (instancetype)initWithTopic:(NSString *)topic
+              withTangramView:(TangramView *)tangram
+             posterIdentifier:(NSString *)identifier
+                    andPoster:(id)poster
 {
     self = [super init];
     if (self) {
-        _topic      = topic;
+        _topic = topic;
         _identifier = identifier;
         _context = [[TangramContext alloc] init];
-        _context.poster     = poster;
-        _context.tangram    = tangram;
-        //增加一个对event的反向依赖，可以通过context找到event，event是weak的
+        _context.poster = poster;
+        _context.tangram = tangram;
         _context.event = self;
     }
     return self;
