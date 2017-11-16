@@ -83,6 +83,13 @@
     }
 }
 
+- (void)tm_safeInsertObject:(id)anObject atIndex:(NSUInteger)index
+{
+    if (anObject && index <= self.count) {
+        [self insertObject:anObject atIndex:index];
+    }
+}
+
 @end
 
 @implementation NSDictionary (TMUtil)

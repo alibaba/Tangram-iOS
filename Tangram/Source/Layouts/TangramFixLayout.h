@@ -67,4 +67,6 @@ typedef NS_ENUM(NSInteger, TangramFixAppearanceType)
 // Whether retain scroll position (Only for TangramFixAppearanceScroll)
 @property   (nonatomic, assign) BOOL            retainScrollState;
 
+@property   (nonatomic, assign) CGFloat             zIndex;
+
 @end

@@ -24,6 +24,7 @@
 @interface NSMutableArray (TMUtil)
 
 - (void)tm_safeAddObject:(id)anObject;
+- (void)tm_safeInsertObject:(id)anObject atIndex:(NSUInteger)index;
 
 @end
 

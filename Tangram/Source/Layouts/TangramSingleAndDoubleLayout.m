@@ -11,6 +11,7 @@
 #import "UIImageView+WebCache.h"
 #import "TangramView.h"
 #import "TMUtils.h"
+#import "UIView+Tangram.h"
 
 @interface TangramSingleAndDoubleLayout()
 
@@ -19,51 +20,92 @@
 // 首次收到reload请求的时间点，毫秒级
 @property (atomic, assign) NSTimeInterval        firstReloadRequestTS;
 
+@property (nonatomic, strong) NSObject<TangramItemModelProtocol> *headerItemModel;
+
+@property (nonatomic, strong) NSObject<TangramItemModelProtocol> *footerItemModel;
+
+
 @end
 
 @implementation TangramSingleAndDoubleLayout
-
+@synthesize itemModels = _itemModels;
 - (NSUInteger)numberOfColumns
 {
     return 2;
 }
 
-- (CGFloat)width
+- (void)setItemModels:(NSArray *)itemModels
 {
-    return self.frame.size.width;
-}
-
-- (void)setWidth:(CGFloat)width
-{
-    self.frame = CGRectMake(self.frame.origin.x, self.frame.origin.y, width, self.frame.size.height);
-}
-
-- (CGFloat)height
-{
-    return self.frame.size.height;
-}
-
-- (void)setHeight:(CGFloat)height
-{
-    self.frame = CGRectMake(self.frame.origin.x, self.frame.origin.y, self.frame.size.width, height);
+    NSMutableArray *toBeAddedItemModels = [[NSMutableArray alloc]init];
+    NSMutableArray *mutableItemModels = [itemModels mutableCopy];
+    //根据Model的position 插入指定位置
+    for (NSObject<TangramItemModelProtocol> *model in mutableItemModels) {
+        if ([model respondsToSelector:@selector(position)] &&  [[model position] isKindOfClass:[NSString class]] &&[model position].length > 0) {
+            [toBeAddedItemModels tm_safeAddObject:model];
+        }
+    }
+    for (NSObject<TangramItemModelProtocol> *model in toBeAddedItemModels) {
+        [mutableItemModels removeObject:model];
+        if ([[model position] integerValue] > mutableItemModels.count) {
+            [mutableItemModels tm_safeInsertObject:model atIndex:mutableItemModels.count];
+        }
+        else{
+            [mutableItemModels tm_safeInsertObject:model atIndex:[[model position] integerValue]];
+        }
+    }
+    if (self.headerItemModel && ![self.itemModels containsObject:self.headerItemModel]) {
+        [mutableItemModels insertObject:self.headerItemModel atIndex:0];
+    }
+    if (self.footerItemModel && ![self.itemModels containsObject:self.footerItemModel]) {
+        [mutableItemModels tm_safeAddObject:self.footerItemModel];
+    }
+    _itemModels = [mutableItemModels copy];
 }
 
 - (void)calculateLayout
 {
-    NSObject<TangramItemModelProtocol> *first   = [self.itemModels tm_safeObjectAtIndex:0];
-    NSObject<TangramItemModelProtocol> *second  = [self.itemModels tm_safeObjectAtIndex:1];
-    NSObject<TangramItemModelProtocol> *third   = [self.itemModels tm_safeObjectAtIndex:2];
-    NSObject<TangramItemModelProtocol> *fourth  = [self.itemModels tm_safeObjectAtIndex:3];
-    NSObject<TangramItemModelProtocol> *fifth   = [self.itemModels tm_safeObjectAtIndex:4];
+    NSUInteger realItemModelStartIndex = 0;
+    NSUInteger realItemModelEndIndex = 0;
+
+    if (self.headerItemModel) {
+        realItemModelStartIndex = 1;
+    }
+    if (self.footerItemModel) {
+        realItemModelEndIndex = self.itemModels.count - realItemModelStartIndex - 1;
+    }
+    else{
+        realItemModelEndIndex = self.itemModels.count - realItemModelStartIndex;
+    }
+    NSObject<TangramItemModelProtocol> *first   = [self.itemModels tm_safeObjectAtIndex:realItemModelStartIndex];
+    NSObject<TangramItemModelProtocol> *second  =  nil ;
+    if (realItemModelEndIndex >= realItemModelStartIndex + 1) {
+        second = [self.itemModels tm_safeObjectAtIndex: realItemModelStartIndex + 1];
+    }
+    NSObject<TangramItemModelProtocol> *third = nil;
+    if (realItemModelEndIndex >= realItemModelStartIndex + 2) {
+        third = [self.itemModels tm_safeObjectAtIndex:realItemModelStartIndex + 2];
+    }
+    NSObject<TangramItemModelProtocol> *fourth = nil;
+    if (realItemModelEndIndex >= realItemModelStartIndex + 3) {
+        fourth = [self.itemModels tm_safeObjectAtIndex:realItemModelStartIndex + 3];
+    }
+    NSObject<TangramItemModelProtocol> *fifth   = nil ;
+    if (realItemModelEndIndex >= realItemModelStartIndex + 4) {
+        fifth = [self.itemModels tm_safeObjectAtIndex:realItemModelStartIndex + 4];
+    }
     CGFloat contentWidth    = self.width - first.marginLeft - first.marginRight;
     CGFloat bottom          = 0.f;
     BOOL useRows = NO;
+    if (self.headerItemModel) {
+        contentWidth = self.width - self.headerItemModel.marginLeft  - self.headerItemModel.marginRight -  [self.padding tm_floatAtIndex:1] -  [self.padding tm_floatAtIndex:3];
+        self.headerItemModel.itemFrame = CGRectMake(self.headerItemModel.marginLeft + [self.padding tm_floatAtIndex:3] , self.headerItemModel.marginTop + [self.padding tm_floatAtIndex:0], contentWidth, self.headerItemModel.itemFrame.size.height);
+    }
     if (self.aspectRatio && self.aspectRatio.length > 0 &&  [self.aspectRatio floatValue] > 0.f) {
         self.height = self.width / [self.aspectRatio floatValue];
     }
     if (second) {
         // 首行纯内容宽度
-        contentWidth = self.width - first.marginLeft - second.marginRight - first.marginRight - second.marginLeft;
+        contentWidth = self.width - first.marginLeft - second.marginRight - first.marginRight - second.marginLeft -  [self.padding tm_floatAtIndex:1] -  [self.padding tm_floatAtIndex:3];
         // 剩余内容宽度
         CGFloat lastContentWidth = contentWidth;
         CGFloat firstHeight = first.itemFrame.size.height;
@@ -76,7 +118,13 @@
         if (0 < ratio && 100 >= ratio) {
             elementWidth = ceilf(contentWidth * ratio / 100);
         }
-        [first setItemFrame:CGRectMake(first.marginTop, first.marginLeft, elementWidth, firstHeight)];
+        if (self.headerItemModel) {
+            [first setItemFrame:CGRectMake(first.marginLeft + [self.padding tm_floatAtIndex:3], first.marginTop + CGRectGetMaxY(self.headerItemModel.itemFrame) +  self.headerItemModel.marginBottom , elementWidth, firstHeight)];
+        }
+        else{
+            [first setItemFrame:CGRectMake(first.marginLeft + [self.padding tm_floatAtIndex:3], first.marginTop + [self.padding tm_floatAtIndex:0] , elementWidth, firstHeight)];
+        }
+        
         firstHeight = first.itemFrame.size.height;
         bottom = CGRectGetMaxY(first.itemFrame) + first.marginBottom;
         
@@ -104,13 +152,21 @@
         // 第二个
         elementWidth = lastContentWidth;
         // 重写高度，保证对齐
-        [second setItemFrame:CGRectMake(first.marginRight + second.marginLeft + CGRectGetMaxX(first.itemFrame),second.marginTop, elementWidth, rightHeight)];
+        if (self.headerItemModel) {
+            [second setItemFrame:CGRectMake(first.marginRight + second.marginLeft + CGRectGetMaxX(first.itemFrame) ,second.marginTop +[self.padding tm_floatAtIndex:0] +  CGRectGetMaxY(self.headerItemModel.itemFrame) + self.headerItemModel.marginBottom, elementWidth, rightHeight)];
+        }
+        else{
+            [second setItemFrame:CGRectMake(first.marginRight + second.marginLeft + CGRectGetMaxX(first.itemFrame) ,second.marginTop + [self.padding tm_floatAtIndex:0], elementWidth, rightHeight)];
+        }
+        
 
         bottom = MAX(CGRectGetMaxY(second.itemFrame) + second.marginBottom, bottom);
         //如果有第五个...
         if (fifth) {
+            //下一个版本再考虑好好把这里收拾一下吧
+            //.....T_T
             contentWidth = self.width - first.marginLeft - first.marginRight- third.marginLeft
-            - third.marginRight- fourth.marginLeft - fourth.marginRight - fifth.marginLeft - fifth.marginRight;
+            - third.marginRight- fourth.marginLeft - fourth.marginRight - fifth.marginLeft - fifth.marginRight - [self.padding tm_floatAtIndex:3] - [self.padding tm_floatAtIndex:1];
              lastContentWidth = contentWidth - CGRectGetWidth(first.itemFrame);
             if(useRows)
             {
@@ -164,7 +220,7 @@
         //如果就4个...
         else if (fourth) {
             contentWidth = self.width - first.marginLeft - first.marginRight- third.marginLeft
-            - third.marginRight- fourth.marginLeft - fourth.marginRight;
+            - third.marginRight- fourth.marginLeft - fourth.marginRight - [self.padding tm_floatAtIndex:3] - [self.padding tm_floatAtIndex:1];
             lastContentWidth = contentWidth - CGRectGetWidth(first.itemFrame);
             if(useRows)
             {
@@ -206,7 +262,8 @@
         }
         //如果就3个...
         else if (third) {
-            contentWidth = self.width - first.marginLeft - first.marginRight - third.marginLeft - third.marginRight;
+            contentWidth = self.width - first.marginLeft - first.marginRight - third.marginLeft - third.marginRight
+            - [self.padding tm_floatAtIndex:3] - [self.padding tm_floatAtIndex:1];
             lastContentWidth = contentWidth - CGRectGetWidth(first.itemFrame);
             CGFloat elementWidth = lastContentWidth;
             CGFloat ratio = [[self.cols tm_safeObjectAtIndex:2] integerValue];
@@ -228,9 +285,16 @@
         [first setItemFrame:CGRectMake(first.marginLeft, first.marginTop, contentWidth, first.itemFrame.size.height)];
         bottom = first.itemFrame.origin.y + first.itemFrame.size.height + first.marginBottom;
     }
+    if (self.footerItemModel) {
+        contentWidth = self.width - self.footerItemModel.marginLeft  - self.footerItemModel.marginRight -  [self.padding tm_floatAtIndex:1] -  [self.padding tm_floatAtIndex:3];
+        self.footerItemModel.itemFrame = CGRectMake(self.footerItemModel.marginLeft + [self.padding tm_floatAtIndex:3] , self.footerItemModel.marginTop + bottom, contentWidth, self.footerItemModel.itemFrame.size.height);
+        bottom = CGRectGetMaxY(self.footerItemModel.itemFrame) + self.footerItemModel.marginBottom;
+    }
+    
     if (!(self.aspectRatio && self.aspectRatio.length > 0 &&  [self.aspectRatio floatValue] > 0.f)) {
         self.height = bottom;
     }
+    self.height += [self.padding tm_floatAtIndex:2];
     if (self.bgImgURL && self.bgImgURL.length > 0) {
         self.bgImageView.frame = CGRectMake(0, 0, self.width, self.height);
         [self.bgImageView sd_setImageWithURL:[NSURL URLWithString:self.bgImgURL]];

@@ -35,7 +35,7 @@ typedef NS_ENUM(NSUInteger,TangramFlowLayoutBgImageScaleType)
 // Only for first row,if `autoFill` is true，flowlayout will change the number of columns to fill a row,
 // when the count of `itemModels` less than the number of columns
 @property   (nonatomic, assign) BOOL             autoFill;
-// id
+//id
 @property   (nonatomic, strong) NSString        *layoutLoadAPI;
 // Background Image View
 @property   (nonatomic, strong) UIImageView     *bgImageView;
@@ -55,5 +55,13 @@ typedef NS_ENUM(NSUInteger,TangramFlowLayoutBgImageScaleType)
 @property   (nonatomic, strong) NSDictionary    *subLayoutDict;
 
 @property   (nonatomic, strong) NSArray         *subLayoutIdentifiers;
+
+@property   (nonatomic, assign) BOOL enableMarginDeduplication;
+
+@property   (nonatomic, assign) CGFloat zIndex;
+
+@property   (nonatomic, assign) BOOL disableUserInteraction;
+
+@property   (nonatomic, assign) BOOL enableInnerZIndexLayout;
 
 @end

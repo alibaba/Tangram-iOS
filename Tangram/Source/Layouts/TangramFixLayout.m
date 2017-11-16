@@ -8,15 +8,12 @@
 
 #import "TangramFixLayout.h"
 #import "TangramItemModelProtocol.h"
-//#import "UIViewEX.h"
-//#import "NSArrayEX.h"
 #import "TangramView.h"
 #import "UIImageView+WebCache.h"
-//#import "NSDictionaryEX.h"
-//#import "NSStringEX.h"
 #import "TangramContext.h"
-#import "TMUtils.h"
 #import "TangramEvent.h"
+#import "TMUtils.h"
+#import "UIView+Tangram.h"
 
 @interface TangramFixLayout()
 
@@ -33,26 +30,6 @@
 @implementation TangramFixLayout
 
 @synthesize itemModels  = _itemModels;
-
-- (CGFloat)width
-{
-    return self.frame.size.width;
-}
-
-- (void)setWidth:(CGFloat)width
-{
-    self.frame = CGRectMake(self.frame.origin.x, self.frame.origin.y, width, self.frame.size.height);
-}
-
-- (CGFloat)height
-{
-    return self.frame.size.height;
-}
-
-- (void)setHeight:(CGFloat)height
-{
-    self.frame = CGRectMake(self.frame.origin.x, self.frame.origin.y, self.frame.size.width, height);
-}
 
 - (instancetype)init
 {
@@ -133,7 +110,7 @@
             }
             lastModel = model;
         }
-        self.scrollView.frame = CGRectMake(0, 0, self.superview.frame.size.width, height);
+        self.scrollView.frame = CGRectMake(0, 0, self.superview.width, height);
         if ([lastModel respondsToSelector:@selector(marginRight)]) {
             self.scrollView.contentSize = CGSizeMake(lastModel.itemFrame.origin.x + lastModel.itemFrame.size.width + lastModel.marginRight + [self.padding tm_floatAtIndex:1], height);
         }
@@ -141,7 +118,7 @@
             self.scrollView.contentSize = CGSizeMake(lastModel.itemFrame.origin.x + lastModel.itemFrame.size.width + [self.padding tm_floatAtIndex:1], height);
         }
         
-        self.width = self.superview.frame.size.width;
+        self.width = self.superview.width;
     }
     else{
         //保持老逻辑不动
@@ -252,12 +229,12 @@
     self.height = 0.f;
     self.animating = YES;
     for (UIView *view in self.subviews) {
-        view.frame = CGRectMake(view.frame.origin.x, view.frame.origin.y - self.layoutHeight, view.frame.size.width, view.frame.size.height);
+        view.top -= self.layoutHeight;
     }
     [UIView animateWithDuration:self.animationDuration delay:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
         self.height = self.layoutHeight;
         for (UIView *view in self.subviews) {
-        view.frame = CGRectMake(view.frame.origin.x, view.frame.origin.y + self.layoutHeight, view.frame.size.width, view.frame.size.height);
+            view.top += self.layoutHeight;
         }
     } completion:^(BOOL finished) {
         self.animating = NO;
@@ -285,11 +262,11 @@
             self.alpha = 0.f;
         }
         for (UIView *view in self.subviews) {
-            view.frame = CGRectMake(view.frame.origin.x, view.frame.origin.y - self.layoutHeight, view.frame.size.width, view.frame.size.height);
+            view.top -= self.layoutHeight;
         }
     } completion:^(BOOL finished) {
         for (UIView *view in self.subviews) {
-            view.frame = CGRectMake(view.frame.origin.x, view.frame.origin.y + self.layoutHeight, view.frame.size.width, view.frame.size.height);
+            view.top += self.layoutHeight;
         }
         self.height = self.layoutHeight;
         self.hidden = YES;

@@ -7,6 +7,7 @@
 //
 
 #import "TangramDragableLayout.h"
+#import "UIView+Tangram.h"
 #import "TangramItemModelProtocol.h"
 #import "TangramView.h"
 @interface TangramDragableLayout ()
@@ -82,12 +83,12 @@
     [UIView animateWithDuration:0.3 animations:^{
         __strong typeof(wself) sself = wself;
         if (sself) {
-            if (sself.superview.center.x < sself.center.x) {
+            if (sself.superview.centerX < sself.centerX) {
                 // 滑向右边贴边
-                sself.frame = CGRectMake(sself.superview.frame.size.width - sself.frame.size.width, sself.frame.origin.y, sself.frame.size.width,sself.frame.size.height);
+                sself.right = sself.superview.width;
             } else {
                 // 滑向左边贴边
-                sself.frame = CGRectMake(0, sself.frame.origin.y, sself.frame.size.width,sself.frame.size.height);
+                sself.left = 0.f;
             }
             //sself.originPoint = sself.frame.origin;
 //            CGFloat topEdge = 0.f;

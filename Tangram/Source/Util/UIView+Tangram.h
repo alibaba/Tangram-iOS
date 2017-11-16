@@ -60,4 +60,18 @@
  */
 @property (nonatomic) CGFloat height;
 
+/**
+ * Shortcut for center.x
+ *
+ * Sets center.x = centerX
+ */
+@property (nonatomic) CGFloat centerX;
+
+/**
+ * Shortcut for center.y
+ *
+ * Sets center.y = centerY
+ */
+@property (nonatomic) CGFloat centerY;
+
 @end

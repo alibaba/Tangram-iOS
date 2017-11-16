@@ -11,8 +11,9 @@
 #import "TangramView.h"
 #import "UIImageView+WebCache.h"
 #import "SDWebImageManager.h"
-#import "TMUtils.h"
 #import "TangramEvent.h"
+#import "UIView+Tangram.h"
+#import "TMUtils.h"
 
 @interface TangramFlowLayout()
 
@@ -34,29 +35,12 @@
 
 @property (nonatomic, strong) NSString  *subLayoutIndex;
 
+@property (nonatomic, strong) NSMutableDictionary  *zIndexItemDict;
+
 @end
 @implementation TangramFlowLayout
 @synthesize itemModels  = _itemModels;
 
-- (CGFloat)width
-{
-    return self.frame.size.width;
-}
-
-- (void)setWidth:(CGFloat)width
-{
-    self.frame = CGRectMake(self.frame.origin.x, self.frame.origin.y, width, self.frame.size.height);
-}
-
-- (CGFloat)height
-{
-    return self.frame.size.height;
-}
-
-- (void)setHeight:(CGFloat)height
-{
-    self.frame = CGRectMake(self.frame.origin.x, self.frame.origin.y, self.frame.size.width, height);
-}
 - (NSMutableDictionary *)layoutModelDict
 {
     if (nil == _layoutModelDict) {
@@ -64,7 +48,13 @@
     }
     return _layoutModelDict;
 }
-
+- (NSMutableDictionary *)zIndexItemDict
+{
+    if (nil == _zIndexItemDict) {
+        _zIndexItemDict = [[NSMutableDictionary alloc]init];
+    }
+    return _zIndexItemDict;
+}
 -(UIImageView *)bgImageView
 {
     if (_bgImageView == nil) {
@@ -81,49 +71,29 @@
     return @"tangram_layout_flow";
 }
 
-//- (void)setItemModels:(NSArray *)itemModels
-//{
-//    NSMutableArray *toBeAddedItemModels = [[NSMutableArray alloc]init];
-//    NSMutableArray *mutableItemModels = [itemModels mutableCopy];
-//    //根据Model的position 插入指定位置
-//    for (NSObject<TangramItemModelProtocol> *model in mutableItemModels) {
-//        if ([model respondsToSelector:@selector(position)] &&  [[model position] isKindOfClass:[NSString class]] &&[model position].length > 0) {
-//            [toBeAddedItemModels safeAddObject:model];
-//        }
-//    }
-//    for (NSObject<TangramItemModelProtocol> *model in toBeAddedItemModels) {
-//        [mutableItemModels removeObject:model];
-//        if ([[model position] integerValue] > mutableItemModels.count) {
-//            [mutableItemModels safeInsertObject:model atIndex:mutableItemModels.count];
-//        }
-//        else{
-//            [mutableItemModels safeInsertObject:model atIndex:[[model position] integerValue]];
-//        }
-//    }
-//    self.contentItemModelCount = itemModels.count;
-//    if (self.headerItemModel && ![self.itemModels containsObject:self.headerItemModel]) {
-//        [mutableItemModels insertObject:self.headerItemModel atIndex:0];
-//    }
-//    if (self.footerItemModel && ![self.itemModels containsObject:self.footerItemModel]) {
-//        [mutableItemModels tm_safeAddObject:self.footerItemModel];
-//    }
-//    _itemModels = [mutableItemModels copy];
-//}
-
-- (void)setHeaderItemModel:(NSObject<TangramItemModelProtocol> *)headerItemModel
+- (void)setItemModels:(NSArray *)itemModels
 {
-    _headerItemModel = headerItemModel;
-    NSMutableArray *mutableItemModels = [self.itemModels mutableCopy];
+    NSMutableArray *toBeAddedItemModels = [[NSMutableArray alloc]init];
+    NSMutableArray *mutableItemModels = [itemModels mutableCopy];
+    //根据Model的position 插入指定位置
+    for (NSObject<TangramItemModelProtocol> *model in mutableItemModels) {
+        if ([model respondsToSelector:@selector(position)] &&  [[model position] isKindOfClass:[NSString class]] &&[model position].length > 0) {
+            [toBeAddedItemModels tm_safeAddObject:model];
+        }
+    }
+    for (NSObject<TangramItemModelProtocol> *model in toBeAddedItemModels) {
+        [mutableItemModels removeObject:model];
+        if ([[model position] integerValue] > mutableItemModels.count) {
+            [mutableItemModels tm_safeInsertObject:model atIndex:mutableItemModels.count];
+        }
+        else{
+            [mutableItemModels tm_safeInsertObject:model atIndex:[[model position] integerValue]];
+        }
+    }
+    self.contentItemModelCount = itemModels.count;
     if (self.headerItemModel && ![self.itemModels containsObject:self.headerItemModel]) {
         [mutableItemModels insertObject:self.headerItemModel atIndex:0];
     }
-    _itemModels = [mutableItemModels copy];
-}
-
-- (void)setFooterItemModel:(NSObject<TangramItemModelProtocol> *)footerItemModel
-{
-    _footerItemModel = footerItemModel;
-    NSMutableArray *mutableItemModels = [self.itemModels mutableCopy];
     if (self.footerItemModel && ![self.itemModels containsObject:self.footerItemModel]) {
         [mutableItemModels tm_safeAddObject:self.footerItemModel];
     }
@@ -172,6 +142,57 @@
 {
     [self addSubview:footerView];
 }
+
+- (void)addSubView:(UIView *)view withModel:(NSObject<TangramItemModelProtocol> *)model
+{
+    if (self.enableInnerZIndexLayout == NO) {
+        [self addSubview:view];
+        return;
+    }
+    if ([model respondsToSelector:@selector(zIndex)] && model.zIndex > 0) {
+        NSMutableArray *zIndexMutableArray = [self.zIndexItemDict tm_safeObjectForKey:[NSString stringWithFormat:@"%ld",(long)(model.zIndex)] class:[NSMutableArray class]];
+        if (zIndexMutableArray == nil) {
+            zIndexMutableArray = [[NSMutableArray alloc]init];
+           [self.zIndexItemDict  tm_safeSetObject:zIndexMutableArray forKey:[NSString stringWithFormat:@"%ld",(long)(model.zIndex)]];
+        }
+        [zIndexMutableArray tm_safeAddObject:view];
+    }
+    else{
+        NSMutableArray *zIndexMutableArray = [self.zIndexItemDict tm_safeObjectForKey:@"0" class:[NSMutableArray class]];
+        if (zIndexMutableArray == nil) {
+            zIndexMutableArray = [[NSMutableArray alloc]init];
+            [self.zIndexItemDict  tm_safeSetObject:zIndexMutableArray forKey:@"0"];
+        }
+        [zIndexMutableArray tm_safeAddObject:view];
+    }
+    [self addSubview:view];
+    [self buildZIndexView];
+}
+
+- (void)buildZIndexView
+{
+    NSArray *zIndexArray  = [[self.zIndexItemDict allKeys] sortedArrayUsingComparator:^NSComparisonResult(id  _Nonnull obj1, id  _Nonnull obj2) {
+        
+        NSInteger firstNumber = [obj1 integerValue];
+        NSInteger secondNumber = [obj2 integerValue];
+        if (firstNumber > secondNumber) {
+            return  NSOrderedDescending;
+        }
+        else if(firstNumber < secondNumber){
+            return NSOrderedAscending ;
+        }
+        else{
+            return NSOrderedSame;
+        }
+    }];
+    for (NSString *zIndex in zIndexArray) {
+        NSMutableArray *zIndexMutableArray = [self.zIndexItemDict tm_safeObjectForKey:zIndex class:[NSMutableArray class]];
+        for (UIView *item in zIndexMutableArray) {
+            [self bringSubviewToFront:item];
+        }
+    }
+    
+}
 - (void)didMoveToSuperview
 {
     if ([self.superview isKindOfClass:[TangramView class]]) {
@@ -180,10 +201,6 @@
 }
 - (void)calculateLayout
 {
-    //默认一行, 和Android一致
-    if (self.numberOfColumns <= 0) {
-        self.numberOfColumns = 1;
-    }
     //抛出可异步加载的事件,暂时仅FlowLayout支持
     if ((self.loadType == TangramLayoutLoadTypeLoadOnce || self.loadType == TangramLayoutLoadTypeByPage) && self.loadAPI.length > 0) {
         TangramEvent *loadEvent = [[TangramEvent alloc]initWithTopic:@"requestItems" withTangramView:self.tangramView posterIdentifier:@"requestItems" andPoster:self];
@@ -195,13 +212,13 @@
         [self.tangramBus postEvent:loadEvent];
     }
     //先移除,最后再加上去
-//    if (self.subLayoutIdentifiers.count > 0) {
-//         [self removeUnuseSubLayouts];
-//    }
+    if (self.subLayoutIdentifiers.count > 0) {
+         [self removeUnuseSubLayouts];
+    }
     //如果说Model的数量为0 直接高度为0返回，不往下计算了
     //如果有header或者footer，但是items里面是空的，也不进行计算了
-    if (nil == self.itemModels) {
-        self.frame = CGRectMake(self.frame.origin.x, self.frame.origin.y, self.frame.size.width, 0.f);
+    if (nil == self.itemModels || 0 == self.contentItemModelCount) {
+        self.height = 0.f;
         return;
     }
     
@@ -298,7 +315,9 @@
                     totalGap -= (itemModel.colspan -1)*self.hGap;
                 }
                 CGFloat gap =  itemMarginLeft + lastItemMarginRight;
-                
+                if (self.enableMarginDeduplication) {
+                    gap = MAX(itemMarginLeft,lastItemMarginRight);
+                }
                 totalGap += gap;
                 lastItemModelInRow = itemModel;
                 if ([@"block" isEqualToString:itemModel.display]) {
@@ -431,6 +450,9 @@
                         itemMarginLeft += [self.padding tm_floatAtIndex:3];
                     }
                     [self setItemTop:lastItemModelBottom + itemMarginTop +CGRectGetMaxY(lastItemModel.itemFrame)+self.vGap withModel:itemModel];
+                    if (self.enableMarginDeduplication) {
+                        [self setItemTop:lastItemModelBottom + itemMarginTop +CGRectGetMaxY(lastItemModel.itemFrame)+self.vGap withModel:itemModel];
+                    }
                     [self setItemLeft:itemMarginLeft withModel:itemModel];
                 }
                 tmpLastItemModel = itemModel;
@@ -535,6 +557,9 @@
                         itemMarginTop += [self.padding tm_floatAtIndex:0];
                     }
                     CGFloat gap = (lastItemModelInRow) ? (lastItemModelRight + itemMarginLeft) : itemMarginLeft;
+                    if (self.enableMarginDeduplication) {
+                        gap = (lastItemModelInRow) ? MAX(lastItemModelRight,itemMarginLeft) : itemMarginLeft;
+                    }
                     [self setItemTop:itemMarginTop + startY withModel:itemModel];
                     [self setItemLeft:CGRectGetMaxX(lastItemModelInRow.itemFrame) + gap + self.hGap  withModel:itemModel];
                 }
@@ -560,6 +585,9 @@
                         itemMarginLeft += [self.padding tm_floatAtIndex:3];
                     }
                     [self setItemTop:lastItemModelBottom + itemMarginTop + CGRectGetMaxY(lastItemModel.itemFrame)+self.vGap withModel:itemModel];
+                    if (self.enableMarginDeduplication) {
+                        [self setItemTop:MAX(lastItemModelBottom,itemMarginTop) + CGRectGetMaxY(lastItemModel.itemFrame)+self.vGap withModel:itemModel];
+                    }
                     [self setItemLeft:itemMarginLeft withModel:itemModel];
                 }
                 // 后边几列
@@ -579,7 +607,13 @@
                         lastItemModelBottom = [lastItemModel marginBottom];
                     }
                     CGFloat gap = (lastItemModelInRow) ? lastItemMarginRight + itemMarginLeft : itemMarginLeft;
+                    if (self.enableMarginDeduplication) {
+                        gap = (lastItemModelInRow) ? MAX(lastItemMarginRight,itemMarginLeft) : itemMarginLeft;
+                    }
                     [self setItemTop:lastItemModelBottom + itemMarginTop + CGRectGetMaxY(lastItemModel.itemFrame)+self.vGap withModel:itemModel];
+                    if (self.enableMarginDeduplication) {
+                        [self setItemTop:MAX(lastItemModelBottom,itemMarginTop) + CGRectGetMaxY(lastItemModel.itemFrame)+self.vGap withModel:itemModel];
+                    }
                     [self setItemLeft:CGRectGetMaxX(lastItemModelInRow.itemFrame) + gap+self.hGap withModel:itemModel];
                 }
             }
@@ -644,7 +678,7 @@
                                 // 等比例缩放
                                 height = (self.width / image.size.width) * image.size.height;
                             }
-                            self.bgImageView.frame = CGRectMake(self.bgImageView.frame.origin.x, self.bgImageView.frame.origin.y, self.bgImageView.frame.size.width, height);
+                            self.bgImageView.height = height;
                             self.clipsToBounds = YES;
                         }
                     }];
@@ -660,7 +694,7 @@
         }
     }
     //加入组件化的卡片
-    //[self addSubLayouts];
+    [self addSubLayouts];
 }
 
 - (void)heightChangedWithElement:(UIView *)element model:(NSObject<TangramItemModelProtocol> *)model
@@ -739,56 +773,56 @@
     }
     //触发对subLayout的计算
     //首先让子layout去算自己的布局高度
-//    if (model.layoutIdentifierForLayoutModel.length > 0 && [self.subLayoutIdentifiers containsObject:model.layoutIdentifierForLayoutModel]) {
-//        [self buildInnerSubLayoutByModel:model];
-//    }
+    if ([model respondsToSelector:@selector(layoutIdentifierForLayoutModel)] && model.layoutIdentifierForLayoutModel.length > 0 && [self.subLayoutIdentifiers containsObject:model.layoutIdentifierForLayoutModel]) {
+        [self buildInnerSubLayoutByModel:model];
+    }
 }
 
 //此方法调用前需要保证itemModel的width是有值的
-//- (void)buildInnerSubLayoutByModel:(NSObject<TangramItemModelProtocol> *)itemModel
-//{
-//    UIView<TangramLayoutProtocol> *layout = [self.subLayoutDict tm_safeObjectForKey:itemModel.layoutIdentifierForLayoutModel];
-//    if (!layout || 0 == layout.itemModels.count) {
-//        return;
-//    }
-//    layout.width = itemModel.itemFrame.size.width;
-//    [layout calculateLayout];
-//    itemModel.itemFrame = CGRectMake(itemModel.itemFrame.origin.x, itemModel.itemFrame.origin.y, itemModel.itemFrame.size.width, layout.height);
-//    [self.layoutModelDict tm_safeSetObject:itemModel forKey:itemModel.layoutIdentifierForLayoutModel];
-//}
+- (void)buildInnerSubLayoutByModel:(NSObject<TangramItemModelProtocol> *)itemModel
+{
+    UIView<TangramLayoutProtocol> *layout = [self.subLayoutDict tm_safeObjectForKey:itemModel.layoutIdentifierForLayoutModel];
+    if (!layout || 0 == layout.itemModels.count) {
+        return;
+    }
+    layout.width = itemModel.itemFrame.size.width;
+    [layout calculateLayout];
+    itemModel.itemFrame = CGRectMake(itemModel.itemFrame.origin.x, itemModel.itemFrame.origin.y, itemModel.itemFrame.size.width, layout.height);
+    [self.layoutModelDict tm_safeSetObject:itemModel forKey:itemModel.layoutIdentifierForLayoutModel];
+}
 
-//- (void)addSubLayouts
-//{
-//    for (NSString *identifier in self.subLayoutIdentifiers) {
-//        UIView<TangramItemModelProtocol> *layout = [self.subLayoutDict tm_safeObjectForKey:identifier];
-//        NSObject<TangramItemModelProtocol> *layoutModel = [self.layoutModelDict tm_safeObjectForKey:identifier];
-//        layout.frame = layoutModel.itemFrame;
-//        [self addSubview:layout];
-//    }
-//}
+- (void)addSubLayouts
+{
+    for (NSString *identifier in self.subLayoutIdentifiers) {
+        UIView<TangramItemModelProtocol> *layout = [self.subLayoutDict tm_safeObjectForKey:identifier];
+        NSObject<TangramItemModelProtocol> *layoutModel = [self.layoutModelDict tm_safeObjectForKey:identifier];
+        layout.frame = layoutModel.itemFrame;
+        [self addSubview:layout];
+    }
+}
 //移除不需要的subLayouts
-//- (void)removeUnuseSubLayouts
-//{
-//    //首先需要从自己的itemModels中遍历出来，不需要的Layout的identifier
-//    NSMutableSet *itemModelsLayoutIdentifiersSet = [[NSMutableSet alloc]init];
-//    for (NSObject<TangramItemModelProtocol> *itemModel in self.itemModels) {
-//        if ([itemModel respondsToSelector:@selector(layoutIdentifierForLayoutModel)] && itemModel.layoutIdentifierForLayoutModel.length > 0) {
-//            [itemModelsLayoutIdentifiersSet addObject:itemModel.layoutIdentifierForLayoutModel];
-//        }
-//    }
-//    NSMutableSet *pastlayoutIdentifiersSet = [[NSMutableSet setWithArray:self.subLayoutIdentifiers] mutableCopy];
-//    [pastlayoutIdentifiersSet minusSet:itemModelsLayoutIdentifiersSet];
-//    NSMutableArray *mutableSubLayoutIdentifiers = [self.subLayoutIdentifiers mutableCopy];
-//    NSMutableDictionary *mutableSubLayoutDict = [self.subLayoutDict mutableCopy];
-//    for (NSString *innerLayoutIdentifier in pastlayoutIdentifiersSet) {
-//        [mutableSubLayoutIdentifiers removeObject:innerLayoutIdentifier];
-//        UIView<TangramLayoutProtocol> *subLayout = [self.subLayoutDict tm_safeObjectForKey:innerLayoutIdentifier];
-//        [subLayout removeFromSuperview];
-//        [mutableSubLayoutDict removeObjectForKey:innerLayoutIdentifier];
-//    }
-//    self.subLayoutDict = [mutableSubLayoutDict copy];
-//    self.subLayoutIdentifiers = [mutableSubLayoutIdentifiers copy];
-//}
+- (void)removeUnuseSubLayouts
+{
+    //首先需要从自己的itemModels中遍历出来，不需要的Layout的identifier
+    NSMutableSet *itemModelsLayoutIdentifiersSet = [[NSMutableSet alloc]init];
+    for (NSObject<TangramItemModelProtocol> *itemModel in self.itemModels) {
+        if ([itemModel respondsToSelector:@selector(layoutIdentifierForLayoutModel)] && itemModel.layoutIdentifierForLayoutModel.length > 0) {
+            [itemModelsLayoutIdentifiersSet addObject:itemModel.layoutIdentifierForLayoutModel];
+        }
+    }
+    NSMutableSet *pastlayoutIdentifiersSet = [[NSMutableSet setWithArray:self.subLayoutIdentifiers] mutableCopy];
+    [pastlayoutIdentifiersSet minusSet:itemModelsLayoutIdentifiersSet];
+    NSMutableArray *mutableSubLayoutIdentifiers = [self.subLayoutIdentifiers mutableCopy];
+    NSMutableDictionary *mutableSubLayoutDict = [self.subLayoutDict mutableCopy];
+    for (NSString *innerLayoutIdentifier in pastlayoutIdentifiersSet) {
+        [mutableSubLayoutIdentifiers removeObject:innerLayoutIdentifier];
+        UIView<TangramLayoutProtocol> *subLayout = [self.subLayoutDict tm_safeObjectForKey:innerLayoutIdentifier];
+        [subLayout removeFromSuperview];
+        [mutableSubLayoutDict removeObjectForKey:innerLayoutIdentifier];
+    }
+    self.subLayoutDict = [mutableSubLayoutDict copy];
+    self.subLayoutIdentifiers = [mutableSubLayoutIdentifiers copy];
+}
 
 
 @end

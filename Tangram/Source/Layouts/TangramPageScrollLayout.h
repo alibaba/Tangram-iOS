@@ -47,7 +47,7 @@ typedef NS_ENUM(NSUInteger,IndicatorStyleType)
 // Indicator position in vertical
 @property (nonatomic, assign) IndicatorPositionType indicatorPosition;
 // Auto scroll time.
-@property (nonatomic, assign) NSTimeInterval        autoScrollTime;
+@property (nonatomic, assign) NSTimeInterval         autoScrollTime;
 // Has more Jump Action
 @property (nonatomic, strong) NSString              *hasMoreAction;
 // TangramBus
@@ -55,11 +55,11 @@ typedef NS_ENUM(NSUInteger,IndicatorStyleType)
 // Gap in horizontal direction
 @property (nonatomic, assign) CGFloat               hGap;
 // Whether infinite loop. Only
-@property  (nonatomic, assign) BOOL                 infiniteLoop;
+@property  (nonatomic, assign) BOOL                infiniteLoop;
 // Load More ImageUrl
 @property   (nonatomic, strong) NSString            *loadMoreImgUrl;
 // Indicator style type
-@property   (nonatomic, assign) IndicatorStyleType  indicatorStyleType;
+@property   (nonatomic, assign) IndicatorStyleType indicatorStyleType;
 // Page Height for every element.
 @property   (nonatomic, assign) CGFloat             pageHeight;
 // Page Height for every element. If `pageWidth` is 0, This pageScroll will scroll by page(pagingEnabled = YES).
@@ -81,5 +81,18 @@ typedef NS_ENUM(NSUInteger,IndicatorStyleType)
 @property   (nonatomic, strong) NSArray             *pageMargin;
 @property   (nonatomic, strong) NSString            *layoutLoadAPI;
 
+@property   (nonatomic, strong) NSString            *bgImgURL;
+
+@property   (nonatomic, assign) CGFloat             zIndex;
+
+//启用margin去重，留个坑，滚动布局暂时不做处理
+//@property   (nonatomic, assign) BOOL enableMarginDeduplication;
+
 @end
 
+@protocol TangramPageScrollLayoutDelegate <NSObject>
+//当滑动到某一页的时候会调用
+-(void)layout:(TangramPageScrollLayout *)layout atIndex:(NSUInteger)index;
+
+
+@end

@@ -9,7 +9,9 @@
 #import "TangramStickyLayout.h"
 #import "TangramView.h"
 #import "UIImageView+WebCache.h"
+#import "UIView+Tangram.h"
 #import "TMUtils.h"
+#import "TangramEvent.h"
 
 @interface TangramStickyLayout ()
 
@@ -47,9 +49,9 @@
         height = CGRectGetMaxY(model.itemFrame);
     }
     //self.width = width;
-    self.frame = CGRectMake(self.frame.origin.x, self.frame.origin.y, self.frame.size.width, height);
+    self.height = height;
     if (self.bgImgURL && self.bgImgURL.length > 0) {
-        self.bgImageView.frame = CGRectMake(0, 0, self.frame.size.width, self.frame.size.height);
+        self.bgImageView.frame = CGRectMake(0, 0, self.width, self.height);
         [self.bgImageView sd_setImageWithURL:[NSURL URLWithString:self.bgImgURL]];
     }
     [self.superview bringSubviewToFront:self];
@@ -122,4 +124,12 @@
     self.layoutIdentifier = identifier;
 }
 
+- (void)setEnterFloatStatus:(BOOL)enterFloatStatus
+{
+    if (_enterFloatStatus == NO && enterFloatStatus == YES) {
+        TangramEvent *captureImageEvent = [[TangramEvent alloc]initWithTopic:TangramStickyEnterEvent withTangramView:((TangramView *)self.superview) posterIdentifier:nil andPoster:self];
+        [self.tangramBus postEvent:captureImageEvent];
+    }
+    _enterFloatStatus = enterFloatStatus;
+}
 @end

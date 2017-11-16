@@ -7,13 +7,11 @@
 //
 
 #import "TangramWaterFlowLayout.h"
-//#import "NSArrayEX.h"
-//#import "UIViewEX.h"
-//#import "NSDictionaryEX.h"
-#import "TMUtils.h"
 #import "TangramItemModelProtocol.h"
 #import "TangramView.h"
 #import "UIImageView+WebCache.h"
+#import "TMUtils.h"
+#import "UIView+Tangram.h"
 
 @interface TangramWaterFlowLayout()
 @property (nonatomic, assign) CGRect                 minRect;
@@ -37,25 +35,7 @@
 @synthesize itemModels  = _itemModels;
 @synthesize cellWidth   = _cellWidth;
 
-- (CGFloat)width
-{
-    return self.frame.size.width;
-}
 
-- (void)setWidth:(CGFloat)width
-{
-    self.frame = CGRectMake(self.frame.origin.x, self.frame.origin.y, width, self.frame.size.height);
-}
-
-- (CGFloat)height
-{
-    return self.frame.size.height;
-}
-
-- (void)setHeight:(CGFloat)height
-{
-    self.frame = CGRectMake(self.frame.origin.x, self.frame.origin.y, self.frame.size.width, height);
-}
 - (NSString *)identifier
 {
     return self.layoutIdentifier;
@@ -70,26 +50,26 @@
     return @"tangram_layout_waterFlow";
 }
 
-//- (void)setItemModels:(NSArray *)itemModels
-//{
-//    NSMutableArray *toBeAddedItemModels = [[NSMutableArray alloc]init];
-//    NSMutableArray *mutableItemModels = [itemModels mutableCopy];
-//    for (NSObject<TangramItemModelProtocol> *model in mutableItemModels) {
-//        if ([model respondsToSelector:@selector(position)] &&  [[model position] isKindOfClass:[NSString class]] &&[model position].length > 0) {
-//            [toBeAddedItemModels tm_safeAddObject:model];
-//        }
-//    }
-//    for (NSObject<TangramItemModelProtocol> *model in toBeAddedItemModels) {
-//        [mutableItemModels removeObject:model];
-//        if ([[model position] integerValue] > mutableItemModels.count) {
-//            [mutableItemModels safeInsertObject:model atIndex:mutableItemModels.count];
-//        }
-//        else{
-//            [mutableItemModels safeInsertObject:model atIndex:[[model position] integerValue]];
-//        }
-//    }
-//    _itemModels = [mutableItemModels copy];
-//}
+- (void)setItemModels:(NSArray *)itemModels
+{
+    NSMutableArray *toBeAddedItemModels = [[NSMutableArray alloc]init];
+    NSMutableArray *mutableItemModels = [itemModels mutableCopy];
+    for (NSObject<TangramItemModelProtocol> *model in mutableItemModels) {
+        if ([model respondsToSelector:@selector(position)] &&  [[model position] isKindOfClass:[NSString class]] &&[model position].length > 0) {
+            [toBeAddedItemModels tm_safeAddObject:model];
+        }
+    }
+    for (NSObject<TangramItemModelProtocol> *model in toBeAddedItemModels) {
+        [mutableItemModels removeObject:model];
+        if ([[model position] integerValue] > mutableItemModels.count) {
+            [mutableItemModels tm_safeInsertObject:model atIndex:mutableItemModels.count];
+        }
+        else{
+            [mutableItemModels tm_safeInsertObject:model atIndex:[[model position] integerValue]];
+        }
+    }
+    _itemModels = [mutableItemModels copy];
+}
 - (NSString *)position
 {
     return @"";
@@ -136,7 +116,7 @@
 - (CGFloat)cellWidth
 {
     if (0 == _cellWidth) {
-        _cellWidth = ceilf((self.width - self.marginLeft - self.marginRight - self.hGap * (self.numberOfColumns - 1)) / self.numberOfColumns);
+        _cellWidth = ceilf((self.width - [self.padding tm_floatAtIndex:1] - [self.padding tm_floatAtIndex:3] - self.hGap * (self.numberOfColumns - 1)) / self.numberOfColumns);
     }
     return _cellWidth;
 }
@@ -160,41 +140,69 @@
     self.minRect = CGRectZero;
     self.maxRect = CGRectZero;
     [self.bottomRects removeAllObjects];
-    CGFloat cellX   = self.marginLeft;
+    CGFloat cellX   = 0.f;
     CGFloat cellY   = 0.f;
     for (NSUInteger i = 0; i < self.itemModels.count; i++) {
         NSObject<TangramItemModelProtocol> *itemModel = [self.itemModels tm_safeObjectAtIndex:i];
         cellX   = CGRectGetMinX(self.minRect);
         //第一行不会受vGap的影响
         if (i  / self.numberOfColumns == 0) {
-            cellY   = CGRectGetMaxY(self.minRect) + [itemModel marginTop];
+            cellY   = CGRectGetMaxY(self.minRect) + [itemModel marginTop] + [self.padding tm_floatAtIndex:0];
         }
         else{
             cellY   = CGRectGetMaxY(self.minRect) + [itemModel marginTop] + self.vGap ;
         }
-        
-        [itemModel setItemFrame:CGRectMake(cellX , cellY, self.cellWidth, itemModel.itemFrame.size.height)];
+        //第一个组件给一个padding 的影响
+        if (i == 0) {
+            cellX += [self.padding tm_floatAtIndex:3];
+            if ([itemModel.display isEqualToString:@"block"]) {
+                [itemModel setItemFrame:CGRectMake(cellX + [itemModel marginLeft]  , cellY, self.width - [itemModel marginRight] - [itemModel marginLeft] - [self.padding tm_floatAtIndex:3] -  [self.padding tm_floatAtIndex:1] , itemModel.itemFrame.size.height)];
+            }
+            else{
+                 [itemModel setItemFrame:CGRectMake(cellX + [itemModel marginLeft]  , cellY, self.cellWidth, itemModel.itemFrame.size.height)];
+            }
+        }
+        else{
+            [itemModel setItemFrame:CGRectMake(cellX + [itemModel marginLeft]  , cellY, self.cellWidth, itemModel.itemFrame.size.height)];
+        }
         CGRect cellFrame = CGRectMake(itemModel.itemFrame.origin.x, itemModel.itemFrame.origin.y, itemModel.itemFrame.size.width, itemModel.itemFrame.size.height + [itemModel marginBottom]);
         // 看看是不是变成最大的了
         if (CGRectGetMaxY(self.maxRect) < CGRectGetMaxY(cellFrame) + [itemModel marginBottom]) {
             self.maxRect = cellFrame;
         }
         // 更新最下边一行的记录字典，用rect.x做key，保证不重复
-        [self.bottomRects setObject:[NSValue valueWithCGRect:cellFrame]  forKey:[NSString stringWithFormat:@"%f", CGRectGetMinX(cellFrame)]];
+        [self.bottomRects tm_safeSetObject:[NSValue valueWithCGRect:cellFrame] forKey:[NSString stringWithFormat:@"%f", CGRectGetMinX(cellFrame)]];
         // 先随便给一个值，然后去最后一行找
         self.minRect = cellFrame;
         // 还没排满的时候
         if (self.numberOfColumns > self.bottomRects.count) {
-            self.minRect = CGRectMake(CGRectGetMaxX(self.minRect) + [itemModel marginLeft] + self.hGap , 0.f, 0.f, 0.f);
+            self.minRect = CGRectMake(CGRectGetMaxX(self.minRect) + self.hGap , 0.f, 0.f, 0.f);
         }
+        //获取一个对象
+        NSValue *value = [self.bottomRects.allValues firstObject];
+        //获取到它的值
+        CGFloat anyY = CGRectGetMaxY([value CGRectValue]);
+        BOOL allSameY = YES;
         for (NSValue *value in self.bottomRects.allValues) {
             CGRect rect = [value CGRectValue];
+            if (CGRectGetMaxY([value CGRectValue]) != anyY) {
+                allSameY = NO;
+            }
             if (CGRectGetMaxY(rect) < CGRectGetMaxY(self.minRect)) {
                 self.minRect = rect;
             }
         }
+        if (allSameY &&  self.bottomRects.allValues.count >= 2) {
+            for (NSValue *value in self.bottomRects.allValues) {
+                CGRect rect = [value CGRectValue];
+                if (CGRectGetMinX(rect) < CGRectGetMinX(self.minRect)) {
+                    self.minRect = rect;
+                }
+            }
+        }
+        
     }
-    self.height = MAX(CGRectGetMaxY(self.maxRect), CGRectGetMaxY(self.minRect));
+    self.height = MAX(CGRectGetMaxY(self.maxRect), CGRectGetMaxY(self.minRect)) + [self.padding tm_floatAtIndex:2];
     if (self.bgImgURL && self.bgImgURL.length > 0) {
         self.bgImageView.frame = CGRectMake(0, 0, self.width, self.height);
         [self.bgImageView sd_setImageWithURL:[NSURL URLWithString:self.bgImgURL]];

@@ -6,25 +6,28 @@
 //  Copyright © 2015年 tmall.com. All rights reserved.
 //
 
+#define TangramStickyEnterEvent @"TangramStickyEnterEvent"
+
 #import "TangramItemModelProtocol.h"
 #import "TangramLayoutProtocol.h"
 
 @interface TangramStickyLayout : UIView<TangramLayoutProtocol>
-// If its true, this layout will stickybottom
-@property (nonatomic, assign) BOOL        stickyBottom;
-// Record origin y position .
-@property (nonatomic, assign) CGFloat     originalY;
-// Whether enter sticky status .
-@property (nonatomic, assign) BOOL        enterFloatStatus;
-// Margin , the sequence of top, right, bottom, left, the class type in array can be NSNumber or NSString
-@property (nonatomic, strong) NSArray     *margin;
-// Models Array , as protocol request.
-@property (nonatomic, strong) NSArray     *itemModels;
-// Extra offset in vertial position.
-@property (nonatomic, assign) CGFloat     extraOffset;
+//默认NO吸顶 YES吸底 
+@property (nonatomic, assign) BOOL stickyBottom;
+//暂未启用 -- 吸顶/吸底的终结Layoutid
+//@property (nonatomic, assign) NSString *endLayoutId;
+//记录原始的高度,为TangramView内部判断而准备
+@property (nonatomic, assign) CGFloat originalY;
+//是否进入"吸"的状态，为TangramView内部判断而准备
+@property (nonatomic, assign) BOOL enterFloatStatus;
+// Margin  top, right, bottom, left的顺序, 接收NSNumber / NSString
+@property (nonatomic, strong) NSArray         *margin;
+// Models数组，Protocol要求的
+@property (nonatomic, strong) NSArray         *itemModels;
+//针对吸顶但是需要离顶端/底端一定距离的情况，增加一个可设定的值
+@property (nonatomic, assign) CGFloat extraOffset;
+@property (nonatomic, weak)   TangramBus            *tangramBus;
 
-@property (nonatomic, weak)   TangramBus  *tangramBus;
-
-
+@property   (nonatomic, assign) CGFloat             zIndex;
 
 @end
