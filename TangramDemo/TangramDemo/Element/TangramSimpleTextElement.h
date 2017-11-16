@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "TangramElementHeightProtocol.h"
-#import "TMMuiLazyScrollView.h"
+#import <Tangram/TMMuiLazyScrollView.h>
 
 @interface TangramSimpleTextElement : UIView<TangramElementHeightProtocol,TMMuiLazyScrollViewCellProtocol>
 
