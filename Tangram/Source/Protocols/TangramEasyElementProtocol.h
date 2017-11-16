@@ -1,19 +1,21 @@
 //
 //  TangramEasyElementProtocol.h
-//  Pods
+//  Tangram
 //
-//  Created by xiaoxia on 2017/1/18.
-//
+//  Copyright (c) 2015-2017 alibaba. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
 #import "TangramDefaultItemModel.h"
+#import "TangramDefaultEventDelegate.h"
 #import "TangramLayoutProtocol.h"
-@class TangramBus;
+#import "TangramBus.h"
+
 
 @protocol TangramEasyElementProtocol <NSObject>
 
 @required
+
 //Get itemModel
 - (TangramDefaultItemModel *)tangramItemModel;
 //Set itemModel
@@ -21,11 +23,21 @@
 
 @optional
 
+// delegate
+- (id<TangramDefaultEventDelegate>)tangramEventDelegate;
+- (void)setTangramEventDelegate: (id<TangramDefaultEventDelegate>)delegate;
+
 // Bind layout
 - (void)setAtLayout: (UIView<TangramLayoutProtocol> *)layout;
 - (UIView<TangramLayoutProtocol> *)atLayout;
 
 // Bind TangramBus
 - (void)setTangramBus:(TangramBus *)tangramBus;
+
+- (void)buildControlNameByPrefix:(NSString *)prefix extraArgs:(NSDictionary *)args;
+
+- (void)setReadCacheInMainThread:(BOOL)mainThread;
+
+- (void)buildContent:(BOOL)shouldReload;
 
 @end

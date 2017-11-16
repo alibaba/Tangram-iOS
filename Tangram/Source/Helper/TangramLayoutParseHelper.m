@@ -1,11 +1,11 @@
 //
 //  TangramLayoutParseHelper.m
-//  Pods
+//  Tangram
 //
-//  Created by xiaoxia on 2017/1/3.
-//
+//  Copyright (c) 2015-2017 alibaba. All rights reserved.
 //
 //  快捷解析器
+
 #import "TangramLayoutParseHelper.h"
 #import "TangramFlowLayout.h"
 #import "TangramFixLayout.h"
@@ -13,25 +13,19 @@
 #import "TangramWaterFlowLayout.h"
 #import "TangramPageScrollLayout.h"
 #import "TangramSingleAndDoubleLayout.h"
+#import "TangramScrollFlowLayout.h"
+#import "TangramScrollWaterFlowLayout.h"
 #import "TMUtils.h"
-//#import "TMImageView.h"
+#import "NSString+Tangram.h"
+
+#define SCREEN_SIZE         [UIScreen mainScreen].bounds.size
+#define SCREEN_WIDTH        SCREEN_SIZE.width
+#define SCREEN_HEIGHT       SCREEN_SIZE.height
 
 @implementation TangramLayoutParseHelper
 
 + (UIView<TangramLayoutProtocol> *)layoutConfigByOriginLayout:(UIView<TangramLayoutProtocol> *)layout withDict:(NSDictionary *)dict
 {
-    //对于所有layout都适用的属性，不用放在plist的style中明确写出
-    //已知的一定会加载的属性有：id,bgColor,bgImgURL
-    layout.identifier = [dict tm_stringForKey:@"id"];
-    NSDictionary *styleDict = [dict tm_dictionaryForKey:@"style"];
-    NSString *backgroundColor = [styleDict tm_stringForKey:@"bgColor"];
-    if (backgroundColor.length > 0) {
-        layout.backgroundColor = [TangramLayoutParseHelper colorFromHexString:backgroundColor];
-    }
-    NSString *bgImgURL = [styleDict tm_stringForKey:@"bgImgUrl"];
-    if (bgImgURL.length > 0 && [layout respondsToSelector:@selector(setBgImgURL:)]) {
-        layout.bgImgURL = bgImgURL;
-    }
     if ([layout isKindOfClass:[TangramFlowLayout class]]) {
         layout = [TangramLayoutParseHelper praseFlowLayout:(TangramFlowLayout *)layout withDict:dict];
     }
@@ -68,14 +62,28 @@
             layout.margin = splitMarginArray;
         }
     }
-    NSArray *padding = [styleDict tm_arrayForKey:@"padding"];
-    layout.padding = padding;
-    NSString *originPaddingString = [styleDict tm_stringForKey:@"padding"];
-    if (padding.count  != 4 && originPaddingString.length > 3) {
-        NSString *splitString = [originPaddingString substringWithRange:NSMakeRange(1, originPaddingString.length-2)];
-        NSArray *splitPaddingArray = [splitString componentsSeparatedByString:@","];
-        if (splitPaddingArray.count == 4) {
-            layout.padding = splitPaddingArray;
+    layout.padding = [styleDict tm_arrayForKey:@"padding"];
+    if ((nil == layout.padding || 4 != [layout.padding count]) && [styleDict tm_stringForKey:@"padding"].length > 0) {
+        NSString *originalPaddingString = [styleDict tm_stringForKey:@"padding"];
+        NSMutableArray *mutablePaddingArray = [[NSMutableArray alloc]initWithCapacity:4];
+        originalPaddingString = [[originalPaddingString trim] substringWithRange:NSMakeRange(1, originalPaddingString.length - 2)];
+        NSArray *pArray = [originalPaddingString componentsSeparatedByString:@","];
+        for (NSUInteger i = 0 ; i < pArray.count ; i++) {
+            if (i == 4) {
+                break;
+            }
+            id onePadding = [pArray tm_safeObjectAtIndex:i];
+            NSNumber *onePaddingNumber = nil;
+            if ([onePadding isKindOfClass:[NSString class]]) {
+                onePaddingNumber =[NSNumber numberWithFloat:[[onePadding trim] floatValue]];
+            }
+            else if ([onePadding isKindOfClass:[NSNumber class]]) {
+                onePaddingNumber = onePadding;
+            }
+            [mutablePaddingArray tm_safeAddObject:onePaddingNumber];
+        }
+        if (mutablePaddingArray.count == 4) {
+            layout.padding = [mutablePaddingArray copy];
         }
     }
     layout.aspectRatio = [styleDict tm_stringForKey:@"aspectRatio"];
@@ -85,6 +93,8 @@
     layout.layoutLoadAPI = [dict tm_stringForKey:@"load"];
     layout.loadType = [dict tm_integerForKey:@"loadType"];
     layout.loadParams = [dict tm_dictionaryForKey:@"loadParams"];
+    layout.zIndex = [styleDict tm_floatForKey:@"zIndex"];
+    layout.enableInnerZIndexLayout = [styleDict tm_boolForKey:@"enableInnerZIndexLayout"];
     if ([[styleDict tm_stringForKey:@"bgScaleType"] isEqualToString:@"fitStart"]) {
         layout.bgScaleType = TangramFlowLayoutBgImageScaleTypeFitStart;
     }
@@ -93,6 +103,24 @@
     }
     if ([layout isKindOfClass:[TangramSingleAndDoubleLayout class]]) {
         ((TangramSingleAndDoubleLayout *)layout).rows = [styleDict tm_arrayForKey:@"rows"];
+    }
+    if ([styleDict tm_integerForKey:@"column"] > 0) {
+        layout.numberOfColumns = [styleDict tm_integerForKey:@"column"];
+    }
+    if ([layout isKindOfClass:[TangramScrollFlowLayout class]]) {
+        if (((TangramScrollFlowLayout *)layout).pagingLength != [styleDict tm_integerForKey:@"pageCount"]) {
+            ((TangramScrollFlowLayout *)layout).pagingLength = [styleDict tm_integerForKey:@"pageCount"];
+        }
+        ((TangramScrollFlowLayout *)layout).bgColors = [styleDict tm_arrayForKey:@"bgColors"];
+        ((TangramScrollFlowLayout *)layout).disableScroll = YES;
+        //((TangramScrollFlowLayout *)layout).pagingIndex = 0;
+        //原本的Tab布局，或者style里面配置了slideable，意味着可以滚动
+        if ([styleDict tm_boolForKey:@"slidable"] || [dict tm_boolForKey:@"canHorizontalScroll"]) {
+            ((TangramScrollFlowLayout *)layout).disableScroll = NO;
+        }
+    }
+    if ([styleDict tm_boolForKey:@"disableClick"] == YES) {
+        ((TangramFlowLayout *)layout).disableUserInteraction = YES;
     }
     return layout;
 }
@@ -110,23 +138,39 @@
             layout.margin = splitMarginArray;
         }
     }
-    NSArray *padding = [styleDict tm_arrayForKey:@"padding"];
-    layout.padding = padding;
-    NSString *originPaddingString = [styleDict tm_stringForKey:@"padding"];
-    if (padding.count  != 4 && originPaddingString.length > 3) {
-        NSString *splitString = [originPaddingString substringWithRange:NSMakeRange(1, originPaddingString.length-2)];
-        NSArray *splitPaddingArray = [splitString componentsSeparatedByString:@","];
-        if (splitPaddingArray.count == 4) {
-            layout.padding = splitPaddingArray;
+    layout.padding = [styleDict tm_arrayForKey:@"padding"];
+    if ((nil == layout.padding || 4 != [layout.padding count]) && [styleDict tm_stringForKey:@"padding"].length > 0) {
+        NSString *originalPaddingString = [styleDict tm_stringForKey:@"padding"];
+        NSMutableArray *mutablePaddingArray = [[NSMutableArray alloc]initWithCapacity:4];
+        originalPaddingString = [[originalPaddingString trim] substringWithRange:NSMakeRange(1, originalPaddingString.length - 2)];
+        NSArray *pArray = [originalPaddingString componentsSeparatedByString:@","];
+        for (NSUInteger i = 0 ; i < pArray.count ; i++) {
+            if (i == 4) {
+                break;
+            }
+            id onePadding = [pArray tm_safeObjectAtIndex:i];
+            NSNumber *onePaddingNumber = nil;
+            if ([onePadding isKindOfClass:[NSString class]]) {
+                onePaddingNumber =[NSNumber numberWithFloat:[[onePadding trim] floatValue]];
+            }
+            else if ([onePadding isKindOfClass:[NSNumber class]]) {
+                onePaddingNumber = onePadding;
+            }
+            [mutablePaddingArray tm_safeAddObject:onePaddingNumber];
+        }
+        if (mutablePaddingArray.count == 4) {
+            layout.padding = [mutablePaddingArray copy];
         }
     }
+    
     layout.aspectRatio = [styleDict tm_stringForKey:@"aspectRatio"];
     layout.indicatorGap = [styleDict tm_floatForKey:@"indicatorGap"];
     layout.indicatorImg1 = [styleDict tm_stringForKey:@"indicatorImg1"];
     layout.indicatorImg2 = [styleDict tm_stringForKey:@"indicatorImg2"];
     layout.autoScrollTime = [styleDict tm_floatForKey:@"autoScroll"]/1000.0;
     layout.layoutLoadAPI = [dict tm_stringForKey:@"load"];
-    if ([styleDict tm_stringForKey:@"infinite"].length > 0) {
+    layout.zIndex = [styleDict tm_floatForKey:@"zIndex"];
+    if ([styleDict tm_stringForKey:@"infiniteMinCount"].length > 0) {
         layout.infiniteLoop = YES;
     }
     if ([[styleDict tm_stringForKey:@"indicatorPosition"] isEqualToString:@"inside"]) {
@@ -154,7 +198,7 @@
     }
     layout.hasMoreAction = [styleDict tm_stringForKey:@"hasMoreAction"];
     layout.pageMargin = [styleDict tm_arrayForKey:@"pageMargin"];
-    layout.pageWidth = [UIScreen mainScreen].bounds.size.width * [styleDict tm_floatForKey:@"pageRatio"];
+    layout.pageWidth = SCREEN_WIDTH * [styleDict tm_floatForKey:@"pageRatio"];
     BOOL disableScale = [styleDict tm_boolForKey:@"disableScale"];
     CGFloat pageWidthInConfig = [styleDict tm_floatForKey:@"pageWidth"];
     if (pageWidthInConfig > 0.f) {
@@ -162,7 +206,7 @@
             layout.pageWidth = pageWidthInConfig;
         }
         else{
-            layout.pageWidth = pageWidthInConfig/375.f*[UIScreen mainScreen].bounds.size.width;
+            layout.pageWidth = pageWidthInConfig/375.f*SCREEN_WIDTH;
         }
     }
     CGFloat pageHeightInConfig = [styleDict tm_floatForKey:@"pageHeight"];
@@ -170,7 +214,7 @@
         layout.pageHeight = pageHeightInConfig;
     }
     else{
-        layout.pageHeight = pageHeightInConfig/375.f*[UIScreen mainScreen].bounds.size.width;
+        layout.pageHeight = pageHeightInConfig/375.f*SCREEN_WIDTH;
     }
     layout.hGap = [styleDict tm_floatForKey:@"hGap"];
     if ([[styleDict tm_stringForKey:@"hasIndicator"] isEqualToString:@"false"]) {
@@ -184,6 +228,12 @@
     layout.defaultIndicatorColor = [styleDict tm_stringForKey:@"defaultIndicatorColor"];
     layout.indicatorRadius = [styleDict tm_floatForKey:@"indicatorRadius"];
     layout.indicatorMargin = [styleDict tm_floatForKey:@"indicatorMargin"];
+    //height 和 width 仅会应用在dot类型
+    layout.indicatorHeight = [styleDict tm_floatForKey:@"indicatorHeight"];
+    if (layout.indicatorHeight > 0) {
+        // 需要根据layout.indicatorImg1图片宽高比计算，这里默认先乘以3
+        layout.indicatorWidth = layout.indicatorHeight * 3;
+    }
     if (layout.indicatorMargin == 0.f) {
         layout.indicatorMargin = 3.f;
     }
@@ -225,23 +275,39 @@
     else{
         layout.appearanceType = TangramFixAppearanceInline;
     }
+    layout.enableAlphaEffect = [styleDict tm_boolForKey:@"enableAlphaEffect"];
     layout.animationDuration = [styleDict tm_floatForKey:@"animationDuration"]/1000.f;
     layout.hGap = [styleDict tm_floatForKey:@"hGap"];
-    NSArray *padding = [styleDict tm_arrayForKey:@"padding"];
-    layout.padding = padding;
-    NSString *originPaddingString = [styleDict tm_stringForKey:@"padding"];
-    if (padding.count  != 4 && originPaddingString.length > 3) {
-        NSString *splitString = [originPaddingString substringWithRange:NSMakeRange(1, originPaddingString.length-2)];
-        NSArray *splitPaddingArray = [splitString componentsSeparatedByString:@","];
-        if (splitPaddingArray.count == 4) {
-            layout.padding = splitPaddingArray;
-        }
-    }
+    layout.padding = [styleDict tm_arrayForKey:@"padding"];
     id tmpValue = [styleDict tm_safeObjectForKey:@"retainScrollState"];
     if (tmpValue && ([tmpValue isKindOfClass:[NSNumber class]] || [tmpValue isKindOfClass:[NSString class]])) {
         layout.retainScrollState = [tmpValue boolValue];
     } else {
         layout.retainScrollState = YES;
+    }
+    layout.zIndex = [styleDict tm_floatForKey:@"zIndex"];
+    if ((nil == layout.padding || 4 != [layout.padding count]) && [styleDict tm_stringForKey:@"padding"].length > 0) {
+        NSString *originalPaddingString = [styleDict tm_stringForKey:@"padding"];
+        NSMutableArray *mutablePaddingArray = [[NSMutableArray alloc]initWithCapacity:4];
+        originalPaddingString = [[originalPaddingString trim] substringWithRange:NSMakeRange(1, originalPaddingString.length - 2)];
+        NSArray *pArray = [originalPaddingString componentsSeparatedByString:@","];
+        for (NSUInteger i = 0 ; i < pArray.count ; i++) {
+            if (i == 4) {
+                break;
+            }
+            id onePadding = [pArray tm_safeObjectAtIndex:i];
+            NSNumber *onePaddingNumber = nil;
+            if ([onePadding isKindOfClass:[NSString class]]) {
+                onePaddingNumber =[NSNumber numberWithFloat:[[onePadding trim] floatValue]];
+            }
+            else if ([onePadding isKindOfClass:[NSNumber class]]) {
+                onePaddingNumber = onePadding;
+            }
+            [mutablePaddingArray tm_safeAddObject:onePaddingNumber];
+        }
+        if (mutablePaddingArray.count == 4) {
+            layout.padding = [mutablePaddingArray copy];
+        }
     }
     return layout;
 }
@@ -250,6 +316,7 @@
 {
     NSDictionary *styleDict = [dict tm_dictionaryForKey:@"style"];
     NSArray *margin = [styleDict tm_arrayForKey:@"margin"];
+    layout.zIndex = [styleDict tm_floatForKey:@"zIndex"];
     NSString *originMarginString = [styleDict tm_stringForKey:@"margin"];
     if (margin.count  != 4 && originMarginString.length > 3) {
         NSString *splitString = [originMarginString substringWithRange:NSMakeRange(1, originMarginString.length-2)];
@@ -276,6 +343,7 @@
     layout.hGap = [styleDict tm_floatForKey:@"hGap"];
     layout.layoutLoadAPI = [dict tm_stringForKey:@"load"];
     layout.loadType = [dict tm_integerForKey:@"loadType"];
+    layout.zIndex = [styleDict tm_floatForKey:@"zIndex"];
     NSArray *margin = [styleDict tm_arrayForKey:@"margin"];
     layout.margin = margin;
     NSString *originMarginString = [styleDict tm_stringForKey:@"margin"];
@@ -286,19 +354,39 @@
             layout.margin = splitMarginArray;
         }
     }
+    //padding支持，以后抽出解析margin和padding的代码，很多地方会用到
+    layout.padding = [styleDict tm_arrayForKey:@"padding"];
+    if ((nil == layout.padding || 4 != [layout.padding count]) && [styleDict tm_stringForKey:@"padding"].length > 0) {
+        NSString *originalPaddingString = [styleDict tm_stringForKey:@"padding"];
+        NSMutableArray *mutablePaddingArray = [[NSMutableArray alloc]initWithCapacity:4];
+        originalPaddingString = [[originalPaddingString trim] substringWithRange:NSMakeRange(1, originalPaddingString.length - 2)];
+        NSArray *pArray = [originalPaddingString componentsSeparatedByString:@","];
+        for (NSUInteger i = 0 ; i < pArray.count ; i++) {
+            if (i == 4) {
+                break;
+            }
+            id onePadding = [pArray tm_safeObjectAtIndex:i];
+            NSNumber *onePaddingNumber = nil;
+            if ([onePadding isKindOfClass:[NSString class]]) {
+                onePaddingNumber =[NSNumber numberWithFloat:[[onePadding trim] floatValue]];
+            }
+            else if ([onePadding isKindOfClass:[NSNumber class]]) {
+                onePaddingNumber = onePadding;
+            }
+            [mutablePaddingArray tm_safeAddObject:onePaddingNumber];
+        }
+        if (mutablePaddingArray.count == 4) {
+            layout.padding = [mutablePaddingArray copy];
+        }
+    }
+    if ([layout isKindOfClass:[TangramScrollWaterFlowLayout class]]) {
+        ((TangramScrollWaterFlowLayout *)layout).pagingLength = [styleDict tm_integerForKey:@"pageCount"];
+        ((TangramScrollWaterFlowLayout *)layout).disableScroll = YES;
+        //原本的Tab布局，或者style里面配置了slideable，意味着可以滚动
+        if ([styleDict tm_boolForKey:@"slidable"] || [dict tm_boolForKey:@"canHorizontalScroll"]) {
+            ((TangramScrollWaterFlowLayout *)layout).disableScroll = NO;
+        }
+    }
     return layout;
 }
-
-//仅支持#FFFFFF (井号 + 6位 RGB颜色)
-+ (UIColor *)colorFromHexString:(NSString *)hexString {
-    if (![hexString isKindOfClass:[NSString class]]) {
-        return nil;
-    }
-    unsigned rgbValue = 0;
-    NSScanner *scanner = [NSScanner scannerWithString:hexString];
-    [scanner setScanLocation:1]; // bypass '#' character
-    [scanner scanHexInt:&rgbValue];
-    return [UIColor colorWithRed:((rgbValue & 0xFF0000) >> 16)/255.0 green:((rgbValue & 0xFF00) >> 8)/255.0 blue:(rgbValue & 0xFF)/255.0 alpha:1.0];
-}
 @end
-

@@ -1,14 +1,15 @@
 //
 //  TangramDataSourceHelper.h
-//  TmallClient4iOS-Tangram
+//  Tangram
 //
-//  Copyright © 2015 tmall.com. All rights reserved.
+//  Copyright (c) 2015-2017 tmall.com. All rights reserved.
 //
 //  There are three main functions in TangramDataSourceHelper
 //  1. JSON to Layout
 //  2. JSON to model
 //  3. Model to element
 //  Three functions executed by three generator. These three generator can be replaced.
+//
 
 #import <Foundation/Foundation.h>
 #import "TangramItemModelProtocol.h"
@@ -148,23 +149,19 @@
 
 /**
  Regist layout factory
-
- @param layoutFactoryClassName
  */
 + (void)registLayoutFactoryClassName:(NSString *)layoutFactoryClassName;
 
 /**
  Regist itemModel factory
-
- @param itemModelFactoryClassName
  */
 + (void)registItemModelFactoryClassName:(NSString *)itemModelFactoryClassName;
 
 /**
  Regist element factory
-
- @param elementFactoryClassName
  */
 + (void)registElementFactoryClassName:(NSString *)elementFactoryClassName;
+
 ////////////////////////////////Regist Factory class Method end/////////////////////////////////////
+
 @end
