@@ -15,11 +15,11 @@
 /**
  A UIView category required by LazyScrollView.
  */
-@interface UIView(TMMuiLazyScrollView)
+@interface UIView (TMMuiLazyScrollView)
 
 // A uniq string that identify a view, require to
 // be same as muiID of the model.
-@property (nonatomic, copy, nonnull) NSString *muiID;
+@property (nonatomic, copy, nullable) NSString *muiID;
 // A string used to identify a view that is reusable.
 @property (nonatomic, copy, nullable) NSString *reuseIdentifier;
 
@@ -36,16 +36,16 @@
 @protocol TMMuiLazyScrollViewDataSource <NSObject>
 
 @required
- // 0 by default.
+
+// 0 by default.
 - (NSUInteger)numberOfItemInScrollView:(nonnull TMMuiLazyScrollView *)scrollView;
 // Return the view model by spcial index.
 - (nonnull TMMuiRectModel *)scrollView:(nonnull TMMuiLazyScrollView *)scrollView
                       rectModelAtIndex:(NSUInteger)index;
 // You should render the item view here.
-// You should ALWAYS try to reuse views by setting each
-// view's reuseIdentifier.
-- (nullable UIView *)scrollView:(nonnull TMMuiLazyScrollView *)scrollView
-                    itemByMuiID:(nonnull NSString *)muiID;
+// You should ALWAYS try to reuse views by setting each view's reuseIdentifier.
+- (nonnull UIView *)scrollView:(nonnull TMMuiLazyScrollView *)scrollView
+                   itemByMuiID:(nonnull NSString *)muiID;
 
 @end
 
@@ -55,9 +55,12 @@
 
 //****************************************************************
 
-@interface TMMuiLazyScrollView : UIScrollView<NSCoding>
+@interface TMMuiLazyScrollView : UIScrollView
 
 @property (nonatomic, weak, nullable) id<TMMuiLazyScrollViewDataSource> dataSource;
+
+// Default value is NO.
+@property (nonatomic, assign) BOOL autoAddSubview;
 
 // Items which has been added to LazyScrollView.
 @property (nonatomic, strong, readonly, nonnull) NSSet *visibleItems;
