@@ -13,7 +13,7 @@
 #import <Tangram/TangramDefaultItemModelFactory.h>
 #import <Tangram/TangramContext.h>
 #import <Tangram/TangramEvent.h>
-#import <Tangram/TMUtils.h>
+#import <LazyScroll/TMUtils.h>
 
 @interface MockViewController ()<TangramViewDatasource>
 
