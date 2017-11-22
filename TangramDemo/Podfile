@@ -1,6 +1,7 @@
 source "https://github.com/CocoaPods/Specs.git"
 
+platform :ios, '7.0'
+
 target 'TangramDemo' do
-	platform :ios, '7.0'
-    pod 'Tangram', :path=>'../'
+    pod 'Tangram', :path=>'../'	
 end
