@@ -281,9 +281,9 @@
 //                absTop += subLayout.frame.origin.y;
 //                absLeft += subLayout.frame.origin.x;
 //            }
-            rectModel.absoluteRect = CGRectMake(absLeft, absTop, CGRectGetWidth(model.itemFrame), CGRectGetHeight(model.itemFrame));
+            rectModel.absRect = CGRectMake(absLeft, absTop, CGRectGetWidth(model.itemFrame), CGRectGetHeight(model.itemFrame));
             if ([model respondsToSelector:@selector(setAbsRect:)]) {
-                model.absRect = rectModel.absoluteRect;
+                model.absRect = rectModel.absRect;
             }
             if ([model respondsToSelector:@selector(setMuiID:)]) {
                 model.muiID = muiID;
