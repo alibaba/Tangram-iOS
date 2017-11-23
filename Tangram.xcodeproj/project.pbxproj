@@ -80,9 +80,7 @@
 		9240F34E1FBAAC5100A630E6 /* TangramLayoutFactoryProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 9240F3461FBAAC5100A630E6 /* TangramLayoutFactoryProtocol.h */; };
 		924C93521FC599AE00442AE0 /* TangramAction.h in Headers */ = {isa = PBXBuildFile; fileRef = 924C93501FC599AE00442AE0 /* TangramAction.h */; };
 		924C93531FC599AE00442AE0 /* TangramAction.m in Sources */ = {isa = PBXBuildFile; fileRef = 924C93511FC599AE00442AE0 /* TangramAction.m */; };
-		924C935A1FC599BA00442AE0 /* UIColor+Tangram.m in Sources */ = {isa = PBXBuildFile; fileRef = 924C93541FC599BA00442AE0 /* UIColor+Tangram.m */; };
 		924C935B1FC599BA00442AE0 /* NSString+Tangram.h in Headers */ = {isa = PBXBuildFile; fileRef = 924C93551FC599BA00442AE0 /* NSString+Tangram.h */; };
-		924C935C1FC599BA00442AE0 /* UIColor+Tangram.h in Headers */ = {isa = PBXBuildFile; fileRef = 924C93561FC599BA00442AE0 /* UIColor+Tangram.h */; };
 		924C935D1FC599BA00442AE0 /* UIView+Tangram.m in Sources */ = {isa = PBXBuildFile; fileRef = 924C93571FC599BA00442AE0 /* UIView+Tangram.m */; };
 		924C935E1FC599BA00442AE0 /* NSString+Tangram.m in Sources */ = {isa = PBXBuildFile; fileRef = 924C93581FC599BA00442AE0 /* NSString+Tangram.m */; };
 		924C935F1FC599BA00442AE0 /* UIView+Tangram.h in Headers */ = {isa = PBXBuildFile; fileRef = 924C93591FC599BA00442AE0 /* UIView+Tangram.h */; };
@@ -191,9 +189,7 @@
 		9240F3461FBAAC5100A630E6 /* TangramLayoutFactoryProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TangramLayoutFactoryProtocol.h; sourceTree = "<group>"; };
 		924C93501FC599AE00442AE0 /* TangramAction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TangramAction.h; sourceTree = "<group>"; };
 		924C93511FC599AE00442AE0 /* TangramAction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TangramAction.m; sourceTree = "<group>"; };
-		924C93541FC599BA00442AE0 /* UIColor+Tangram.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+Tangram.m"; sourceTree = "<group>"; };
 		924C93551FC599BA00442AE0 /* NSString+Tangram.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Tangram.h"; sourceTree = "<group>"; };
-		924C93561FC599BA00442AE0 /* UIColor+Tangram.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+Tangram.h"; sourceTree = "<group>"; };
 		924C93571FC599BA00442AE0 /* UIView+Tangram.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Tangram.m"; sourceTree = "<group>"; };
 		924C93581FC599BA00442AE0 /* NSString+Tangram.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Tangram.m"; sourceTree = "<group>"; };
 		924C93591FC599BA00442AE0 /* UIView+Tangram.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Tangram.h"; sourceTree = "<group>"; };
@@ -254,8 +250,6 @@
 			children = (
 				924C93551FC599BA00442AE0 /* NSString+Tangram.h */,
 				924C93581FC599BA00442AE0 /* NSString+Tangram.m */,
-				924C93561FC599BA00442AE0 /* UIColor+Tangram.h */,
-				924C93541FC599BA00442AE0 /* UIColor+Tangram.m */,
 				924C93591FC599BA00442AE0 /* UIView+Tangram.h */,
 				924C93571FC599BA00442AE0 /* UIView+Tangram.m */,
 			);
@@ -512,7 +506,6 @@
 				9240F34B1FBAAC5100A630E6 /* TangramElementFactoryProtocol.h in Headers */,
 				9240F3271FBAAC2C00A630E6 /* TangramFixBottomLayout.h in Headers */,
 				9240F3481FBAAC5100A630E6 /* TangramItemModelFactoryProtocol.h in Headers */,
-				924C935C1FC599BA00442AE0 /* UIColor+Tangram.h in Headers */,
 				924C936B1FC599EC00442AE0 /* TangramScrollLayoutProtocol.h in Headers */,
 				9240F32B1FBAAC2C00A630E6 /* TangramStickyBottomLayout.h in Headers */,
 				9240F34D1FBAAC5100A630E6 /* TangramElementReuseIdentifierProtocol.h in Headers */,
@@ -665,9 +658,13 @@
 			files = (
 			);
 			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-Tangram/Pods-Tangram-resources.sh",
+				"${PODS_ROOT}/../../VirtualView/VirtualView/Resources/ic_map_gaode.png",
+				"${PODS_ROOT}/../../VirtualView/VirtualView/Resources/widgetCodeList.plist",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -708,7 +705,6 @@
 				9240F32F1FBAAC2C00A630E6 /* TangramPageScrollLayout.m in Sources */,
 				9240F2FD1FBAAC1700A630E6 /* TangramDefaultDataSourceHelper.m in Sources */,
 				9240F3201FBAAC2C00A630E6 /* TangramSingleColumnLayout.m in Sources */,
-				924C935A1FC599BA00442AE0 /* UIColor+Tangram.m in Sources */,
 				9240F3221FBAAC2C00A630E6 /* TangramStickyLayout.m in Sources */,
 				9240F2D21FBAABF700A630E6 /* TangramView.m in Sources */,
 				9240F2EE1FBAAC0800A630E6 /* TangramEvent.m in Sources */,

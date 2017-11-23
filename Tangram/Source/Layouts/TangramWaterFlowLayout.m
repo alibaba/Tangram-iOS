@@ -11,7 +11,7 @@
 #import "TangramView.h"
 #import "UIImageView+WebCache.h"
 #import "TMUtils.h"
-#import "UIView+Tangram.h"
+#import <VirtualView/UIView+VirtualView.h>
 
 @interface TangramWaterFlowLayout()
 @property (nonatomic, assign) CGRect                 minRect;

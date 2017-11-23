@@ -8,8 +8,8 @@
 
 #import "TangramScrollFlowLayout.h"
 #import "TangramEvent.h"
-#import "UIColor+Tangram.h"
-#import "UIView+Tangram.h"
+#import <VirtualView/UIColor+VirtualView.h>
+#import <VirtualView/UIView+VirtualView.h>
 #import "TMUtils.h"
 
 //截图逻辑：滚动时截取当前页面的图，屏幕大小来算

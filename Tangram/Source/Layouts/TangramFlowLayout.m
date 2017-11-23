@@ -12,7 +12,7 @@
 #import "UIImageView+WebCache.h"
 #import "SDWebImageManager.h"
 #import "TangramEvent.h"
-#import "UIView+Tangram.h"
+#import <VirtualView/UIView+VirtualView.h>
 #import "TMUtils.h"
 
 @interface TangramFlowLayout()

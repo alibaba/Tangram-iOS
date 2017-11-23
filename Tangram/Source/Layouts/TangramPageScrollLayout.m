@@ -12,9 +12,10 @@
 #import "TangramView.h"
 #import "UIImageView+WebCache.h"
 #import "TangramEvent.h"
+#import <VirtualView/UIView+VirtualView.h>
 #import "UIView+Tangram.h"
 #import "TMUtils.h"
-#import "UIColor+Tangram.h"
+#import <VirtualView/UIColor+VirtualView.h>
 #import "TMMuiProgressBar.h"
 #import "TMPageControl.h"
 #import <Foundation/Foundation.h>

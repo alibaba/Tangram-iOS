@@ -8,7 +8,7 @@
 
 #import "TMMuiProgressBar.h"
 #import "UIImageView+WebCache.h"
-#import "UIView+Tangram.h"
+#import <VirtualView/UIView+VirtualView.h>
 #import "TMUtils.h"
 
 

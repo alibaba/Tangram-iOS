@@ -11,7 +11,7 @@
 #import "UIImageView+WebCache.h"
 #import "TangramView.h"
 #import "TMUtils.h"
-#import "UIView+Tangram.h"
+#import <VirtualView/UIView+VirtualView.h>
 
 @interface TangramSingleAndDoubleLayout()
 

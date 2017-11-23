@@ -10,7 +10,7 @@
 #import "TMUtils.h"
 #import "TangramScrollFlowLayout.h"
 #import "TangramLayoutParseHelper.h"
-#import "UIColor+Tangram.h"
+#import <VirtualView/UIColor+VirtualView.h>
 
 @interface TangramDefaultLayoutFactory()
 //Key : type(String) , Value: layout class name(String)

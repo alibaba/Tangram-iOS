@@ -9,7 +9,7 @@
 #import "TangramStickyLayout.h"
 #import "TangramView.h"
 #import "UIImageView+WebCache.h"
-#import "UIView+Tangram.h"
+#import <VirtualView/UIView+VirtualView.h>
 #import "TMUtils.h"
 #import "TangramEvent.h"
 
