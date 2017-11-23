@@ -70,13 +70,13 @@
 	</dict>
 	<dict>
 		<key>class</key>
-		<string>TangramWaterFlowLayout</string>
+		<string>TangramScrollWaterFlowLayout</string>
 		<key>type</key>
 		<string>25</string>
 	</dict>
 	<dict>
 		<key>class</key>
-		<string>TangramFlowLayout</string>
+		<string>TangramScrollFlowLayout</string>
 		<key>type</key>
 		<string>27</string>
 	</dict>
@@ -112,7 +112,13 @@
 	</dict>
 	<dict>
 		<key>class</key>
-		<string>TangramWaterFlowLayout</string>
+		<string>TangramScrollFlowLayout</string>
+		<key>type</key>
+		<string>container-flow</string>
+	</dict>
+	<dict>
+		<key>class</key>
+		<string>TangramScrollWaterFlowLayout</string>
 		<key>type</key>
 		<string>container-waterfall</string>
 	</dict>

@@ -8,8 +8,9 @@
 
 #import "TangramDefaultLayoutFactory.h"
 #import "TMUtils.h"
-//#import "TangramScrollFlowLayout.h"
+#import "TangramScrollFlowLayout.h"
 #import "TangramLayoutParseHelper.h"
+#import "UIColor+Tangram.h"
 
 @interface TangramDefaultLayoutFactory()
 //Key : type(String) , Value: layout class name(String)
@@ -34,14 +35,8 @@
 {
     if (self = [super init]) {
         _layoutTypeMap = [[NSMutableDictionary alloc]init];
-        //Decode LayoutType From plist
-        NSString *tangramMapPath = [[NSBundle mainBundle]pathForResource:@"TangramHelperMapping" ofType:@"plist"];
-        NSArray *mapArray = [NSArray arrayWithContentsOfFile:tangramMapPath];
-        for (NSDictionary *dict in mapArray) {
-            NSString *layoutMapString = [dict tm_safeObjectForKey:@"layoutMap" class:[NSString class]];
-            NSString *layoutMapPath = [[NSBundle mainBundle] pathForResource:layoutMapString ofType:@"plist"];
-            [_layoutTypeMap addEntriesFromDictionary:[TangramDefaultLayoutFactory decodeTypeMap:[NSArray arrayWithContentsOfFile:layoutMapPath]]];
-        }
+        NSString *layoutMapPath = [[NSBundle mainBundle] pathForResource:@"TangramLayoutTypeMap" ofType:@"plist"];
+        [_layoutTypeMap addEntriesFromDictionary:[TangramDefaultLayoutFactory decodeTypeMap:[NSArray arrayWithContentsOfFile:layoutMapPath]]];
     }
     return self;
 }
@@ -50,7 +45,7 @@
  Regist Layout Type and its className
  
  @param type is TangramLayoutType In TangramLayoutProtocol
- @param layoutClassName
+ @param layoutClassName layoutClassName
  */
 + (void)registLayoutType:(NSString *)type className:(NSString *)layoutClassName
 {
@@ -62,7 +57,7 @@
 /**
  Generate a layout by a dictionary
  
- @param dict
+ @param dict dict
  @return layout
  */
 + (UIView<TangramLayoutProtocol> *)layoutByDict:(NSDictionary *)dict
@@ -71,11 +66,11 @@
     if (type.length <= 0) {
         return nil;
     }
-    NSString *layoutClassName = [[TangramDefaultLayoutFactory sharedInstance].layoutTypeMap tm_safeObjectForKey:type class:[NSString class]];
+    NSString *layoutClassName = [[TangramDefaultLayoutFactory sharedInstance].layoutTypeMap tm_stringForKey:type];
     UIView<TangramLayoutProtocol> *layout = nil;
     if ([dict tm_boolForKey:@"canHorizontalScroll"] && ([type integerValue] <= 4 || [type integerValue] == 9)) {
-//        layout = [[TangramScrollFlowLayout alloc] init];
-//        ((TangramScrollFlowLayout *)layout).numberOfColumns = (NSUInteger)[type integerValue];
+        layout = [[TangramScrollFlowLayout alloc] init];
+        ((TangramScrollFlowLayout *)layout).numberOfColumns = (NSUInteger)[type integerValue];
     }
     else {
         layout = (UIView<TangramLayoutProtocol> *)[[NSClassFromString(layoutClassName) alloc]init];
@@ -90,14 +85,31 @@
 /**
  Fill Layout Property
 
- @param layout
- @param dict
+ @param layout layout
+ @param dict dict
  @return layout filled property
  */
 + (UIView<TangramLayoutProtocol> *)fillLayoutProperty:(UIView<TangramLayoutProtocol> *)layout withDict:(NSDictionary *)dict
 {
+    layout.identifier = [dict tm_stringForKey:@"id"];
+    NSDictionary *styleDict = [dict tm_dictionaryForKey:@"style"];
+    NSString *backgroundColor = [styleDict tm_stringForKey:@"bgColor"];
+    if (backgroundColor.length <= 0 ) {
+        backgroundColor = [styleDict tm_stringForKey:@"background-color"];
+    }
+    if (backgroundColor.length > 0) {
+        layout.backgroundColor = [UIColor colorWithString:backgroundColor];
+    }
+    NSString *bgImgURL = [styleDict tm_stringForKey:@"bgImgUrl"];
+    if (bgImgURL.length <= 0) {
+        bgImgURL = [styleDict tm_stringForKey:@"background-image"];
+    }
+    if (bgImgURL.length > 0 && [layout respondsToSelector:@selector(setBgImgURL:)]) {
+        layout.bgImgURL = bgImgURL;
+    }
     return [TangramLayoutParseHelper layoutConfigByOriginLayout:layout withDict:dict];
 }
+
 + (NSMutableDictionary *)decodeTypeMap:(NSArray *)mapArray
 {
     NSMutableDictionary *mapDict = [[NSMutableDictionary alloc]init];

@@ -16,9 +16,6 @@
 		9240F2C21FBAABA900A630E6 /* TangramDefaultItemModelFactory.h in Headers */ = {isa = PBXBuildFile; fileRef = 9240F2BC1FBAABA900A630E6 /* TangramDefaultItemModelFactory.h */; };
 		9240F2C31FBAABA900A630E6 /* TangramDefaultLayoutFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 9240F2BD1FBAABA900A630E6 /* TangramDefaultLayoutFactory.m */; };
 		9240F2C41FBAABA900A630E6 /* TangramDefaultLayoutFactory.h in Headers */ = {isa = PBXBuildFile; fileRef = 9240F2BE1FBAABA900A630E6 /* TangramDefaultLayoutFactory.h */; };
-		9240F2C81FBAABCB00A630E6 /* TangramKitLayoutTypeMap.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9240F2C51FBAABCB00A630E6 /* TangramKitLayoutTypeMap.plist */; };
-		9240F2C91FBAABCB00A630E6 /* TangramHelperCustomMapping.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9240F2C61FBAABCB00A630E6 /* TangramHelperCustomMapping.plist */; };
-		9240F2CA1FBAABCB00A630E6 /* TangramHelperMapping.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9240F2C71FBAABCB00A630E6 /* TangramHelperMapping.plist */; };
 		9240F2D11FBAABF700A630E6 /* TangramView.h in Headers */ = {isa = PBXBuildFile; fileRef = 9240F2CF1FBAABF700A630E6 /* TangramView.h */; };
 		9240F2D21FBAABF700A630E6 /* TangramView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9240F2D01FBAABF700A630E6 /* TangramView.m */; };
 		9240F2E31FBAAC0800A630E6 /* TangramBus.h in Headers */ = {isa = PBXBuildFile; fileRef = 9240F2D31FBAAC0700A630E6 /* TangramBus.h */; };
@@ -99,6 +96,7 @@
 		924C93721FC599FD00442AE0 /* TMMuiProgressBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 924C936E1FC599FD00442AE0 /* TMMuiProgressBar.m */; };
 		924C93731FC599FD00442AE0 /* TMPageControl.h in Headers */ = {isa = PBXBuildFile; fileRef = 924C936F1FC599FD00442AE0 /* TMPageControl.h */; };
 		924C93741FC599FD00442AE0 /* TMPageControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 924C93701FC599FD00442AE0 /* TMPageControl.m */; };
+		924C93761FC667EA00442AE0 /* TangramLayoutTypeMap.plist in Resources */ = {isa = PBXBuildFile; fileRef = 924C93751FC667EA00442AE0 /* TangramLayoutTypeMap.plist */; };
 		D85037D31B9C6D8400864DF0 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D85037D21B9C6D8400864DF0 /* Foundation.framework */; };
 		D85037EB1B9C6F8A00864DF0 /* Dummy.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = D85037EA1B9C6F8A00864DF0 /* Dummy.h */; };
 		D85037ED1B9C6F8A00864DF0 /* Dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = D85037EC1B9C6F8A00864DF0 /* Dummy.m */; };
@@ -129,9 +127,6 @@
 		9240F2BC1FBAABA900A630E6 /* TangramDefaultItemModelFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TangramDefaultItemModelFactory.h; sourceTree = "<group>"; };
 		9240F2BD1FBAABA900A630E6 /* TangramDefaultLayoutFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TangramDefaultLayoutFactory.m; sourceTree = "<group>"; };
 		9240F2BE1FBAABA900A630E6 /* TangramDefaultLayoutFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TangramDefaultLayoutFactory.h; sourceTree = "<group>"; };
-		9240F2C51FBAABCB00A630E6 /* TangramKitLayoutTypeMap.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = TangramKitLayoutTypeMap.plist; sourceTree = "<group>"; };
-		9240F2C61FBAABCB00A630E6 /* TangramHelperCustomMapping.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = TangramHelperCustomMapping.plist; sourceTree = "<group>"; };
-		9240F2C71FBAABCB00A630E6 /* TangramHelperMapping.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = TangramHelperMapping.plist; sourceTree = "<group>"; };
 		9240F2CF1FBAABF700A630E6 /* TangramView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TangramView.h; sourceTree = "<group>"; };
 		9240F2D01FBAABF700A630E6 /* TangramView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TangramView.m; sourceTree = "<group>"; };
 		9240F2D31FBAAC0700A630E6 /* TangramBus.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TangramBus.h; sourceTree = "<group>"; };
@@ -212,6 +207,7 @@
 		924C936E1FC599FD00442AE0 /* TMMuiProgressBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMMuiProgressBar.m; sourceTree = "<group>"; };
 		924C936F1FC599FD00442AE0 /* TMPageControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMPageControl.h; sourceTree = "<group>"; };
 		924C93701FC599FD00442AE0 /* TMPageControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMPageControl.m; sourceTree = "<group>"; };
+		924C93751FC667EA00442AE0 /* TangramLayoutTypeMap.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = TangramLayoutTypeMap.plist; sourceTree = "<group>"; };
 		CC4296F32D77BDA738D7ED30 /* libPods-Tangram.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Tangram.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D71EEB371CD5ED9E00163A7E /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS9.3.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
 		D71EEB391CD5EDA100163A7E /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS9.3.sdk/System/Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
@@ -293,9 +289,7 @@
 		D71EEA5A1CD5EB9E00163A7E /* Resource */ = {
 			isa = PBXGroup;
 			children = (
-				9240F2C61FBAABCB00A630E6 /* TangramHelperCustomMapping.plist */,
-				9240F2C71FBAABCB00A630E6 /* TangramHelperMapping.plist */,
-				9240F2C51FBAABCB00A630E6 /* TangramKitLayoutTypeMap.plist */,
+				924C93751FC667EA00442AE0 /* TangramLayoutTypeMap.plist */,
 			);
 			name = Resource;
 			path = Tangram/Resource;
@@ -625,10 +619,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9240F2C91FBAABCB00A630E6 /* TangramHelperCustomMapping.plist in Resources */,
+				924C93761FC667EA00442AE0 /* TangramLayoutTypeMap.plist in Resources */,
 				70962E0D1E768DC7000F85EB /* Info.plist in Resources */,
-				9240F2CA1FBAABCB00A630E6 /* TangramHelperMapping.plist in Resources */,
-				9240F2C81FBAABCB00A630E6 /* TangramKitLayoutTypeMap.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

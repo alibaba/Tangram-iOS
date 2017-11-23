@@ -176,9 +176,4 @@
     [self.styleDict tm_safeSetObject:value forKey:key];
 }
 
-- (NSMutableDictionary *)feedMap
-{
-    return self.bizDict;
-}
-
 @end

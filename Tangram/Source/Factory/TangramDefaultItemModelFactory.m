@@ -31,15 +31,7 @@
 - (instancetype)init
 {
     if (self = [super init]) {
-        //暂时先放在这里，之后移除到自己的factory中!
         self.elementTypeMap = [[NSMutableDictionary alloc]init];
-        NSString *tangramMapPath = [[NSBundle mainBundle]pathForResource:@"TangramHelperMapping" ofType:@"plist"];
-        NSArray *mapArray = [NSArray arrayWithContentsOfFile:tangramMapPath];
-        for (NSDictionary *dict in mapArray) {
-            NSString *elementMapString = [dict tm_stringForKey:@"modelMap"];
-            NSString *elementMapPath = [[NSBundle mainBundle] pathForResource:elementMapString ofType:@"plist"];
-            [self.elementTypeMap addEntriesFromDictionary:[TangramDefaultItemModelFactory decodeElementTypeMap:[NSArray arrayWithContentsOfFile:elementMapPath]]];
-        }
     }
     return self;
 }

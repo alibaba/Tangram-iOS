@@ -9,7 +9,7 @@
 #import "TangramItemModelProtocol.h"
 #import "TMMuiLazyScrollView.h"
 
-@interface TangramDefaultItemModel : TMMuiRectModel<TangramItemModelProtocol>
+@interface TangramDefaultItemModel : TMMuiRectModel <TangramItemModelProtocol>
 
 // type
 @property (nonatomic, strong) NSString *type;
@@ -62,8 +62,5 @@
 - (id)styleValueForKey:(NSString *)key;
 // Get a style param, if not match the desired class type, here will return nil.
 - (id)styleValueForKey:(NSString *)key desiredClass:(__unsafe_unretained Class)aClass;
-
-// Do NOT use this directly.
-- (NSMutableDictionary *)feedMap;
 
 @end

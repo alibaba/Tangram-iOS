@@ -14,6 +14,7 @@
 #import <Foundation/Foundation.h>
 #import "TangramItemModelProtocol.h"
 #import "TangramLayoutProtocol.h"
+#import "TangramDefaultItemModel.h"
 #import "TangramBus.h"
 #import "TangramLayoutFactoryProtocol.h"
 #import "TangramItemModelFactoryProtocol.h"
@@ -69,7 +70,7 @@
 /**
  *  Refresh element By Model
  *
- *  @param UIView element can be reused
+ *  @param element UIView element can be reused
  *
  *  @return refreshed element
  */
@@ -95,21 +96,31 @@
  *
  *  @return TangramModel
  */
-+(NSObject<TangramItemModelProtocol> *)modelWithDictionary : (NSDictionary *)dict;
++(TangramDefaultItemModel *)modelWithDictionary : (NSDictionary *)dict;
 /**
  *  Generate models by NSDictionary array
  *
- *  @param dictArray
+ *  @param dictArray dictArray
  *
  *  @return NSArray
  */
-+(NSArray *)modelsWithDictArray : (NSArray *)dictArray;
++(NSArray<TangramDefaultItemModel *> *)modelsWithDictArray : (NSArray *)dictArray;
+
+/**
+ *  根据Dict生成layout
+ *  这里生成的layout内的itemModels是有值的,那model可以直接用layout.itemModels取
+ *  @param dict layout的dict
+ *
+ *  @return  layout
+ */
++(UIView<TangramLayoutProtocol> *)layoutWithDictionary: (NSDictionary *)dict tangramBus:(TangramBus *)tangramBus;
+
+
 /////////////////////////////////Core Class Method end/////////////////////////////////////////////
 
 
 /////////////////////////////////Method will be depracated/////////////////////////////////////////
-
-+(UIView<TangramLayoutProtocol> *)layoutWithDictionary: (NSDictionary *)dict;
++(UIView<TangramLayoutProtocol> *)layoutWithDictionary:(NSDictionary *)dict;
 
 +(NSMutableArray *)modelsWithLayoutDictionary : (NSDictionary *)dict;
 //////////////////////////////Method will be depracated end////////////////////////////////////////
@@ -132,16 +143,6 @@
  @return Inner model count
  */
 + (NSUInteger)innerModelCountInLayouts:(NSArray *)layoutArray;
-
-/**
- Quick merge layout Data to another layout.
-
- @param layout Origin Layout
- @param dict An NSDictionary contains data to merged, it should be a NSDictionary for layout.
- @param tangramBus Tangram Event Bus
- @return Layout merged by a origin layout instance and an NSDictionary of a layout.
- */
-+ (UIView<TangramLayoutProtocol> *)fillLayoutProperty :(UIView<TangramLayoutProtocol> *)layout withDict:(NSDictionary *)dict tangramBus:(TangramBus *)tangramBus;
 
 //////////////////////////////////Other Helper method end//////////////////////////////////////////
 

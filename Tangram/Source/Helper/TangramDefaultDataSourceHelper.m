@@ -40,7 +40,7 @@
     return _dataSourceHelper;
 }
 
--(instancetype)init
+- (instancetype)init
 {
     if (self = [super init]) {
         self.layoutFactoryClass = NSClassFromString(@"TangramDefaultLayoutFactory");
@@ -49,6 +49,7 @@
     }
     return self;
 }
+
 #pragma mark - Quick Parser
 +(UIView<TangramLayoutProtocol> *)layoutWithDictionary: (NSDictionary *)dict
 {
@@ -310,7 +311,6 @@
 
 + (void)registLayoutFactoryClassName:(NSString *)layoutFactoryClassName
 {
-    //Class<TangramLayoutFactoryProtocol> layoutFactoryClass = NSClassFromString(layoutFactoryClassName);
     if ([NSClassFromString(layoutFactoryClassName) instanceMethodForSelector:@selector(layoutByDict:)]) {
         [TangramDefaultDataSourceHelper sharedInstance].layoutFactoryClass = NSClassFromString(layoutFactoryClassName);
     }
