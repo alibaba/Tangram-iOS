@@ -143,7 +143,7 @@
 {
     if ([type isKindOfClass:[NSString class]] && type.length > 0
         && [elementClassName isKindOfClass:[NSString class]] && elementClassName.length > 0) {
-        [[TangramDefaultItemModelFactory sharedInstance].elementTypeMap setObject:[elementClassName copy] forKey:[type copy]];
+        [[TangramDefaultItemModelFactory sharedInstance].elementTypeMap tm_safeSetObject:[elementClassName copy] forKey:[type copy]];
     }
 }
 

@@ -7,6 +7,8 @@
 
 #import <Foundation/Foundation.h>
 
+#define TangramEventTopicJumpAction   @"openUrl"
+
 @class TangramContext;
 @class TangramView;
 
@@ -57,7 +59,7 @@
  * @param   poster      id              The instance of poster
  */
 - (nonnull instancetype)initWithTopic:(nonnull NSString *)topic
-                      withTangramView:(nonnull TangramView *)tangram
+                      withTangramView:(nullable TangramView *)tangram
                      posterIdentifier:(nullable NSString *)identifier
                             andPoster:(nonnull id)poster;
 
