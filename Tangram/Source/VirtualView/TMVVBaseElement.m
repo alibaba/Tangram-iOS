@@ -14,7 +14,7 @@
 
 static BOOL xmlIsLoad = NO;
 
-@interface TMVVBaseElement ()<VirtualViewDelegate>{
+@interface TMVVBaseElement ()<VirtualViewDelegate, TMMuiLazyScrollViewCellProtocol>{
     //
 }
 @property(assign, nonatomic)BOOL    appear;
@@ -42,21 +42,21 @@ static BOOL xmlIsLoad = NO;
     ///self.itemModel.type
     self.frame = CGRectMake(floor(self.left), floor(self.top), floor(self.width), floor(self.height));
     if (self.contentView==nil) {
-        self.contentView = (VVViewContainer*)[[VVViewFactory shareFactoryInstance] obtainVirtualWithKey:self.itemModel.type];//11,1024
+        self.contentView = (VVViewContainer*)[[VVViewFactory shareFactoryInstance] obtainVirtualWithKey:self.tangramItemModel.type];//11,1024
         self.contentView.delegate = self;
         [self addSubview:self.contentView];
     }
     NSUInteger w = self.frame.size.width;
     NSUInteger h = self.frame.size.height;
     self.contentView.frame = CGRectMake(0, 0, w, h);
-    [self.contentView update:@{}];
+    [self.contentView update:self.tangramItemModel.privateOriginalDict];
 }
 
 - (void)subViewClicked:(NSString*)action andValue:(NSString *)value
 {
     NSString *actualAction = value;
     if (actualAction.length <= 0) {
-        actualAction = [self.itemModel bizValueForKey:action];
+        actualAction = [self.tangramItemModel bizValueForKey:action];
     }
 
     if (self.tangramBus) {
@@ -70,7 +70,7 @@ static BOOL xmlIsLoad = NO;
 {
     
 }
-+ (CGFloat)elementHeightByModel:(TangramDefaultItemModel *)itemModel
++ (CGFloat)heightByModel:(TangramDefaultItemModel *)itemModel
 {
     CGFloat ratio = [[VVTempleteManager sharedInstance]ratioByElementType:itemModel.type];
     if(ratio > 0.f)
@@ -84,6 +84,11 @@ static BOOL xmlIsLoad = NO;
 {
     NSString *version = [[VVTempleteManager sharedInstance]localVersionByElementType:itemModel.type];
     return [NSString stringWithFormat:@"%@_%@",itemModel.type,version];
+}
+
+-(void)mui_afterGetView
+{
+    [self calculateLayout];
 }
 
 - (void)dealloc

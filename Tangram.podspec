@@ -16,7 +16,7 @@ Pod::Spec.new do |s|
   s.ios.deployment_target = '7.0'
   s.requires_arc = true
   s.source       = { :git => "https://github.com/alibaba/Tangram-iOS.git", :tag => "1.0.7" }
-  s.resources    = 'Tangram/Resource/*.{plist,json}'
+  s.resources    = 'Tangram/Resource/*.{plist,json,out}'
   s.source_files = 'Tangram/Source/**/*.{h,m}'
   
   s.dependency  'LazyScroll', '~>0.1.0'

@@ -63,4 +63,6 @@
 // Get a style param, if not match the desired class type, here will return nil.
 - (id)styleValueForKey:(NSString *)key desiredClass:(__unsafe_unretained Class)aClass;
 
+- (NSDictionary *)privateOriginalDict;
+
 @end

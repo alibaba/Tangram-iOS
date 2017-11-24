@@ -176,4 +176,13 @@
     [self.styleDict tm_safeSetObject:value forKey:key];
 }
 
+- (NSDictionary *)privateOriginalDict
+{
+    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+    [dict addEntriesFromDictionary:self.bizDict];
+    [dict addEntriesFromDictionary:self.styleDict];
+    [dict tm_safeSetObject:self.type forKey:@"type"];
+    return [dict copy];
+}
+
 @end

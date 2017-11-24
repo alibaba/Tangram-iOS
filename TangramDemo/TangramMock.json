@@ -8,7 +8,12 @@
                     {
                         "type": "2",
                         "text": "Test Page"
-                    }
+                    },
+                      {
+                      "type": "TmallComponent2",
+                      "imgUrl": "https://gw.alicdn.com/tps/TB1Nin9JFXXXXbXaXXXXXXXXXXX-224-224.png",
+                      "title": "VirtualView"
+                      }
                 ]
             },
             {
