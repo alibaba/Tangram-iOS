@@ -244,7 +244,6 @@
 				"${PODS_ROOT}/../../Tangram/Resource/TangramKitVVElementTypeMap.plist",
 				"${PODS_ROOT}/../../Tangram/Resource/TangramLayoutTypeMap.plist",
 				"${PODS_ROOT}/../../Tangram/Resource/TmallComponent2.out",
-				"${PODS_ROOT}/../../../VirtualView/VirtualView/Resources/ic_map_gaode.png",
 				"${PODS_ROOT}/../../../VirtualView/VirtualView/Resources/widgetCodeList.plist",
 			);
 			name = "[CP] Copy Pods Resources";

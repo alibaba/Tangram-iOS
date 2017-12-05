@@ -628,7 +628,6 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-Tangram/Pods-Tangram-resources.sh",
-				"${PODS_ROOT}/../../VirtualView/VirtualView/Resources/ic_map_gaode.png",
 				"${PODS_ROOT}/../../VirtualView/VirtualView/Resources/widgetCodeList.plist",
 			);
 			name = "[CP] Copy Pods Resources";

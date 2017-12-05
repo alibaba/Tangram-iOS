@@ -10,7 +10,7 @@
 #define VVBundleName @"VVTempleteBundle"
 #define APPMONITOR_MODULE @"VirtualView"
 #import "VVTempleteManager.h"
-#import <LazyScroll/TMUtils.h>
+#import <TMUtils/TMUtils.h>
 #import "VVBinaryLoader.h"
 #import "TangramDefaultDataSourceHelper.h"
 #import "TangramEvent.h"

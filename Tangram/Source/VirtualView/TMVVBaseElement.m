@@ -7,7 +7,7 @@
 //
 #import "VVTempleteManager.h"
 #import "TMVVBaseElement.h"
-#import <LazyScroll/TMUtils.h>
+#import <TMUtils/TMUtils.h>
 #import <VirtualView/UIView+VirtualView.h>
 #import "TangramEvent.h"
 #import "UIView+Tangram.h"
