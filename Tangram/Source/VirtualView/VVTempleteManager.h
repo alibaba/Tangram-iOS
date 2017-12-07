@@ -11,6 +11,10 @@
 @class TangramBus;
 @interface VVTempleteManager : NSObject
 
+@property (nonatomic, strong) NSMutableDictionary *templeteHeightDict;
+
+@property (nonatomic, strong) NSMutableDictionary *templeteRatioDict;
+
 /**
  用于更新模板的时候向外面发消息用
  */

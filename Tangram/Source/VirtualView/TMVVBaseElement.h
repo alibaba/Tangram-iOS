@@ -23,4 +23,7 @@
 
 //实际用来刷新vv的内容
 @property(nonatomic, strong)NSMutableDictionary *vvDict;
+
+- (void)calculateLayout;
+
 @end

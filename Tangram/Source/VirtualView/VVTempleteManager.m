@@ -24,10 +24,6 @@
 
 @property (nonatomic, strong) NSMutableDictionary *templeteVersionDict;
 
-@property (nonatomic, strong) NSMutableDictionary *templeteHeightDict;
-
-@property (nonatomic, strong) NSMutableDictionary *templeteRatioDict;
-
 @end
 
 @implementation VVTempleteManager
