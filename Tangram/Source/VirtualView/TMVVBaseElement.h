@@ -6,9 +6,9 @@
 //
 //
 
-#import "VVViewFactory.h"
-#import "VVBinaryLoader.h"
-#import "VVViewContainer.h"
+#import <VirtualView/VVViewFactory.h>
+#import <VirtualView/VVBinaryLoader.h>
+#import <VirtualView/VVViewContainer.h>
 #import "TangramElementReuseIdentifierProtocol.h"
 #import "TangramElementHeightProtocol.h"
 #import "TangramEasyElementProtocol.h"

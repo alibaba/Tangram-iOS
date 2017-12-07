@@ -14,7 +14,7 @@
 #import "TangramEvent.h"
 #import "TangramContext.h"
 #import <VirtualView/UIView+VirtualView.h>
-#import "TMUtils.h"
+#import <TMUtils/TMUtils.h>
 
 
 @interface TangramViewDelegateHandler : NSObject<TangramViewDelegate>

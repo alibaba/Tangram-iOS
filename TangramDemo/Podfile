@@ -4,5 +4,4 @@ platform :ios, '7.0'
 
 target 'TangramDemo' do
     pod 'Tangram', :path => '../'
-    pod 'VirtualView', :path => '../../VirtualView/'	
 end

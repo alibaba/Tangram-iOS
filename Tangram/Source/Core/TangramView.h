@@ -6,7 +6,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "TMMuiLazyScrollView.h"
+#import <LazyScroll/TMMuiLazyScrollView.h>
 
 @protocol TangramItemModelProtocol;
 @protocol TangramLayoutProtocol;
