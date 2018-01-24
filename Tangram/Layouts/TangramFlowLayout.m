@@ -217,7 +217,7 @@
     //如果说Model的数量为0 直接高度为0返回，不往下计算了
     //如果有header或者footer，但是items里面是空的，也不进行计算了
     if (nil == self.itemModels || 0 == self.contentItemModelCount) {
-        self.height = 0.f;
+        self.vv_height = 0.f;
         return;
     }
     
@@ -470,7 +470,7 @@
                 }
             }
             if (self.aspectRatio && self.aspectRatio.length > 0 &&  [self.aspectRatio floatValue] > 0.f) {
-                baseHeight = self.width / [self.aspectRatio floatValue];
+                baseHeight = self.vv_width / [self.aspectRatio floatValue];
             }
             // 对齐操作，Base Height是这一行的基准高度，用来磨平误差
             // 对于流式布局，每一行的高度等于当前行的第一个组件高度
@@ -661,9 +661,9 @@
                 lastItemMarginBottom += [self.padding tm_floatAtIndex:2];
             }
         }
-        self.height =  CGRectGetMaxY(lastItemModel.itemFrame)  + lastItemMarginBottom;
+        self.vv_height =  CGRectGetMaxY(lastItemModel.itemFrame)  + lastItemMarginBottom;
         if (self.bgImgURL && self.bgImgURL.length > 0) {
-            self.bgImageView.frame = CGRectMake(0, 0, self.width, self.height);
+            self.bgImageView.frame = CGRectMake(0, 0, self.vv_width, self.vv_height);
             [self sendSubviewToBack:self.bgImageView];
             switch (self.bgScaleType) {
                 case TangramFlowLayoutBgImageScaleTypeFitStart:
@@ -675,9 +675,9 @@
                             CGFloat height = 0;
                             if (image.size.width > 0) {
                                 // 等比例缩放
-                                height = (self.width / image.size.width) * image.size.height;
+                                height = (self.vv_width / image.size.width) * image.size.height;
                             }
-                            self.bgImageView.height = height;
+                            self.bgImageView.vv_height = height;
                             self.clipsToBounds = YES;
                         }
                     }];
@@ -784,9 +784,9 @@
     if (!layout || 0 == layout.itemModels.count) {
         return;
     }
-    layout.width = itemModel.itemFrame.size.width;
+    layout.vv_width = itemModel.itemFrame.size.width;
     [layout calculateLayout];
-    itemModel.itemFrame = CGRectMake(itemModel.itemFrame.origin.x, itemModel.itemFrame.origin.y, itemModel.itemFrame.size.width, layout.height);
+    itemModel.itemFrame = CGRectMake(itemModel.itemFrame.origin.x, itemModel.itemFrame.origin.y, itemModel.itemFrame.size.width, layout.vv_height);
     [self.layoutModelDict tm_safeSetObject:itemModel forKey:itemModel.layoutIdentifierForLayoutModel];
 }
 

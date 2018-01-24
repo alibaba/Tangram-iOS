@@ -25,7 +25,7 @@
 {
     if (_barView == nil) {
         _barView = [[UIView alloc]init];
-        _barView.left = 0;
+        _barView.vv_left = 0;
         [self addSubview:_barView];
         [self bringSubviewToFront:_barView];
     }
@@ -35,7 +35,7 @@
 {
     if (_bgImageView == nil) {
         _bgImageView = [[UIImageView alloc]init];
-        _bgImageView.left = 0;
+        _bgImageView.vv_left = 0;
         _bgImageView.contentMode = UIViewContentModeScaleToFill;
         [self addSubview:_bgImageView];
         [self sendSubviewToBack:_bgImageView];
@@ -50,12 +50,12 @@
 -(void)setBarWidth:(CGFloat)barWidth
 {
     _barWidth = barWidth;
-    self.barView.width = barWidth;
+    self.barView.vv_width = barWidth;
 }
 -(void)setBarHeight:(CGFloat)barHeight
 {
     _barHeight = barHeight;
-    self.barView.height = barHeight;
+    self.barView.vv_height = barHeight;
 }
 -(CGFloat)autoHideTime
 {
@@ -70,23 +70,23 @@
 {
     _progress = progress;
     if (self.progressBarType == LinearMUIProgressBar) {
-        self.barView.width = self.barWidth + (self.width - self.barWidth) * progress;
-        self.barView.left = 0.f;
-        if (self.barView.width <=  self.barWidth) {
-            self.barView.width = self.barWidth;
+        self.barView.vv_width = self.barWidth + (self.vv_width - self.barWidth) * progress;
+        self.barView.vv_left = 0.f;
+        if (self.barView.vv_width <=  self.barWidth) {
+            self.barView.vv_width = self.barWidth;
         }
     }
     else
     {
         self.alpha = 1.f;
-        self.barView.centerX = (self.width - self.barView.width) * progress + self.barView.width / 2;
-        if (self.barView.left < 0)
+        self.barView.vv_centerX = (self.vv_width - self.barView.vv_width) * progress + self.barView.vv_width / 2;
+        if (self.barView.vv_left < 0)
         {
-            self.barView.left = 0;
+            self.barView.vv_left = 0;
         }
-        else if(self.barView.right > self.width)
+        else if(self.barView.vv_right > self.vv_width)
         {
-            self.barView.right = self.width;
+            self.barView.vv_right = self.vv_width;
         }
         if (self.autoHide && !self.shouldAnim) {
             self.shouldAnim = YES;
@@ -111,13 +111,13 @@
             __strong typeof(self) strongSelf = weakSelf;
             if (!error)
             {
-                strongSelf.bgImageView.width = strongSelf.width;
-                strongSelf.bgImageView.height = strongSelf.bgImageView.width * image.size.height / strongSelf.bgImageView.width;
-                if(strongSelf.bgImageView.height > strongSelf.height)
+                strongSelf.bgImageView.vv_width = strongSelf.vv_width;
+                strongSelf.bgImageView.vv_height = strongSelf.bgImageView.vv_width * image.size.height / strongSelf.bgImageView.vv_width;
+                if(strongSelf.bgImageView.vv_height > strongSelf.vv_height)
                 {
-                    strongSelf.bgImageView.height = strongSelf.height;
+                    strongSelf.bgImageView.vv_height = strongSelf.vv_height;
                 }
-                strongSelf.bgImageView.bottom = strongSelf.height;
+                strongSelf.bgImageView.vv_bottom = strongSelf.vv_height;
                 strongSelf.bgImageView.image = image;
             }
         }];

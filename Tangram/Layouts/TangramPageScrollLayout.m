@@ -91,13 +91,13 @@
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
     //加载更多的逻辑
-    CGFloat loadX = scrollView.contentSize.width - scrollView.width + scrollView.contentInset.right + 2 * self.loadMoreImageView.width;
+    CGFloat loadX = scrollView.contentSize.width - scrollView.vv_width + scrollView.contentInset.right + 2 * self.loadMoreImageView.vv_width;
     if (self.hasMoreAction.length > 0 && self.willPush == NO && [scrollView.subviews containsObject:self.loadMoreImageView] && scrollView.contentOffset.x > loadX && !scrollView.dragging)
     {
         self.willPush = YES;
-        scrollView.contentInset = UIEdgeInsetsMake(0, [self.pageMargin tm_floatAtIndex:3] - self.scrollView.left, 0, self.scrollView.right - self.width + self.loadMoreImageView.width);
+        scrollView.contentInset = UIEdgeInsetsMake(0, [self.pageMargin tm_floatAtIndex:3] - self.scrollView.vv_left, 0, self.scrollView.vv_right - self.vv_width + self.loadMoreImageView.vv_width);
         scrollView.pagingEnabled = NO;
-        [scrollView setContentOffset:CGPointMake(loadX - self.loadMoreImageView.width, scrollView.contentOffset.y)];
+        [scrollView setContentOffset:CGPointMake(loadX - self.loadMoreImageView.vv_width, scrollView.contentOffset.y)];
         
         __weak typeof(self) weakSelf = self;
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
@@ -105,7 +105,7 @@
             TangramEvent *event = [[TangramEvent alloc]initWithTopic:@"pageLayoutJumpMorePage" withTangramView:self.inTangramView posterIdentifier:@"pageScrollLayout" andPoster:strongSelf];
             [strongSelf.tangramBus postEvent:event];
              //使用TangramBus发出事件
-            scrollView.contentInset = UIEdgeInsetsMake(0, [strongSelf.pageMargin tm_floatAtIndex:3] - strongSelf.scrollView.left, 0, strongSelf.scrollView.right - strongSelf.width);
+            scrollView.contentInset = UIEdgeInsetsMake(0, [strongSelf.pageMargin tm_floatAtIndex:3] - strongSelf.scrollView.vv_left, 0, strongSelf.scrollView.vv_right - strongSelf.vv_width);
             if (strongSelf.pageWidth > 0) {
                 scrollView.pagingEnabled = YES;
             }
@@ -114,11 +114,11 @@
     }
     if (self.progressBar)
     {
-        if (scrollView.contentSize.width + scrollView.contentInset.left + scrollView.contentInset.right - scrollView.width == 0)
+        if (scrollView.contentSize.width + scrollView.contentInset.left + scrollView.contentInset.right - scrollView.vv_width == 0)
         {
             return;
         }
-        self.progressBar.progress = (scrollView.contentOffset.x + scrollView.contentInset.left) / (scrollView.contentSize.width + scrollView.contentInset.left + scrollView.contentInset.right - scrollView.width);
+        self.progressBar.progress = (scrollView.contentOffset.x + scrollView.contentInset.left) / (scrollView.contentSize.width + scrollView.contentInset.left + scrollView.contentInset.right - scrollView.vv_width);
     }
 
 }
@@ -126,19 +126,19 @@
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {
-    NSUInteger currentIndex = floor((scrollView.contentOffset.x + 10.f) / scrollView.width);
+    NSUInteger currentIndex = floor((scrollView.contentOffset.x + 10.f) / scrollView.vv_width);
     if (self.infiniteLoop) {
         //如果第0页 跳转到最后
         if (currentIndex == 0)
         {
             currentIndex = self.realCount - 1;
-            [self.scrollView scrollRectToVisible:CGRectMake(self.scrollView.width * self.realCount, 0, self.scrollView.width, self.scrollView.height) animated:NO];
+            [self.scrollView scrollRectToVisible:CGRectMake(self.scrollView.vv_width * self.realCount, 0, self.scrollView.vv_width, self.scrollView.vv_height) animated:NO];
         }
         else if (currentIndex == self.realCount + 1)
             //如果是最后一页，跳转到第一页
         {
             currentIndex = 0;
-            [self.scrollView scrollRectToVisible:CGRectMake(self.scrollView.width, 0, self.scrollView.width, self.scrollView.height) animated:NO];
+            [self.scrollView scrollRectToVisible:CGRectMake(self.scrollView.vv_width, 0, self.scrollView.vv_width, self.scrollView.vv_height) animated:NO];
         }
         else {
             currentIndex -= 1;
@@ -163,7 +163,7 @@
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
 {
     if (! decelerate) {
-        NSUInteger currentIndex = floor((scrollView.contentOffset.x + 10.f) / scrollView.width);
+        NSUInteger currentIndex = floor((scrollView.contentOffset.x + 10.f) / scrollView.vv_width);
         if (self.pageControl.currentPage != currentIndex)
         {
             self.pageControl.currentPage = currentIndex;
@@ -183,7 +183,7 @@
       //如果设计了无限循环,那么在跳最后一页的时候，直接跳到第1页
     if (self.infiniteLoop) {
         if (self.currentPage == self.realCount + 1) {
-            [self.scrollView scrollRectToVisible:CGRectMake(self.scrollView.width, 0, self.scrollView.width, self.scrollView.height) animated:NO];
+            [self.scrollView scrollRectToVisible:CGRectMake(self.scrollView.vv_width, 0, self.scrollView.vv_width, self.scrollView.vv_height) animated:NO];
             self.currentPage = 1;
             self.pageControl.currentPage = 0;
         }
@@ -237,11 +237,11 @@
     if (!_progressBar)
     {
         _progressBar = [[TMMuiProgressBar alloc] init];
-        _progressBar.barColor = [UIColor colorWithHexValue:0xB4B4B4];
-        _progressBar.bgImageView.backgroundColor = [UIColor colorWithHexValue:0xDFDFDF];
-        _progressBar.bgImageView.height = 1;
-        _progressBar.width = 154;
-        _progressBar.height = 4;
+        _progressBar.barColor = [UIColor vv_colorWithRGB:0xB4B4B4];
+        _progressBar.bgImageView.backgroundColor = [UIColor vv_colorWithRGB:0xDFDFDF];
+        _progressBar.bgImageView.vv_height = 1;
+        _progressBar.vv_width = 154;
+        _progressBar.vv_height = 4;
         _progressBar.progressBarType = BlockMUIProgressBar;
     }
     return _progressBar;
@@ -296,14 +296,14 @@
     [self.pageControl sizeToFit];
     switch (self.indicatorGravity) {
         case IndicatorGravityLeft:
-            self.pageControl.left = 6.f;
+            self.pageControl.vv_left = 6.f;
             break;
         case IndicatorGravityRight:
-            self.pageControl.right = self.width - 6.f;
+            self.pageControl.vv_right = self.vv_width - 6.f;
             break;
         case IndicatorGravityCenter:
         default:
-            self.pageControl.centerX = self.width / 2;
+            self.pageControl.vv_centerX = self.vv_width / 2;
             break;
     }
 }
@@ -338,7 +338,7 @@
         [self.scrollView addSubview:view];
         if (self.infiniteLoop) {
             if (self.scrollView.subviews.count == self.itemModels.count) {
-                [self.scrollView scrollRectToVisible:CGRectMake(self.scrollView.width, 0, self.scrollView.width, self.scrollView.height) animated:NO];
+                [self.scrollView scrollRectToVisible:CGRectMake(self.scrollView.vv_width, 0, self.scrollView.vv_width, self.scrollView.vv_height) animated:NO];
             }
         }
     }
@@ -378,7 +378,7 @@
         modelCount --;
     }
     if (nil == self.itemModels || 0 >= modelCount) {
-        self.height = 0.f;
+        self.vv_height = 0.f;
         return;
     }
     //设定坐标
@@ -386,13 +386,13 @@
     //elementHeight += [self.padding tm_floatAtIndex:0];
     NSObject<TangramItemModelProtocol> *lastElementModel = nil;
     if (self.aspectRatio.length > 0 && [self.aspectRatio floatValue] > 0.f ) {
-        self.height = self.width / [self.aspectRatio floatValue];
+        self.vv_height = self.vv_width / [self.aspectRatio floatValue];
     }
     //对header进行布局
     //获取头部的大小
     CGFloat headerHeight = 0.f;
     if (self.headerItemModel) {
-        CGFloat contentWidth = self.width - self.headerItemModel.marginLeft - self.headerItemModel.marginRight - [self.padding tm_floatAtIndex:1] - [self.padding tm_floatAtIndex:3];
+        CGFloat contentWidth = self.vv_width - self.headerItemModel.marginLeft - self.headerItemModel.marginRight - [self.padding tm_floatAtIndex:1] - [self.padding tm_floatAtIndex:3];
         CGRect tempRect = self.headerItemModel.itemFrame;
         tempRect.size.width = contentWidth;
         tempRect.origin.x   = self.headerItemModel.marginLeft + [self.padding tm_floatAtIndex:3];
@@ -411,7 +411,7 @@
         if (model == self.headerItemModel || model == self.footerItemModel) {
             continue;
         }
-        CGFloat contentWidth = self.width - model.marginLeft - model.marginRight - [self.padding tm_floatAtIndex:1] - [self.padding tm_floatAtIndex:3] ;
+        CGFloat contentWidth = self.vv_width - model.marginLeft - model.marginRight - [self.padding tm_floatAtIndex:1] - [self.padding tm_floatAtIndex:3] ;
         //有pagewidth，强制页面宽度
         if (self.pageWidth > 0.f) {
             contentWidth = self.pageWidth;
@@ -442,21 +442,21 @@
     if (self.pageWidth > 0) {
         self.scrollView.pagingEnabled = NO;
     }
-    self.height = elementHeight;
-    self.scrollView.frame = CGRectMake([self.padding tm_floatAtIndex:3], 0, self.width - [self.padding tm_floatAtIndex:3] - [self.padding tm_floatAtIndex:1], elementHeight);
+    self.vv_height = elementHeight;
+    self.scrollView.frame = CGRectMake([self.padding tm_floatAtIndex:3], 0, self.vv_width - [self.padding tm_floatAtIndex:3] - [self.padding tm_floatAtIndex:1], elementHeight);
     self.scrollView.contentSize = CGSizeMake(CGRectGetMaxX(lastElementModel.itemFrame) + lastElementModel.marginRight + self.scrollMarginLeft + self.scrollMarginRight, elementHeight) ;
     //设定加载更多的图片，只是在后面贴了一张图而已
-    if(self.hasMoreAction.length > 0 && self.loadMoreImgUrl > 0 && self.scrollView.contentSize.width > self.width)
+    if(self.hasMoreAction.length > 0 && self.loadMoreImgUrl > 0 && self.scrollView.contentSize.width > self.vv_width)
     {
-        self.loadMoreImageView.left = self.scrollView.contentSize.width;
+        self.loadMoreImageView.vv_left = self.scrollView.contentSize.width;
         [self.scrollView addSubview:self.loadMoreImageView];
-        self.loadMoreImageView.height = self.scrollView.height;
+        self.loadMoreImageView.vv_height = self.scrollView.vv_height;
         __weak typeof(self) weakself = self;
         [self.loadMoreImageView sd_setImageWithURL:[NSURL URLWithString:self.loadMoreImgUrl] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType,NSURL *imageURL) {
             __strong typeof(weakself) strongSelf = weakself;
             if (!error && image)
             {
-                strongSelf.loadMoreImageView.width = strongSelf.scrollView.contentSize.height * image.size.width / image.size.height;
+                strongSelf.loadMoreImageView.vv_width = strongSelf.scrollView.contentSize.height * image.size.width / image.size.height;
             }
         }];
     }
@@ -470,8 +470,8 @@
                 self.pageControl.pageHeight = self.indicatorRadius * 2;
                 self.pageControl.pageWidth = self.indicatorRadius * 2;
                 self.pageControl.pageSpacing = 4.f;
-                self.pageControl.normalFillColor = [UIColor colorWithString:self.defaultIndicatorColor];
-                self.pageControl.selectedFillColor = [UIColor colorWithString:self.indicatorColor];
+                self.pageControl.normalFillColor = [UIColor vv_colorWithString:self.defaultIndicatorColor];
+                self.pageControl.selectedFillColor = [UIColor vv_colorWithString:self.indicatorColor];
             }
             else{
                 self.pageControl.style = TMPageControlStyleImage;
@@ -486,21 +486,21 @@
             }
             [self.pageControl sizeToFit];
             if (self.indicatorHeight > 0) {
-                self.pageControl.height = self.indicatorHeight;
+                self.pageControl.vv_height = self.indicatorHeight;
             }
             switch (self.indicatorPosition) {
                 case IndicatorPositionInside:
                     //如果是inside，是不用变更整体layout的高度的
-                    self.pageControl.bottom = self.height - self.indicatorMargin ;
+                    self.pageControl.vv_bottom = self.vv_height - self.indicatorMargin ;
                     break;
                 case IndicatorPositionOutside:
                 default:
                     //如果是outside，需要变更高度
                     //Outside的PageControl 整个View的高度加两倍的indicatorMargin
                     //增加的高度 = PageControl的高度 + indicator
-                    self.height += self.pageControl.height;
-                    self.height += self.indicatorMargin*2 ;
-                    self.pageControl.bottom = self.height - self.indicatorMargin;
+                    self.vv_height += self.pageControl.vv_height;
+                    self.vv_height += self.indicatorMargin*2 ;
+                    self.pageControl.vv_bottom = self.vv_height - self.indicatorMargin;
                     break;
             }
             [self calculatePageControlPosition];
@@ -511,17 +511,17 @@
             self.progressBar.autoHide = self.indicatorAutoHide;
             self.progressBar.barWidth = self.indicatorRadius * 2;
             self.progressBar.barHeight = 3;
-            self.progressBar.bgImageView.bottom = self.progressBar.height;
-            self.progressBar.bgImageView.width = self.progressBar.width;
-            self.progressBar.barColor = [UIColor colorWithString:self.indicatorColor];
-            self.progressBar.bgImageView.backgroundColor = [UIColor colorWithString:self.defaultIndicatorColor];
+            self.progressBar.bgImageView.vv_bottom = self.progressBar.vv_height;
+            self.progressBar.bgImageView.vv_width = self.progressBar.vv_width;
+            self.progressBar.barColor = [UIColor vv_colorWithString:self.indicatorColor];
+            self.progressBar.bgImageView.backgroundColor = [UIColor vv_colorWithString:self.defaultIndicatorColor];
             [self addSubview:self.progressBar];
             if (self.indicatorPosition == IndicatorPositionOutside) {
-                self.height += self.progressBar.height;
-                self.height += self.indicatorMargin*2 ;
+                self.vv_height += self.progressBar.vv_height;
+                self.vv_height += self.indicatorMargin*2 ;
             }
-            self.progressBar.centerX = self.width / 2;
-            self.progressBar.bottom = self.height - 4;
+            self.progressBar.vv_centerX = self.vv_width / 2;
+            self.progressBar.vv_bottom = self.vv_height - 4;
         }
         
     }
@@ -529,21 +529,21 @@
     
     //对footer进行布局
     if (self.footerItemModel) {
-        CGFloat contentWidth = self.width - self.footerItemModel.marginLeft - self.footerItemModel.marginRight - [self.padding tm_floatAtIndex:1] - [self.padding tm_floatAtIndex:3];
+        CGFloat contentWidth = self.vv_width - self.footerItemModel.marginLeft - self.footerItemModel.marginRight - [self.padding tm_floatAtIndex:1] - [self.padding tm_floatAtIndex:3];
         CGRect tempRect = self.footerItemModel.itemFrame;
         tempRect.size.width = contentWidth;
         tempRect.origin.x   = self.footerItemModel.marginLeft + [self.padding tm_floatAtIndex:3];
-        tempRect.origin.y   = self.height + self.footerItemModel.marginTop;
+        tempRect.origin.y   = self.vv_height + self.footerItemModel.marginTop;
         self.footerItemModel.itemFrame = tempRect;
-        self.height = CGRectGetMaxY(self.footerItemModel.itemFrame) + self.footerItemModel.marginBottom + [self.padding tm_floatAtIndex:2];
+        self.vv_height = CGRectGetMaxY(self.footerItemModel.itemFrame) + self.footerItemModel.marginBottom + [self.padding tm_floatAtIndex:2];
     }
     else{
-        self.height += [self.padding tm_floatAtIndex:2];
+        self.vv_height += [self.padding tm_floatAtIndex:2];
     }
     [self startTimer];
     [self buildIndicator];
     if (self.bgImgURL.length > 0) {
-        self.bgImageView.frame = CGRectMake(0, 0, self.width, self.height);
+        self.bgImageView.frame = CGRectMake(0, 0, self.vv_width, self.vv_height);
         [self.bgImageView sd_setImageWithURL:[NSURL URLWithString:self.bgImgURL]];
         [self insertSubview:self.bgImageView belowSubview:self.scrollView];
     }

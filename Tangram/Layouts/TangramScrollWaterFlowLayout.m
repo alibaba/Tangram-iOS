@@ -66,7 +66,7 @@
     if (![self.subviews containsObject:_innerScrollView]) {
         [super addSubview:_innerScrollView];
     }
-    _innerScrollView.height = self.height;
+    _innerScrollView.vv_height = self.vv_height;
     return _innerScrollView;
 }
 -(void)calculateLayout
@@ -212,14 +212,14 @@
     
     CGFloat left        = 0;
     if (self.pagingIndex > pagingIndex) {
-        left        = currentView.left - self.width;
+        left        = currentView.vv_left - self.vv_width;
     } else if (self.pagingIndex < pagingIndex) {
-        left        = currentView.right;
+        left        = currentView.vv_right;
     } else if (self.pagingIndex == pagingIndex) {
-        left        = currentView.left;
+        left        = currentView.vv_left;
     }
     
-    nextView.left       = left;
+    nextView.vv_left       = left;
     [self.innerScrollView addSubview:nextView];
     
     // 添加影子
@@ -227,12 +227,12 @@
     
     [nextView.layer removeAllAnimations];
     [UIView animateWithDuration:0.4 animations:^{
-        [self.innerScrollView setContentOffset:CGPointMake(nextView.left, 0)];
+        [self.innerScrollView setContentOffset:CGPointMake(nextView.vv_left, 0)];
     } completion:^(BOOL finished) {
         // 归位
         if (pagingIndex == self.pagingIndex) {
-            nextView.left = pagingIndex * nextView.width;
-            [self.innerScrollView setContentOffset:CGPointMake(nextView.left, 0)];
+            nextView.vv_left = pagingIndex * nextView.vv_width;
+            [self.innerScrollView setContentOffset:CGPointMake(nextView.vv_left, 0)];
         }
         self.preContentOffsetX = self.innerScrollView.contentOffset.x;
         self.needIgnoreScroll = NO;
@@ -278,9 +278,9 @@
 
 -(void)buildScrollView
 {
-    if (self.innerScrollView.width <= 0 || self.innerScrollView.contentSize.width <= 0) {
+    if (self.innerScrollView.vv_width <= 0 || self.innerScrollView.contentSize.width <= 0) {
         self.innerScrollView.frame = self.bounds;
-        self.innerScrollView.contentSize = CGSizeMake(self.width * self.pagingLength, 0);
+        self.innerScrollView.contentSize = CGSizeMake(self.vv_width * self.pagingLength, 0);
         self.innerScrollView.pagingEnabled = YES;
         
         [self seutpPagingItemView];
@@ -300,7 +300,7 @@
     for (NSInteger i = 0; i < self.pagingViews.count; i++) {
         
         UIView *subView             = [self.pagingViews tm_safeObjectAtIndex:i];
-        subView.frame = CGRectMake(i * self.innerScrollView.width, subView.top, self.innerScrollView.width, self.innerScrollView.height);
+        subView.frame = CGRectMake(i * self.innerScrollView.vv_width, subView.vv_top, self.innerScrollView.vv_width, self.innerScrollView.vv_height);
         subView.autoresizingMask    = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
         //subView.backgroundColor = [UIColor colorWithString:[self.bgColors stringAtIndex:i]];
         [subView addSubview:[self.pagingCaptureImageViews tm_safeObjectAtIndex:i]];
@@ -330,7 +330,7 @@
             }
         }
         strongSelf.loadingView.alpha = 0.f;
-        strongSelf.loadingView.top -= self.offsetToLoadingView;
+        strongSelf.loadingView.vv_top -= self.offsetToLoadingView;
     } completion:^(BOOL finished) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
         [strongSelf.loadingView removeFromSuperview];
@@ -356,7 +356,7 @@
     
     CGFloat contentOffsetX = scrollView.contentOffset.x;
     //滚动到第几页
-    CGFloat tempPagingIndex = contentOffsetX / self.width;
+    CGFloat tempPagingIndex = contentOffsetX / self.vv_width;
     //如果准确滚动到了某一页
     if (tempPagingIndex == (int)tempPagingIndex) {
         self.isPaging = NO;

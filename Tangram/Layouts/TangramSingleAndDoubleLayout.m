@@ -92,24 +92,24 @@
     if (realItemModelEndIndex >= realItemModelStartIndex + 4) {
         fifth = [self.itemModels tm_safeObjectAtIndex:realItemModelStartIndex + 4];
     }
-    CGFloat contentWidth    = self.width - first.marginLeft - first.marginRight;
+    CGFloat contentWidth    = self.vv_width - first.marginLeft - first.marginRight;
     CGFloat bottom          = 0.f;
     BOOL useRows = NO;
     if (self.headerItemModel) {
-        contentWidth = self.width - self.headerItemModel.marginLeft  - self.headerItemModel.marginRight -  [self.padding tm_floatAtIndex:1] -  [self.padding tm_floatAtIndex:3];
+        contentWidth = self.vv_width - self.headerItemModel.marginLeft  - self.headerItemModel.marginRight -  [self.padding tm_floatAtIndex:1] -  [self.padding tm_floatAtIndex:3];
         self.headerItemModel.itemFrame = CGRectMake(self.headerItemModel.marginLeft + [self.padding tm_floatAtIndex:3] , self.headerItemModel.marginTop + [self.padding tm_floatAtIndex:0], contentWidth, self.headerItemModel.itemFrame.size.height);
     }
     if (self.aspectRatio && self.aspectRatio.length > 0 &&  [self.aspectRatio floatValue] > 0.f) {
-        self.height = self.width / [self.aspectRatio floatValue];
+        self.vv_height = self.vv_width / [self.aspectRatio floatValue];
     }
     if (second) {
         // 首行纯内容宽度
-        contentWidth = self.width - first.marginLeft - second.marginRight - first.marginRight - second.marginLeft -  [self.padding tm_floatAtIndex:1] -  [self.padding tm_floatAtIndex:3];
+        contentWidth = self.vv_width - first.marginLeft - second.marginRight - first.marginRight - second.marginLeft -  [self.padding tm_floatAtIndex:1] -  [self.padding tm_floatAtIndex:3];
         // 剩余内容宽度
         CGFloat lastContentWidth = contentWidth;
         CGFloat firstHeight = first.itemFrame.size.height;
         if (self.aspectRatio.length > 0) {
-            firstHeight = self.height;
+            firstHeight = self.vv_height;
          }
         // 第一个
         CGFloat elementWidth = ceilf(lastContentWidth) / 2;
@@ -164,7 +164,7 @@
         if (fifth) {
             //下一个版本再考虑好好把这里收拾一下吧
             //.....T_T
-            contentWidth = self.width - first.marginLeft - first.marginRight- third.marginLeft
+            contentWidth = self.vv_width - first.marginLeft - first.marginRight- third.marginLeft
             - third.marginRight- fourth.marginLeft - fourth.marginRight - fifth.marginLeft - fifth.marginRight - [self.padding tm_floatAtIndex:3] - [self.padding tm_floatAtIndex:1];
              lastContentWidth = contentWidth - CGRectGetWidth(first.itemFrame);
             if(useRows)
@@ -218,7 +218,7 @@
         }
         //如果就4个...
         else if (fourth) {
-            contentWidth = self.width - first.marginLeft - first.marginRight- third.marginLeft
+            contentWidth = self.vv_width - first.marginLeft - first.marginRight- third.marginLeft
             - third.marginRight- fourth.marginLeft - fourth.marginRight - [self.padding tm_floatAtIndex:3] - [self.padding tm_floatAtIndex:1];
             lastContentWidth = contentWidth - CGRectGetWidth(first.itemFrame);
             if(useRows)
@@ -261,7 +261,7 @@
         }
         //如果就3个...
         else if (third) {
-            contentWidth = self.width - first.marginLeft - first.marginRight - third.marginLeft - third.marginRight
+            contentWidth = self.vv_width - first.marginLeft - first.marginRight - third.marginLeft - third.marginRight
             - [self.padding tm_floatAtIndex:3] - [self.padding tm_floatAtIndex:1];
             lastContentWidth = contentWidth - CGRectGetWidth(first.itemFrame);
             CGFloat elementWidth = lastContentWidth;
@@ -285,17 +285,17 @@
         bottom = first.itemFrame.origin.y + first.itemFrame.size.height + first.marginBottom;
     }
     if (self.footerItemModel) {
-        contentWidth = self.width - self.footerItemModel.marginLeft  - self.footerItemModel.marginRight -  [self.padding tm_floatAtIndex:1] -  [self.padding tm_floatAtIndex:3];
+        contentWidth = self.vv_width - self.footerItemModel.marginLeft  - self.footerItemModel.marginRight -  [self.padding tm_floatAtIndex:1] -  [self.padding tm_floatAtIndex:3];
         self.footerItemModel.itemFrame = CGRectMake(self.footerItemModel.marginLeft + [self.padding tm_floatAtIndex:3] , self.footerItemModel.marginTop + bottom, contentWidth, self.footerItemModel.itemFrame.size.height);
         bottom = CGRectGetMaxY(self.footerItemModel.itemFrame) + self.footerItemModel.marginBottom;
     }
     
     if (!(self.aspectRatio && self.aspectRatio.length > 0 &&  [self.aspectRatio floatValue] > 0.f)) {
-        self.height = bottom;
+        self.vv_height = bottom;
     }
-    self.height += [self.padding tm_floatAtIndex:2];
+    self.vv_height += [self.padding tm_floatAtIndex:2];
     if (self.bgImgURL && self.bgImgURL.length > 0) {
-        self.bgImageView.frame = CGRectMake(0, 0, self.width, self.height);
+        self.bgImageView.frame = CGRectMake(0, 0, self.vv_width, self.vv_height);
         [self.bgImageView sd_setImageWithURL:[NSURL URLWithString:self.bgImgURL]];
     }
 }

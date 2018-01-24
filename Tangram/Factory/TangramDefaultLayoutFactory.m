@@ -97,7 +97,7 @@
         backgroundColor = [styleDict tm_stringForKey:@"background-color"];
     }
     if (backgroundColor.length > 0) {
-        layout.backgroundColor = [UIColor colorWithString:backgroundColor];
+        layout.backgroundColor = [UIColor vv_colorWithString:backgroundColor];
     }
     NSString *bgImgURL = [styleDict tm_stringForKey:@"bgImgUrl"];
     if (bgImgURL.length <= 0) {

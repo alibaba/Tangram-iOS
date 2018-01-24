@@ -269,8 +269,8 @@
                 && [layout respondsToSelector:@selector(subLayoutIdentifiers)] &&
                 [layout.subLayoutIdentifiers containsObject:model.inLayoutIdentifier]) {
                 UIView<TangramLayoutProtocol> *subLayout = [layout.subLayoutDict tm_safeObjectForKey:model.inLayoutIdentifier];
-                absTop += subLayout.top;
-                absLeft += subLayout.left;
+                absTop += subLayout.vv_top;
+                absLeft += subLayout.vv_left;
             }
             rectModel.absRect = CGRectMake(absLeft, absTop, CGRectGetWidth(model.itemFrame), CGRectGetHeight(model.itemFrame));
             if ([model respondsToSelector:@selector(setAbsRect:)]) {
@@ -371,7 +371,7 @@
     }
     if (cleanElement) {
         [super removeAllLayouts];
-        self.contentSize = CGSizeMake(self.width, self.height);
+        self.contentSize = CGSizeMake(self.vv_width, self.vv_height);
     }
     [self reloadData];
     
@@ -453,7 +453,7 @@
     [self.stickyLayoutArray removeAllObjects];
     if (cleanElement) {
         [super removeAllLayouts];
-        self.contentSize = CGSizeMake(self.width, self.height);
+        self.contentSize = CGSizeMake(self.vv_width, self.vv_height);
     }
 }
 
@@ -531,7 +531,7 @@
             NSString *layoutKeyNumberString = [NSString stringWithFormat:@"%ld", (long)startNumber];
             UIView<TangramLayoutProtocol> *layout = [self.layoutDict tm_safeObjectForKey:layoutKeyNumberString];
             if (layout) {
-                layout.top += offset;
+                layout.vv_top += offset;
             }
         }
     }
@@ -598,7 +598,7 @@
                     }
                     break;
                 case TopRight:
-                    originPoint.x = self.width - layout.width - ((TangramFixLayout *)layout).offsetX;
+                    originPoint.x = self.vv_width - layout.vv_width - ((TangramFixLayout *)layout).offsetX;
                     originPoint.y += ((TangramFixLayout *)layout).offsetY;
                     originPoint.y += self.fixExtraOffset;
                     if (topOffset < originPoint.y) {
@@ -608,15 +608,15 @@
                     break;
                 case BottomLeft:
                     originPoint.x += ((TangramFixLayout *)layout).offsetX;
-                    originPoint.y = self.height - layout.height - ((TangramFixLayout *)layout).offsetY;
+                    originPoint.y = self.vv_height - layout.vv_height - ((TangramFixLayout *)layout).offsetY;
                     break;
                 case BottomRight:
-                    originPoint.x = self.width - layout.width - ((TangramFixLayout *)layout).offsetX;
-                    originPoint.y = self.height - layout.height - ((TangramFixLayout *)layout).offsetY;
+                    originPoint.x = self.vv_width - layout.vv_width - ((TangramFixLayout *)layout).offsetX;
+                    originPoint.y = self.vv_height - layout.vv_height - ((TangramFixLayout *)layout).offsetY;
                     break;
             }
             ((TangramFixLayout *)layout).originPoint = originPoint;
-            layout.frame = CGRectMake(originPoint.x , originPoint.y, layout.width, layout.height);
+            layout.frame = CGRectMake(originPoint.x , originPoint.y, layout.vv_width, layout.vv_height);
             switch (((TangramFixLayout *)layout).showType) {
                 case FixLayoutShowOnLeave:
                     ((TangramFixLayout *)layout).showY = layoutTop;
@@ -714,8 +714,8 @@
     }
 
     self.contentSize = CGSizeMake(contentWidth, contentHeight);
-    if (self.contentSize.width > self.width) {
-        self.contentSize = CGSizeMake(self.width, self.contentSize.height);
+    if (self.contentSize.width > self.vv_width) {
+        self.contentSize = CGSizeMake(self.vv_width, self.contentSize.height);
     }
     
     for (UIView *layout in self.dragableLayoutArray) {
@@ -733,7 +733,7 @@
             if (topOffset >= ((TangramStickyLayout *)layout).extraOffset) {
                 ((TangramStickyLayout *)layout).extraOffset = 0.f;
             }
-            topOffset += (((TangramStickyLayout *)layout).extraOffset + layout.height);
+            topOffset += (((TangramStickyLayout *)layout).extraOffset + layout.vv_height);
         }
         [self bringSubviewToFront:layout];
     }
@@ -786,7 +786,7 @@
 {
     // BUSMARK - 查找layout 即将进入 或者 已经进入
     NSUInteger min = [self.hostTangramView layoutIndexByHeight:scrollView.contentOffset.y];
-    NSUInteger max = [self.hostTangramView layoutIndexByHeight:scrollView.contentOffset.y + scrollView.height];
+    NSUInteger max = [self.hostTangramView layoutIndexByHeight:scrollView.contentOffset.y + scrollView.vv_height];
     [self.hostTangramView.visibleLayoutIdentifierSet removeAllObjects];
     for (NSUInteger i = min; i <= max; i++) {
         UIView<TangramLayoutProtocol> *layout = [self.hostTangramView.layoutDict tm_safeObjectForKey:[NSString stringWithFormat:@"%ld",(long)i]];
@@ -818,7 +818,7 @@
     // 如果要固定住，需要满足：layout的layoutType返回值是fix，layout中Model的reuseIdentifier的返回的字符串length = 0
     // fix的marginTop和marginBottom在这里是指固定离顶端/底端的距离
     CGFloat topOffset = 0;
-    CGFloat bottomOffset = scrollView.height;
+    CGFloat bottomOffset = scrollView.vv_height;
     for (UIView<TangramLayoutProtocol> *layout in self.hostTangramView.fixLayoutArray) {
         if (((TangramFixLayout *)layout).showY > 0 && ((TangramFixLayout *)layout).showType != FixLayoutShowAlways) {
             if (scrollView.contentOffset.y >= ((TangramFixLayout *)layout).showY) {
@@ -841,15 +841,15 @@
         if ([layout.position isEqualToString:@"top-fixed"] ||
             (([layout.position isEqualToString:@"fixed"]) && (((TangramFixLayout *)layout).alignType == TopLeft || ((TangramFixLayout *)layout).alignType == TopRight))) {
             layout.frame = CGRectMake(layout.frame.origin.x,scrollView.contentOffset.y + ((TangramFixLayout *)layout).originPoint.y, layout.frame.size.width, layout.frame.size.height);
-            if (topOffset < layout.height + ((TangramFixLayout *)layout).originPoint.y) {
-                topOffset = layout.height + ((TangramFixLayout *)layout).originPoint.y;
+            if (topOffset < layout.vv_height + ((TangramFixLayout *)layout).originPoint.y) {
+                topOffset = layout.vv_height + ((TangramFixLayout *)layout).originPoint.y;
             }
         }
         else {
-            layout.frame = CGRectMake(layout.frame.origin.x,scrollView.height- layout.height + scrollView.contentOffset.y -  ((TangramFixLayout *)layout).offsetY, layout.frame.size.width, layout.frame.size.height);
-            bottomOffset -= (layout.height + ((TangramFixLayout *)layout).offsetY);
-            if (bottomOffset > (scrollView.height - layout.height - ((TangramFixLayout *)layout).offsetY)) {
-                bottomOffset  = (scrollView.height - layout.height - ((TangramFixLayout *)layout).offsetY);
+            layout.frame = CGRectMake(layout.frame.origin.x,scrollView.vv_height- layout.vv_height + scrollView.contentOffset.y -  ((TangramFixLayout *)layout).offsetY, layout.frame.size.width, layout.frame.size.height);
+            bottomOffset -= (layout.vv_height + ((TangramFixLayout *)layout).offsetY);
+            if (bottomOffset > (scrollView.vv_height - layout.vv_height - ((TangramFixLayout *)layout).offsetY)) {
+                bottomOffset  = (scrollView.vv_height - layout.vv_height - ((TangramFixLayout *)layout).offsetY);
             }
         }
     }
@@ -859,15 +859,15 @@
             && scrollView.contentOffset.y >= ((TangramStickyLayout *)layout).originalY - topOffset - ((TangramStickyLayout *)layout).extraOffset) {
             ((TangramStickyLayout *)layout).enterFloatStatus = YES;
             layout.frame = CGRectMake(layout.frame.origin.x,scrollView.contentOffset.y + topOffset + layout.marginTop + ((TangramStickyLayout *)layout).extraOffset , layout.frame.size.width, layout.frame.size.height);
-            topOffset += (layout.height + layout.marginTop + layout.marginBottom + ((TangramStickyLayout *)layout).extraOffset) ;
+            topOffset += (layout.vv_height + layout.marginTop + layout.marginBottom + ((TangramStickyLayout *)layout).extraOffset) ;
         }
         //吸底判断
         else if(((TangramStickyLayout *)layout).stickyBottom == YES
-                && scrollView.contentOffset.y + scrollView.height >= ((TangramStickyLayout *)layout).originalY + layout.height)
+                && scrollView.contentOffset.y + scrollView.vv_height >= ((TangramStickyLayout *)layout).originalY + layout.vv_height)
         {
             ((TangramStickyLayout *)layout).enterFloatStatus = YES;
-            layout.frame = CGRectMake(layout.frame.origin.x,scrollView.contentOffset.y + scrollView.height - layout.height - layout.marginBottom, layout.frame.size.width, layout.frame.size.height);
-            bottomOffset -= (layout.height + layout.marginTop + layout.marginBottom);
+            layout.frame = CGRectMake(layout.frame.origin.x,scrollView.contentOffset.y + scrollView.vv_height - layout.vv_height - layout.marginBottom, layout.frame.size.width, layout.frame.size.height);
+            bottomOffset -= (layout.vv_height + layout.marginTop + layout.marginBottom);
         }
         else
         {

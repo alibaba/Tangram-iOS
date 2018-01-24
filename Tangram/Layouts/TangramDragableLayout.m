@@ -82,19 +82,19 @@
     [UIView animateWithDuration:0.3 animations:^{
         __strong typeof(wself) sself = wself;
         if (sself) {
-            if (sself.superview.centerX < sself.centerX) {
+            if (sself.superview.vv_centerX < sself.vv_centerX) {
                 // 滑向右边贴边
-                sself.right = sself.superview.width;
+                sself.vv_right = sself.superview.vv_width;
             } else {
                 // 滑向左边贴边
-                sself.left = 0.f;
+                sself.vv_left = 0.f;
             }
             //sself.originPoint = sself.frame.origin;
 //            CGFloat topEdge = 0.f;
 //            CGFloat bottomEdge = 0.f;
 //            if ([sself.superview isKindOfClass:[TangramView class]]) {
-//                if ((((TangramView *)(sself.superview)).contentOffset.y + sself.superview.height - topEdge) < sself.bottom) {
-//                    sself.bottom = topEdge;
+//                if ((((TangramView *)(sself.superview)).contentOffset.y + sself.superview.height - topEdge) < sself.vv_bottom) {
+//                    sself.vv_bottom = topEdge;
 //                }
 //                else if (bottomEdge > sself.top) {
 //                    sself.top = bottomEdge;

@@ -115,7 +115,7 @@
 - (CGFloat)cellWidth
 {
     if (0 == _cellWidth) {
-        _cellWidth = ceilf((self.width - [self.padding tm_floatAtIndex:1] - [self.padding tm_floatAtIndex:3] - self.hGap * (self.numberOfColumns - 1)) / self.numberOfColumns);
+        _cellWidth = ceilf((self.vv_width - [self.padding tm_floatAtIndex:1] - [self.padding tm_floatAtIndex:3] - self.hGap * (self.numberOfColumns - 1)) / self.numberOfColumns);
     }
     return _cellWidth;
 }
@@ -155,7 +155,7 @@
         if (i == 0) {
             cellX += [self.padding tm_floatAtIndex:3];
             if ([itemModel.display isEqualToString:@"block"]) {
-                [itemModel setItemFrame:CGRectMake(cellX + [itemModel marginLeft]  , cellY, self.width - [itemModel marginRight] - [itemModel marginLeft] - [self.padding tm_floatAtIndex:3] -  [self.padding tm_floatAtIndex:1] , itemModel.itemFrame.size.height)];
+                [itemModel setItemFrame:CGRectMake(cellX + [itemModel marginLeft]  , cellY, self.vv_width - [itemModel marginRight] - [itemModel marginLeft] - [self.padding tm_floatAtIndex:3] -  [self.padding tm_floatAtIndex:1] , itemModel.itemFrame.size.height)];
             }
             else{
                  [itemModel setItemFrame:CGRectMake(cellX + [itemModel marginLeft]  , cellY, self.cellWidth, itemModel.itemFrame.size.height)];
@@ -201,9 +201,9 @@
         }
         
     }
-    self.height = MAX(CGRectGetMaxY(self.maxRect), CGRectGetMaxY(self.minRect)) + [self.padding tm_floatAtIndex:2];
+    self.vv_height = MAX(CGRectGetMaxY(self.maxRect), CGRectGetMaxY(self.minRect)) + [self.padding tm_floatAtIndex:2];
     if (self.bgImgURL && self.bgImgURL.length > 0) {
-        self.bgImageView.frame = CGRectMake(0, 0, self.width, self.height);
+        self.bgImageView.frame = CGRectMake(0, 0, self.vv_width, self.vv_height);
         [self.bgImageView sd_setImageWithURL:[NSURL URLWithString:self.bgImgURL]];
     }
     

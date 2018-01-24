@@ -48,9 +48,9 @@
         height = CGRectGetMaxY(model.itemFrame);
     }
     //self.width = width;
-    self.height = height;
+    self.vv_height = height;
     if (self.bgImgURL && self.bgImgURL.length > 0) {
-        self.bgImageView.frame = CGRectMake(0, 0, self.width, self.height);
+        self.bgImageView.frame = CGRectMake(0, 0, self.vv_width, self.vv_height);
         [self.bgImageView sd_setImageWithURL:[NSURL URLWithString:self.bgImgURL]];
     }
     [self.superview bringSubviewToFront:self];

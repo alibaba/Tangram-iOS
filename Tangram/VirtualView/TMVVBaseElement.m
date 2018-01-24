@@ -39,7 +39,7 @@ static BOOL xmlIsLoad = NO;
 - (void)calculateLayout
 {
     ///self.itemModel.type
-    self.frame = CGRectMake(floor(self.left), floor(self.top), floor(self.width), floor(self.height));
+    self.frame = CGRectMake(floor(self.vv_left), floor(self.vv_top), floor(self.vv_width), floor(self.vv_height));
     if (self.contentView==nil) {
         self.contentView = (VVViewContainer*)[[VVViewFactory shareFactoryInstance] obtainVirtualWithKey:self.tangramItemModel.type];//11,1024
         self.contentView.delegate = self;

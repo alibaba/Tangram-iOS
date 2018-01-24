@@ -109,7 +109,7 @@
             }
             lastModel = model;
         }
-        self.scrollView.frame = CGRectMake(0, 0, self.superview.width, height);
+        self.scrollView.frame = CGRectMake(0, 0, self.superview.vv_width, height);
         if ([lastModel respondsToSelector:@selector(marginRight)]) {
             self.scrollView.contentSize = CGSizeMake(lastModel.itemFrame.origin.x + lastModel.itemFrame.size.width + lastModel.marginRight + [self.padding tm_floatAtIndex:1], height);
         }
@@ -117,7 +117,7 @@
             self.scrollView.contentSize = CGSizeMake(lastModel.itemFrame.origin.x + lastModel.itemFrame.size.width + [self.padding tm_floatAtIndex:1], height);
         }
         
-        self.width = self.superview.width;
+        self.vv_width = self.superview.vv_width;
     }
     else{
         //保持老逻辑不动
@@ -131,12 +131,12 @@
         if (CGRectGetMaxY(model.itemFrame) > height) {
             height = CGRectGetMaxY(model.itemFrame);
         }
-        self.width = model.itemFrame.size.width;
+        self.vv_width = model.itemFrame.size.width;
     }
-    self.height = height + [self.padding tm_floatAtIndex:2];
-    self.layoutHeight = self.height;
+    self.vv_height = height + [self.padding tm_floatAtIndex:2];
+    self.layoutHeight = self.vv_height;
     if (self.bgImgURL && self.bgImgURL.length > 0) {
-        self.bgImageView.frame = CGRectMake(0, 0, self.width, self.height);
+        self.bgImageView.frame = CGRectMake(0, 0, self.vv_width, self.vv_height);
         [self.bgImageView sd_setImageWithURL:[NSURL URLWithString:self.bgImgURL]];
     }
     [self.superview bringSubviewToFront:self];
@@ -225,15 +225,15 @@
     if (self.animating || self.animationDuration == 0.f) {
         return;
     }
-    self.height = 0.f;
+    self.vv_height = 0.f;
     self.animating = YES;
     for (UIView *view in self.subviews) {
-        view.top -= self.layoutHeight;
+        view.vv_top -= self.layoutHeight;
     }
     [UIView animateWithDuration:self.animationDuration delay:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
-        self.height = self.layoutHeight;
+        self.vv_height = self.layoutHeight;
         for (UIView *view in self.subviews) {
-            view.top += self.layoutHeight;
+            view.vv_top += self.layoutHeight;
         }
     } completion:^(BOOL finished) {
         self.animating = NO;
@@ -256,18 +256,18 @@
     }
     self.animating = YES;
     [UIView animateWithDuration:0.5 animations:^{
-        self.height = 0.f;
+        self.vv_height = 0.f;
         if (self.enableAlphaEffect) {
             self.alpha = 0.f;
         }
         for (UIView *view in self.subviews) {
-            view.top -= self.layoutHeight;
+            view.vv_top -= self.layoutHeight;
         }
     } completion:^(BOOL finished) {
         for (UIView *view in self.subviews) {
-            view.top += self.layoutHeight;
+            view.vv_top += self.layoutHeight;
         }
-        self.height = self.layoutHeight;
+        self.vv_height = self.layoutHeight;
         self.hidden = YES;
         if (self.enableAlphaEffect) {
             self.alpha = 1.f;
