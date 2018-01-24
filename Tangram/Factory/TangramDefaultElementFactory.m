@@ -79,7 +79,6 @@
  Return view after be refreshed
  
  @param  element to be refreshed
- @param  model
  @return element after refreshed
  */
 + (UIView *)refreshElement:(UIView *)element byModel:(NSObject<TangramItemModelProtocol> *)model

@@ -41,7 +41,7 @@ static BOOL xmlIsLoad = NO;
     ///self.itemModel.type
     self.frame = CGRectMake(floor(self.vv_left), floor(self.vv_top), floor(self.vv_width), floor(self.vv_height));
     if (self.contentView==nil) {
-        self.contentView = (VVViewContainer*)[[VVViewFactory shareFactoryInstance] obtainVirtualWithKey:self.tangramItemModel.type];//11,1024
+        self.contentView = [VVViewContainer viewContainerWithTemplateType:self.tangramItemModel.type];
         self.contentView.delegate = self;
         [self addSubview:self.contentView];
     }
