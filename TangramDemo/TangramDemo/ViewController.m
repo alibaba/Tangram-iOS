@@ -1,9 +1,8 @@
 //
 //  ViewController.m
-//  TmallClient4iOS-Tangram
+//  TangramDemo
 //
-//  Created by jiajun on 8/26/15.
-//  Copyright (c) 2015 tmall.com. All rights reserved.
+//  Copyright (c) 2017-2018 Alibaba. All rights reserved.
 //
 #define TESTLAYOUT_NUMBER 20
 #define TESTCOLUMN 3

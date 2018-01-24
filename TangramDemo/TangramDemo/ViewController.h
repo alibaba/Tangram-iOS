@@ -2,8 +2,7 @@
 //  ViewController.h
 //  TangramDemo
 //
-//  Created by xiaoxia on 15/12/29.
-//  Copyright © 2015年 Taobao lnc. All rights reserved.
+//  Copyright (c) 2017-2018 Alibaba. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
