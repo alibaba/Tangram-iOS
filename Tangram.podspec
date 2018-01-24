@@ -2,10 +2,12 @@ Pod::Spec.new do |s|
 
   s.name         = "Tangram"
   s.version      = "2.0.0"
-  s.summary      = "Tangram is a UI Framework for building a fast and dynamic ScrollView."
+  s.summary      = "Tangram is a modular UI solution for building native page dynamically & quickly."
   
   s.description  = <<-DESC
-                   Tangram is a UI Framework for building a fast and dynamic ScrollView, with two platform support (Android & iOS)
+                   Tangram is a modular UI solution for building native page dynamically & quickly.
+                   And Tangram 2.0 with VirtualView can create & release UI component dynamically.
+                   The solution also have an implementation for Andriod platform.
                    DESC
 
   s.homepage     = "https://github.com/alibaba/Tangram-iOS"
@@ -13,11 +15,11 @@ Pod::Spec.new do |s|
   s.author       = { "fydx"       => "lbgg918@gmail.com",
                      "HarrisonXi" => "gpra8764@gmail.com"}
   s.platform     = :ios
-  s.ios.deployment_target = '7.0'
+  s.ios.deployment_target = '8.0'
   s.requires_arc = true
   s.source       = { :git => "https://github.com/alibaba/Tangram-iOS.git", :tag => "2.0.0" }
-  s.resources    = 'Tangram/Resource/*.{plist,json,out}'
-  s.source_files = 'Tangram/Source/**/*.{h,m}'
+  s.resources    = 'Tangram/Resources/*'
+  s.source_files = 'Tangram/**/*.{h,m}'
   
   s.dependency 'LazyScroll', '~> 1.0'
   s.dependency 'VirtualView', '~> 1.0'

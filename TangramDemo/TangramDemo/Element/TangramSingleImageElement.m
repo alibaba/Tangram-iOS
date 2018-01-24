@@ -1,9 +1,8 @@
 //
 //  TangramSingleImageElement.m
-//  TmallClient4iOS-Tangram
+//  TangramDemo
 //
-//  Created by xiaoxia on 15/11/26.
-//  Copyright © 2015年 tmall.com. All rights reserved.
+//  Copyright (c) 2017-2018 Alibaba. All rights reserved.
 //
 
 #import "TangramSingleImageElement.h"

@@ -2,8 +2,7 @@
 //  AppDelegate.m
 //  TangramDemo
 //
-//  Created by xiaoxia on 2017/3/1.
-//  Copyright © 2017年 taobao. All rights reserved.
+//  Copyright (c) 2017-2018 Alibaba. All rights reserved.
 //
 
 #import "AppDelegate.h"
