@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
 
   s.name         = "Tangram"
-  s.version      = "2.1.0"
+  s.version      = "2.1.1"
   s.summary      = "Tangram is a modular UI solution for building native page dynamically & quickly."
   
   s.description  = <<-DESC
@@ -17,7 +17,7 @@ Pod::Spec.new do |s|
   s.platform     = :ios
   s.ios.deployment_target = '8.0'
   s.requires_arc = true
-  s.source       = { :git => "https://github.com/alibaba/Tangram-iOS.git", :tag => "2.1.0" }
+  s.source       = { :git => "https://github.com/alibaba/Tangram-iOS.git", :tag => "2.1.1" }
   s.resources    = 'Tangram/Resources/*'
   s.source_files = 'Tangram/**/*.{h,m}'
   
