@@ -133,6 +133,11 @@
     return [[self.margin tm_safeObjectAtIndex:3] floatValue];
 }
 
+- (void)setNumberOfColumns:(NSUInteger)numberOfColumns
+{
+    _numberOfColumns = numberOfColumns ?: 1;
+}
+
 - (void)addHeaderView:(UIView *)headerView
 {
     [self addSubview:headerView];
