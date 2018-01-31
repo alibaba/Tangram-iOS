@@ -13,11 +13,6 @@
 @class TangramView;
 @class TangramBus;
 
-
-@protocol TangramViewDelegate <TMMuiLazyScrollViewDelegate>
-
-@end
-
 //****************************************************************
 
 /**
@@ -82,6 +77,8 @@
 //****************************************************************
 
 @interface TangramView : TMMuiLazyScrollView
+
+// 注意，修改 delegate 属性后需要将 scrollViewDidScroll: 事件转发回给 TangramView
 
 // Contains layouts in TangramView. Key ：layout index；value：layout
 @property   (nonatomic, strong, readonly) NSMutableDictionary     *layoutDict;

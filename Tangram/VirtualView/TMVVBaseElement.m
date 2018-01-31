@@ -10,6 +10,7 @@
 #import <VirtualView/UIView+VirtualView.h>
 #import "TangramEvent.h"
 #import "UIView+Tangram.h"
+#import <VVViewContainer.h>
 
 static BOOL xmlIsLoad = NO;
 
@@ -36,10 +37,23 @@ static BOOL xmlIsLoad = NO;
     return self;
 }
 
+- (CGRect)fitRect:(CGRect)originalFrame
+{
+    CGFloat left = CGRectGetMinX(originalFrame);
+    CGFloat right = CGRectGetMaxX(originalFrame);
+    CGFloat top = CGRectGetMinY(originalFrame);
+    CGFloat bottom = CGRectGetMaxY(originalFrame);
+    left = round(left);
+    right = round(right);
+    top = round(top);
+    bottom = round(bottom);
+    return CGRectMake(left, top, right - left, bottom - top);
+}
+
 - (void)calculateLayout
 {
     ///self.itemModel.type
-    self.frame = CGRectMake(floor(self.vv_left), floor(self.vv_top), floor(self.vv_width), floor(self.vv_height));
+    self.frame = [self fitRect:self.frame];
     if (self.contentView==nil) {
         self.contentView = [VVViewContainer viewContainerWithTemplateType:self.tangramItemModel.type];
         self.contentView.delegate = self;

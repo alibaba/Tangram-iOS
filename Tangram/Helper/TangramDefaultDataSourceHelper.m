@@ -81,6 +81,9 @@
     for (NSDictionary *dict in dictArray) {
         UIView<TangramLayoutProtocol> *layout = [[TangramDefaultDataSourceHelper sharedInstance].layoutFactoryClass layoutByDict:dict];
         [self fillLayoutProperty:layout withDict:dict tangramBus:tangramBus];
+        if (0 == layout.itemModels.count) {
+            continue;
+        }
         [layouts tm_safeAddObject:layout];
         for (int i = 0 ; i< layout.itemModels.count; i++) {
             TangramDefaultItemModel *itemModel = [layout.itemModels tm_safeObjectAtIndex:i];

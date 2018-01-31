@@ -16,22 +16,17 @@
 #import <VirtualView/UIView+VirtualView.h>
 #import <TMUtils/TMUtils.h>
 
+@interface TMMuiLazyScrollView ()
 
-@interface TangramViewDelegateHandler : NSObject<TangramViewDelegate>
-
-@property   (nonatomic, weak)   TangramView<TMMuiLazyScrollViewDelegate>    *hostTangramView;
-
-@property   (nonatomic, assign) CGFloat  scrollHeight;
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView;
 
 @end
 
 //****************************************************************
 
-@interface TangramView () <TMMuiLazyScrollViewDelegate, TMMuiLazyScrollViewDataSource>
+@interface TangramView () <TMMuiLazyScrollViewDataSource, UIScrollViewDelegate>
 
 @property   (nonatomic, weak, setter=setDataSource:)    id<TangramViewDatasource>       clDataSource;
-
-@property   (nonatomic, weak, setter=setDelegate:)      id<TangramViewDelegate>         clDelegate;
 
 // Contains layouts in TangramView. Key ：layout index；value：layout
 @property   (nonatomic, strong) NSMutableDictionary     *layoutDict;
@@ -48,8 +43,6 @@
 @property   (nonatomic, strong) NSMutableDictionary     *muiIDIndexIndex;
 // The Dictionary of MUI ID（unique ID，String) and Model。Key：MUI ID；value：Model
 @property   (nonatomic, strong) NSMutableDictionary     *muiIDModelIndex;
-
-@property   (nonatomic, strong) TangramViewDelegateHandler  *delegateHandler;
 // FixLayout Array
 @property   (nonatomic, strong) NSMutableArray          *fixLayoutArray;
 // StickyLayout Array
@@ -80,28 +73,6 @@
 @implementation TangramView
 
 #pragma mark - Setter & Getter
-- (TangramViewDelegateHandler *)delegateHandler
-{
-    if (nil == _delegateHandler) {
-        _delegateHandler = [[TangramViewDelegateHandler alloc] init];
-        _delegateHandler.hostTangramView = self;
-        _delegateHandler.scrollHeight = 0.f;
-    }
-    return _delegateHandler;
-}
-
-- (void)setDelegate:(id<TangramViewDelegate>)clDelegate
-{
-    _clDelegate = clDelegate;
-    if (_clDelegate) {
-        [super setDelegate:self.delegateHandler];
-    } else {
-        // will reach here during dealloc
-        [super setDelegate:clDelegate];
-    }
-    
-}
-
 - (NSMutableArray *)layoutKeyArray
 {
     if (nil == _layoutKeyArray) {
@@ -356,7 +327,6 @@
     self = [super initWithFrame:frame];
     if (self) {
         [super setDataSource:self];
-        [super setDelegate:self.delegateHandler];
     }
     return self;
 }
@@ -631,12 +601,6 @@
                     }
                     break;
                 case FixLayoutShowAlways:
-                    if (calculate) {
-                        layout.hidden = YES;
-                        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(.5f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                            layout.hidden = NO;
-                        });
-                    }
                     break;
             }
         }
@@ -776,212 +740,107 @@
     [self.lastVisibleLayoutIdentifierSet removeAllObjects];
     [self.layoutEnterTimesDict removeAllObjects];
 }
-@end
-//在这里实现相关的ScrollViewDelegate，避免覆盖父类的方法
-@implementation TangramViewDelegateHandler
 
-
-#pragma mark - TMMuiLazyScrollViewDelegate
+#pragma mark - UIScrollViewDelegate
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
+    [super scrollViewDidScroll:scrollView];
+    
     // BUSMARK - 查找layout 即将进入 或者 已经进入
-    NSUInteger min = [self.hostTangramView layoutIndexByHeight:scrollView.contentOffset.y];
-    NSUInteger max = [self.hostTangramView layoutIndexByHeight:scrollView.contentOffset.y + scrollView.vv_height];
-    [self.hostTangramView.visibleLayoutIdentifierSet removeAllObjects];
-    for (NSUInteger i = min; i <= max; i++) {
-        UIView<TangramLayoutProtocol> *layout = [self.hostTangramView.layoutDict tm_safeObjectForKey:[NSString stringWithFormat:@"%ld",(long)i]];
-        if (layout.identifier && layout.identifier.length > 0) {
-            [self.hostTangramView.visibleLayoutIdentifierSet addObject:layout.identifier];
+    if (scrollView == self) {
+        NSUInteger min = [self layoutIndexByHeight:scrollView.contentOffset.y];
+        NSUInteger max = [self layoutIndexByHeight:scrollView.contentOffset.y + scrollView.vv_height];
+        [self.visibleLayoutIdentifierSet removeAllObjects];
+        for (NSUInteger i = min; i <= max; i++) {
+            UIView<TangramLayoutProtocol> *layout = [self.layoutDict tm_safeObjectForKey:[NSString stringWithFormat:@"%ld",(long)i]];
+            if (layout.identifier && layout.identifier.length > 0) {
+                [self.visibleLayoutIdentifierSet addObject:layout.identifier];
+            }
         }
-    }
-    NSMutableSet *appearLayoutSet = [self.hostTangramView.visibleLayoutIdentifierSet mutableCopy];
-    //这样子取交集可能会有问题：如果layout的identifier重新生成？
-    [appearLayoutSet minusSet:self.hostTangramView.lastVisibleLayoutIdentifierSet];
-    for (NSUInteger i = min; i <= max; i++) {
-        UIView<TangramLayoutProtocol> *layout = [self.hostTangramView.layoutDict tm_safeObjectForKey:[NSString stringWithFormat:@"%ld",(long)i]];
-        NSUInteger times = 0;
-        if ([appearLayoutSet containsObject:layout.identifier])
-        {
-            //执行delegate
-            times = [self.hostTangramView.layoutEnterTimesDict tm_integerForKey:layout.identifier];
-            //[layout.layoutEventDelegate layoutDidEnter:layout times:times];
-            TangramEvent *layoutEnterEvent = [[TangramEvent alloc]initWithTopic:@"layoutEnter" withTangramView:self.hostTangramView posterIdentifier:layout.identifier andPoster:layout];
-            [layoutEnterEvent setParam:[NSNumber numberWithUnsignedInteger:times] forKey:@"times"];
-            [self.hostTangramView.tangramBus postEvent:layoutEnterEvent];
-            [self.hostTangramView.layoutEnterTimesDict tm_safeSetObject:[NSNumber numberWithUnsignedInteger:times + 1] forKey:layout.identifier];
+        NSMutableSet *appearLayoutSet = [self.visibleLayoutIdentifierSet mutableCopy];
+        //这样子取交集可能会有问题：如果layout的identifier重新生成？
+        [appearLayoutSet minusSet:self.lastVisibleLayoutIdentifierSet];
+        for (NSUInteger i = min; i <= max; i++) {
+            UIView<TangramLayoutProtocol> *layout = [self.layoutDict tm_safeObjectForKey:[NSString stringWithFormat:@"%ld",(long)i]];
+            NSUInteger times = 0;
+            if ([appearLayoutSet containsObject:layout.identifier])
+            {
+                //执行delegate
+                times = [self.layoutEnterTimesDict tm_integerForKey:layout.identifier];
+                //[layout.layoutEventDelegate layoutDidEnter:layout times:times];
+                TangramEvent *layoutEnterEvent = [[TangramEvent alloc]initWithTopic:@"layoutEnter" withTangramView:self posterIdentifier:layout.identifier andPoster:layout];
+                [layoutEnterEvent setParam:[NSNumber numberWithUnsignedInteger:times] forKey:@"times"];
+                [self.tangramBus postEvent:layoutEnterEvent];
+                [self.layoutEnterTimesDict tm_safeSetObject:[NSNumber numberWithUnsignedInteger:times + 1] forKey:layout.identifier];
+            }
         }
-    }
-    //完毕，写入lastVisibleLayoutSet
-    self.hostTangramView.lastVisibleLayoutIdentifierSet = [self.hostTangramView.visibleLayoutIdentifierSet mutableCopy];
-    
-    // 做fix属性的相关计算
-    // 如果要固定住，需要满足：layout的layoutType返回值是fix，layout中Model的reuseIdentifier的返回的字符串length = 0
-    // fix的marginTop和marginBottom在这里是指固定离顶端/底端的距离
-    CGFloat topOffset = 0;
-    CGFloat bottomOffset = scrollView.vv_height;
-    for (UIView<TangramLayoutProtocol> *layout in self.hostTangramView.fixLayoutArray) {
-        if (((TangramFixLayout *)layout).showY > 0 && ((TangramFixLayout *)layout).showType != FixLayoutShowAlways) {
-            if (scrollView.contentOffset.y >= ((TangramFixLayout *)layout).showY) {
-                if (((TangramFixLayout *)layout).hidden != NO) {
-                    TangramEvent *fixLayoutShouldShowEvent = [[TangramEvent alloc]initWithTopic:@"TangramFixLayoutShouldShow" withTangramView:self.hostTangramView posterIdentifier:nil andPoster:self];
-                    [fixLayoutShouldShowEvent setParam:layout forKey:@"layout"];
-                    [self.hostTangramView.tangramBus postEvent:fixLayoutShouldShowEvent];
+        //完毕，写入lastVisibleLayoutSet
+        self.lastVisibleLayoutIdentifierSet = [self.visibleLayoutIdentifierSet mutableCopy];
+        
+        // 做fix属性的相关计算
+        // 如果要固定住，需要满足：layout的layoutType返回值是fix，layout中Model的reuseIdentifier的返回的字符串length = 0
+        // fix的marginTop和marginBottom在这里是指固定离顶端/底端的距离
+        CGFloat topOffset = 0;
+        CGFloat bottomOffset = scrollView.vv_height;
+        for (UIView<TangramLayoutProtocol> *layout in self.fixLayoutArray) {
+            if (((TangramFixLayout *)layout).showY > 0 && ((TangramFixLayout *)layout).showType != FixLayoutShowAlways) {
+                if (scrollView.contentOffset.y >= ((TangramFixLayout *)layout).showY) {
+                    if (((TangramFixLayout *)layout).hidden != NO) {
+                        TangramEvent *fixLayoutShouldShowEvent = [[TangramEvent alloc]initWithTopic:@"TangramFixLayoutShouldShow" withTangramView:self posterIdentifier:nil andPoster:self];
+                        [fixLayoutShouldShowEvent setParam:layout forKey:@"layout"];
+                        [self.tangramBus postEvent:fixLayoutShouldShowEvent];
+                    }
+                    //((TangramFixLayout *)layout).hidden = NO;
                 }
-                //((TangramFixLayout *)layout).hidden = NO;
-            }
-            else{
-                if (((TangramFixLayout *)layout).hidden != YES) {
-                    TangramEvent *fixLayoutShouldHideEvent = [[TangramEvent alloc]initWithTopic:@"TangramFixLayoutShouldHide" withTangramView:self.hostTangramView posterIdentifier:nil andPoster:self];
-                    [fixLayoutShouldHideEvent setParam:layout forKey:@"layout"];
-                    [self.hostTangramView.tangramBus postEvent:fixLayoutShouldHideEvent];
+                else{
+                    if (((TangramFixLayout *)layout).hidden != YES) {
+                        TangramEvent *fixLayoutShouldHideEvent = [[TangramEvent alloc]initWithTopic:@"TangramFixLayoutShouldHide" withTangramView:self posterIdentifier:nil andPoster:self];
+                        [fixLayoutShouldHideEvent setParam:layout forKey:@"layout"];
+                        [self.tangramBus postEvent:fixLayoutShouldHideEvent];
+                    }
+                    //((TangramFixLayout *)layout).hidden = YES;
                 }
-                //((TangramFixLayout *)layout).hidden = YES;
+            }
+            if ([layout.position isEqualToString:@"top-fixed"] ||
+                (([layout.position isEqualToString:@"fixed"]) && (((TangramFixLayout *)layout).alignType == TopLeft || ((TangramFixLayout *)layout).alignType == TopRight))) {
+                layout.frame = CGRectMake(layout.frame.origin.x,scrollView.contentOffset.y + ((TangramFixLayout *)layout).originPoint.y, layout.frame.size.width, layout.frame.size.height);
+                if (topOffset < layout.vv_height + ((TangramFixLayout *)layout).originPoint.y) {
+                    topOffset = layout.vv_height + ((TangramFixLayout *)layout).originPoint.y;
+                }
+            }
+            else {
+                layout.frame = CGRectMake(layout.frame.origin.x,scrollView.vv_height- layout.vv_height + scrollView.contentOffset.y -  ((TangramFixLayout *)layout).offsetY, layout.frame.size.width, layout.frame.size.height);
+                bottomOffset -= (layout.vv_height + ((TangramFixLayout *)layout).offsetY);
+                if (bottomOffset > (scrollView.vv_height - layout.vv_height - ((TangramFixLayout *)layout).offsetY)) {
+                    bottomOffset  = (scrollView.vv_height - layout.vv_height - ((TangramFixLayout *)layout).offsetY);
+                }
             }
         }
-        if ([layout.position isEqualToString:@"top-fixed"] ||
-            (([layout.position isEqualToString:@"fixed"]) && (((TangramFixLayout *)layout).alignType == TopLeft || ((TangramFixLayout *)layout).alignType == TopRight))) {
-            layout.frame = CGRectMake(layout.frame.origin.x,scrollView.contentOffset.y + ((TangramFixLayout *)layout).originPoint.y, layout.frame.size.width, layout.frame.size.height);
-            if (topOffset < layout.vv_height + ((TangramFixLayout *)layout).originPoint.y) {
-                topOffset = layout.vv_height + ((TangramFixLayout *)layout).originPoint.y;
+        for (UIView<TangramLayoutProtocol> *layout in self.stickyLayoutArray) {
+            //吸顶判断
+            if (((TangramStickyLayout *)layout).stickyBottom == NO
+                && scrollView.contentOffset.y >= ((TangramStickyLayout *)layout).originalY - topOffset - ((TangramStickyLayout *)layout).extraOffset) {
+                ((TangramStickyLayout *)layout).enterFloatStatus = YES;
+                layout.frame = CGRectMake(layout.frame.origin.x,scrollView.contentOffset.y + topOffset + layout.marginTop + ((TangramStickyLayout *)layout).extraOffset , layout.frame.size.width, layout.frame.size.height);
+                topOffset += (layout.vv_height + layout.marginTop + layout.marginBottom + ((TangramStickyLayout *)layout).extraOffset) ;
+            }
+            //吸底判断
+            else if(((TangramStickyLayout *)layout).stickyBottom == YES
+                    && scrollView.contentOffset.y + scrollView.vv_height >= ((TangramStickyLayout *)layout).originalY + layout.vv_height)
+            {
+                ((TangramStickyLayout *)layout).enterFloatStatus = YES;
+                layout.frame = CGRectMake(layout.frame.origin.x,scrollView.contentOffset.y + scrollView.vv_height - layout.vv_height - layout.marginBottom, layout.frame.size.width, layout.frame.size.height);
+                bottomOffset -= (layout.vv_height + layout.marginTop + layout.marginBottom);
+            }
+            else
+            {
+                ((TangramStickyLayout *)layout).enterFloatStatus = NO;
+                layout.frame = CGRectMake(layout.frame.origin.x,((TangramStickyLayout *)layout).originalY, layout.frame.size.width, layout.frame.size.height);
             }
         }
-        else {
-            layout.frame = CGRectMake(layout.frame.origin.x,scrollView.vv_height- layout.vv_height + scrollView.contentOffset.y -  ((TangramFixLayout *)layout).offsetY, layout.frame.size.width, layout.frame.size.height);
-            bottomOffset -= (layout.vv_height + ((TangramFixLayout *)layout).offsetY);
-            if (bottomOffset > (scrollView.vv_height - layout.vv_height - ((TangramFixLayout *)layout).offsetY)) {
-                bottomOffset  = (scrollView.vv_height - layout.vv_height - ((TangramFixLayout *)layout).offsetY);
-            }
+        for (UIView<TangramLayoutProtocol> *layout in self.dragableLayoutArray) {
+            layout.frame = CGRectMake(layout.frame.origin.x, ((TangramDragableLayout *)layout).originPoint.y + scrollView.contentOffset.y , layout.frame.size.width, layout.frame.size.height);
         }
-    }
-    for (UIView<TangramLayoutProtocol> *layout in self.hostTangramView.stickyLayoutArray) {
-        //吸顶判断
-        if (((TangramStickyLayout *)layout).stickyBottom == NO
-            && scrollView.contentOffset.y >= ((TangramStickyLayout *)layout).originalY - topOffset - ((TangramStickyLayout *)layout).extraOffset) {
-            ((TangramStickyLayout *)layout).enterFloatStatus = YES;
-            layout.frame = CGRectMake(layout.frame.origin.x,scrollView.contentOffset.y + topOffset + layout.marginTop + ((TangramStickyLayout *)layout).extraOffset , layout.frame.size.width, layout.frame.size.height);
-            topOffset += (layout.vv_height + layout.marginTop + layout.marginBottom + ((TangramStickyLayout *)layout).extraOffset) ;
-        }
-        //吸底判断
-        else if(((TangramStickyLayout *)layout).stickyBottom == YES
-                && scrollView.contentOffset.y + scrollView.vv_height >= ((TangramStickyLayout *)layout).originalY + layout.vv_height)
-        {
-            ((TangramStickyLayout *)layout).enterFloatStatus = YES;
-            layout.frame = CGRectMake(layout.frame.origin.x,scrollView.contentOffset.y + scrollView.vv_height - layout.vv_height - layout.marginBottom, layout.frame.size.width, layout.frame.size.height);
-            bottomOffset -= (layout.vv_height + layout.marginTop + layout.marginBottom);
-        }
-        else
-        {
-            ((TangramStickyLayout *)layout).enterFloatStatus = NO;
-            layout.frame = CGRectMake(layout.frame.origin.x,((TangramStickyLayout *)layout).originalY, layout.frame.size.width, layout.frame.size.height);
-        }
-    }
-    for (UIView<TangramLayoutProtocol> *layout in self.hostTangramView.dragableLayoutArray) {
-        layout.frame = CGRectMake(layout.frame.origin.x, ((TangramDragableLayout *)layout).originPoint.y + scrollView.contentOffset.y , layout.frame.size.width, layout.frame.size.height);
-    }
-    
-    if (self.hostTangramView.clDelegate && [self.hostTangramView.clDelegate conformsToProtocol:@protocol(UIScrollViewDelegate)] && [self.hostTangramView.clDelegate respondsToSelector:@selector(scrollViewDidScroll:)])
-    {
-        [self.hostTangramView.clDelegate scrollViewDidScroll:self.hostTangramView];
-    }
-}
-
-- (void)scrollViewDidZoom:(UIScrollView *)scrollView NS_AVAILABLE_IOS(3_2)
-{
-    if (self.hostTangramView.clDelegate && [self.hostTangramView.clDelegate conformsToProtocol:@protocol(UIScrollViewDelegate)] && [self.hostTangramView.clDelegate respondsToSelector:@selector(scrollViewDidZoom:)])
-    {
-        [self.hostTangramView.clDelegate scrollViewDidZoom:self.hostTangramView];
-    }
-}
-
-- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
-{
-    if (self.hostTangramView.clDelegate && [self.hostTangramView.clDelegate conformsToProtocol:@protocol(UIScrollViewDelegate)] && [self.hostTangramView.clDelegate respondsToSelector:@selector(scrollViewWillBeginDragging:)])
-    {
-        [self.hostTangramView.clDelegate scrollViewWillBeginDragging:self.hostTangramView];
-    }
-}
-
-- (void)scrollViewWillEndDragging:(UIScrollView *)scrollView withVelocity:(CGPoint)velocity targetContentOffset:(inout CGPoint *)targetContentOffset NS_AVAILABLE_IOS(5_0)
-{
-    if (self.hostTangramView.clDelegate && [self.hostTangramView.clDelegate conformsToProtocol:@protocol(UIScrollViewDelegate)] && [self.hostTangramView.clDelegate respondsToSelector:@selector(scrollViewWillEndDragging:withVelocity:targetContentOffset:)])
-    {
-        [self.hostTangramView.clDelegate scrollViewWillEndDragging:self.hostTangramView withVelocity:velocity targetContentOffset:targetContentOffset];
-    }
-}
-
-- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
-{
-    if (self.hostTangramView.clDelegate && [self.hostTangramView.clDelegate conformsToProtocol:@protocol(UIScrollViewDelegate)] && [self.hostTangramView.clDelegate respondsToSelector:@selector(scrollViewDidEndDragging:willDecelerate:)])
-    {
-        [self.hostTangramView.clDelegate scrollViewDidEndDragging:self.hostTangramView willDecelerate:decelerate];
-    }
-}
-
-- (void)scrollViewWillBeginDecelerating:(UIScrollView *)scrollView
-{
-    if (self.hostTangramView.clDelegate && [self.hostTangramView.clDelegate conformsToProtocol:@protocol(UIScrollViewDelegate)] && [self.hostTangramView.clDelegate respondsToSelector:@selector(scrollViewWillBeginDecelerating:)])
-    {
-        [self.hostTangramView.clDelegate scrollViewWillBeginDecelerating:self.hostTangramView];
-    }
-}
-
-- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
-{
-    if (self.hostTangramView.clDelegate && [self.hostTangramView.clDelegate conformsToProtocol:@protocol(UIScrollViewDelegate)] && [self.hostTangramView.clDelegate respondsToSelector:@selector(scrollViewDidEndDecelerating:)])
-    {
-        [self.hostTangramView.clDelegate scrollViewDidEndDecelerating:self.hostTangramView];
-    }
-}
-
-- (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView
-{
-    if (self.hostTangramView.clDelegate && [self.hostTangramView.clDelegate conformsToProtocol:@protocol(UIScrollViewDelegate)] && [self.hostTangramView.clDelegate respondsToSelector:@selector(scrollViewDidEndScrollingAnimation:)])
-    {
-        [self.hostTangramView.clDelegate scrollViewDidEndScrollingAnimation:self.hostTangramView];
-    }
-}
-
-- (UIView *)viewForZoomingInScrollView:(UIScrollView *)scrollView
-{
-    if (self.hostTangramView.clDelegate && [self.hostTangramView.clDelegate conformsToProtocol:@protocol(UIScrollViewDelegate)] && [self.hostTangramView.clDelegate respondsToSelector:@selector(viewForZoomingInScrollView:)])
-    {
-        return [self.hostTangramView.clDelegate viewForZoomingInScrollView:self.hostTangramView];
-    }
-    return nil;
-}
-
-- (void)scrollViewWillBeginZooming:(UIScrollView *)scrollView withView:(UIView *)view NS_AVAILABLE_IOS(3_2)
-{
-    if (self.hostTangramView.clDelegate && [self.hostTangramView.clDelegate conformsToProtocol:@protocol(UIScrollViewDelegate)] && [self.hostTangramView.clDelegate respondsToSelector:@selector(scrollViewWillBeginZooming:withView:)])
-    {
-        [self.hostTangramView.clDelegate scrollViewWillBeginZooming:self.hostTangramView withView:view];
-    }
-}
-
-
-- (void)scrollViewDidEndZooming:(UIScrollView *)scrollView withView:(UIView *)view atScale:(CGFloat)scale
-{
-    if (self.hostTangramView.clDelegate && [self.hostTangramView.clDelegate conformsToProtocol:@protocol(UIScrollViewDelegate)] && [self.hostTangramView.clDelegate respondsToSelector:@selector(scrollViewDidEndZooming:withView:atScale:)])
-    {
-        [self.hostTangramView.clDelegate scrollViewDidEndZooming:self.hostTangramView withView:view atScale:scale];
-    }
-}
-
-
-- (BOOL)scrollViewShouldScrollToTop:(UIScrollView *)scrollView
-{
-    if (self.hostTangramView.clDelegate && [self.hostTangramView.clDelegate conformsToProtocol:@protocol(UIScrollViewDelegate)] && [self.hostTangramView.clDelegate respondsToSelector:@selector(scrollViewShouldScrollToTop:)])
-    {
-        return [self.hostTangramView.clDelegate scrollViewShouldScrollToTop:self.hostTangramView];
-    }
-    return self.hostTangramView.scrollsToTop;
-}
-
-- (void)scrollViewDidScrollToTop:(UIScrollView *)scrollView
-{
-    if (self.hostTangramView.clDelegate && [self.hostTangramView.clDelegate conformsToProtocol:@protocol(UIScrollViewDelegate)] && [self.hostTangramView.clDelegate respondsToSelector:@selector(scrollViewDidScrollToTop:)])
-    {
-        [self.hostTangramView.clDelegate scrollViewDidScrollToTop:self.hostTangramView];
     }
 }
 

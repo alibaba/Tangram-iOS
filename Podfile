@@ -6,6 +6,7 @@ target 'TangramDemo' do
     project 'TangramDemo/TangramDemo.xcodeproj'
     pod 'Tangram', :path => './'
     # pod 'VirtualView', :path => '../VirtualView/'
+    # pod 'LazyScroll', :path => '../LazyScrollView/'
 end
 
 workspace 'Tangram'

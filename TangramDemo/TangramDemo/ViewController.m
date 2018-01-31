@@ -162,7 +162,7 @@
 @end
 
 //Fix 固定布局测试区 结束
-@interface ViewController ()<TangramViewDatasource,TangramViewDelegate>
+@interface ViewController () <TangramViewDatasource, UIScrollViewDelegate>
 
 @property (nonatomic, assign) NSUInteger totalIndex;
 
