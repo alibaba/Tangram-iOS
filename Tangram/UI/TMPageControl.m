@@ -95,7 +95,7 @@
                               _pageHeight);
     
     [_norDots enumerateObjectsUsingBlock:^(CALayer *layer, NSUInteger idx, BOOL *stop) {
-        switch (_style)
+        switch (self->_style)
         {
             case TMPageControlStyleDefault:
             {
@@ -103,10 +103,10 @@
                     CAShapeLayer *shapeLayer = (CAShapeLayer*)layer;
                     shapeLayer.frame = frame;
                     
-                    UIBezierPath *ellipse = [UIBezierPath bezierPathWithOvalInRect:CGRectMake(0, 0, _pageWidth, _pageHeight)];
+                    UIBezierPath *ellipse = [UIBezierPath bezierPathWithOvalInRect:CGRectMake(0, 0, self->_pageWidth, self->_pageHeight)];
                     shapeLayer.path = [ellipse CGPath];
                     
-                    shapeLayer.fillColor = idx==_currentPage? _selectedFillColor.CGColor:_normalFillColor.CGColor;
+                    shapeLayer.fillColor = idx==self->_currentPage? self->_selectedFillColor.CGColor:self->_normalFillColor.CGColor;
 
                 }
                 break;
@@ -114,11 +114,11 @@
             case TMPageControlStyleImage:
             {
                 layer.frame = frame;
-                layer.contents=(__bridge id)(idx==_currentPage?_selectedImage.CGImage:_normalImage.CGImage);
+                layer.contents=(__bridge id)(idx==self->_currentPage?self->_selectedImage.CGImage:self->_normalImage.CGImage);
                 break;
             }
         }
-        frame.origin.x += (_pageWidth + _pageSpacing);
+        frame.origin.x += (self->_pageWidth + self->_pageSpacing);
     }];
 }
 

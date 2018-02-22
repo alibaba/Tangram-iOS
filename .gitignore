@@ -30,8 +30,3 @@ xcuserdata/
 Pods/
 Podfile.lock
 *.xcworkspace
-
-# Demo
-TangramDemo/Pods/
-TangramDemo/Podfile.lock
-TangramDemo/*.xcworkspace

@@ -51,7 +51,7 @@ static BOOL xmlIsLoad = NO;
     [self.contentView update:self.tangramItemModel.privateOriginalDict];
 }
 
-- (void)subViewClicked:(NSString*)action andValue:(NSString *)value
+- (void)virtualViewClickedWithAction:(NSString *)action andValue:(NSString *)value
 {
     NSString *actualAction = value;
     if (actualAction.length <= 0) {
@@ -65,10 +65,8 @@ static BOOL xmlIsLoad = NO;
         [self.tangramBus postEvent:event];
     }
 }
-- (void)subViewLongPressed:(NSString*)action andValue:(NSString*)value gesture:(UILongPressGestureRecognizer *)gesture
-{
-    
-}
+
+
 + (CGFloat)heightByModel:(TangramDefaultItemModel *)itemModel
 {
     CGFloat ratio = [[VVTempleteManager sharedInstance]ratioByElementType:itemModel.type];
