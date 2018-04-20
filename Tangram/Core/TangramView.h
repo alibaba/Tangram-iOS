@@ -6,7 +6,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <LazyScroll/TMMuiLazyScrollView.h>
+#import <LazyScroll/TMLazyScrollView.h>
 
 @protocol TangramItemModelProtocol;
 @protocol TangramLayoutProtocol;
@@ -76,7 +76,7 @@
 
 //****************************************************************
 
-@interface TangramView : TMMuiLazyScrollView
+@interface TangramView : TMLazyScrollView
 
 // 注意，修改 delegate 属性后需要将 scrollViewDidScroll: 事件转发回给 TangramView
 

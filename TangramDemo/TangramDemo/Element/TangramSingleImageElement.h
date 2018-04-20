@@ -6,11 +6,12 @@
 //
 #import <UIkit/UIkit.h>
 #import "TangramElementHeightProtocol.h"
-#import "TMMuiLazyScrollView.h"
+#import "TMLazyScrollView.h"
 #import "TangramDefaultItemModel.h"
 #import "TangramEasyElementProtocol.h"
+#import <TMLazyItemViewProtocol.h>
 
-@interface TangramSingleImageElement : UIControl<TangramElementHeightProtocol,TMMuiLazyScrollViewCellProtocol,TangramEasyElementProtocol>
+@interface TangramSingleImageElement : UIControl<TangramElementHeightProtocol,TMLazyItemViewProtocol,TangramEasyElementProtocol>
 
 @property (nonatomic, strong) NSString *imgUrl;
 

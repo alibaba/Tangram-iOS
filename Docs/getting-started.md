@@ -10,7 +10,7 @@ Default Helper can easily map attribute to element(using KVC).
 
 ## Build an element
 
-Generate a element as a subclass of UIView , and implement `TangramElementHeightProtocol` and `TMMuiLazyScrollViewCellProtocol`
+Generate a element as a subclass of UIView , and implement `TangramElementHeightProtocol` and `TMLazyItemViewProtocol`
 , then state propreties you need.
 
 ### implement TangramElementHeightProtocol
@@ -25,7 +25,7 @@ Element should implement the class method following:
 
 In this method, the properties of the param `itemModel` is set.So you can get width by `itemModel.itemFrame.size.width`
 
-### implement TMMuiLazyScrollViewCellProtocol
+### implement TMLazyItemViewProtocol
 
 Tangram is based on LazyScrollView. You can do something in the life cycle of element by LazyScrollView API.
 
@@ -44,9 +44,9 @@ Finally we make a element like this. It's a element contains a singleImage.
 ```objc
 #import <UIkit/UIkit.h>
 #import "TangramElementHeightProtocol.h"
-#import "TMMuiLazyScrollView.h"
+#import "TMLazyScrollView.h"
 
-@interface TangramSingleImageElement : UIView<TangramElementHeightProtocol,TMMuiLazyScrollViewCellProtocol>
+@interface TangramSingleImageElement : UIView<TangramElementHeightProtocol,TMLazyItemViewProtocol>
 
 @property (nonatomic, strong) NSString *imgUrl;
 

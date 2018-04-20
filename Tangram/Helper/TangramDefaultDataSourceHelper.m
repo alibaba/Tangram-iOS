@@ -6,7 +6,7 @@
 //
 #import <objc/runtime.h>
 
-#import "TMMuiLazyScrollView.h"
+#import "TMLazyScrollView.h"
 #import "TangramLayoutProtocol.h"
 #import "TangramItemModelProtocol.h"
 #import "TangramEasyElementProtocol.h"

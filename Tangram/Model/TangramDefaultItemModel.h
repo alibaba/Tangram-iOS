@@ -7,9 +7,9 @@
 
 #import <Foundation/Foundation.h>
 #import "TangramItemModelProtocol.h"
-#import "TMMuiLazyScrollView.h"
+#import "TMLazyScrollView.h"
 
-@interface TangramDefaultItemModel : TMMuiRectModel <TangramItemModelProtocol>
+@interface TangramDefaultItemModel : TMLazyItemModel <TangramItemModelProtocol>
 
 // type
 @property (nonatomic, strong) NSString *type;

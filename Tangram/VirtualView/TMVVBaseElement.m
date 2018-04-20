@@ -11,10 +11,11 @@
 #import "TangramEvent.h"
 #import "UIView+Tangram.h"
 #import <VVViewContainer.h>
+#import <TMLazyItemViewProtocol.h>
 
 static BOOL xmlIsLoad = NO;
 
-@interface TMVVBaseElement ()<VirtualViewDelegate, TMMuiLazyScrollViewCellProtocol>{
+@interface TMVVBaseElement ()<VirtualViewDelegate, TMLazyItemViewProtocol>{
     //
 }
 @property(assign, nonatomic)BOOL    appear;
