@@ -10,8 +10,8 @@
 #import <VirtualView/UIView+VirtualView.h>
 #import "TangramEvent.h"
 #import "UIView+Tangram.h"
-#import <VVViewContainer.h>
-#import <TMLazyItemViewProtocol.h>
+#import <VirtualView/VVViewContainer.h>
+#import <LazyScroll/TMLazyItemViewProtocol.h>
 
 static BOOL xmlIsLoad = NO;
 
