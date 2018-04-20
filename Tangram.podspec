@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
 
   s.name         = "Tangram"
-  s.version      = "2.1.2"
+  s.version      = "2.1.3"
   s.summary      = "Tangram is a modular UI solution for building native page dynamically & quickly."
   
   s.description  = <<-DESC
@@ -17,12 +17,12 @@ Pod::Spec.new do |s|
   s.platform     = :ios
   s.ios.deployment_target = '8.0'
   s.requires_arc = true
-  s.source       = { :git => "https://github.com/alibaba/Tangram-iOS.git", :tag => "2.1.2" }
+  s.source       = { :git => "https://github.com/alibaba/Tangram-iOS.git", :tag => "2.1.3" }
   s.resources    = 'Tangram/Resources/*'
   s.source_files = 'Tangram/**/*.{h,m}'
   
   s.dependency 'SDWebImage', '~> 4.2'
-  s.dependency 'LazyScroll', '~> 1.0.0'
-  s.dependency 'VirtualView', '~> 1.2.0'
+  s.dependency 'LazyScroll', '1.0.1'
+  s.dependency 'VirtualView', '1.2.7'
   
 end
