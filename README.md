@@ -65,10 +65,3 @@ pod 'Tangram'
 
 - See [Getting Started Guide](https://github.com/alibaba/Tangram-iOS/blob/master/Docs/getting-started.md)
 - Or Open project in `TangramDemo` and execute `pod install` to see detail usage.
-
-
-# 微信群
-
-![](https://img.alicdn.com/tfs/TB11_2_kbSYBuNjSspiXXXNzpXa-167-167.png)
-
-搜索 `tangram_` 或者扫描以上二维码添加 Tangram 为好友，以便我们邀请你入群。
