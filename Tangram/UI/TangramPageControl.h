@@ -1,5 +1,5 @@
 //
-//  TMPageControl.h
+//  TangramPageControl.h
 //  Tangram
 //
 //  Copyright (c) 2017-2018 Alibaba. All rights reserved.
@@ -8,14 +8,14 @@
 #import <UIKit/UIKit.h>
 
 typedef enum {
-    TMPageControlStyleDefault,
-    TMPageControlStyleImage
-} TMPageControlStyle;
+    TangramPageControlStyleDefault,
+    TangramPageControlStyleImage
+} TangramPageControlStyle;
 
 
-@interface TMPageControl : UIControl
+@interface TangramPageControl : UIControl
 
-@property (nonatomic) TMPageControlStyle style;
+@property (nonatomic) TangramPageControlStyle style;
 
 @property (nonatomic) NSInteger numberOfPages;
 @property (nonatomic) NSInteger currentPage;
@@ -29,10 +29,10 @@ typedef enum {
 @property (nonatomic) CGFloat pageHeight;
 @property (nonatomic) CGFloat pageSpacing;
 
-// for TMPageControlStyleImage
+// for TangramPageControlStyleImage
 @property (nonatomic, strong) UIImage * normalImage;
 @property (nonatomic, strong) UIImage * selectedImage;
-// for TMPageControlStyleDefault
+// for TangramPageControlStyleDefault
 @property (nonatomic, strong) UIColor   *normalFillColor;
 @property (nonatomic, strong) UIColor   *selectedFillColor;
 

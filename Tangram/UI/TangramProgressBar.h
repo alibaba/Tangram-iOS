@@ -1,19 +1,19 @@
 //
-//  TMMuiProgressBar.h
+//  TangramProgressBar.h
 //  Tangram
 //
 //  Copyright (c) 2017-2018 Alibaba. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
-typedef NS_ENUM(NSUInteger,MUIProgressBarType)
+typedef NS_ENUM(NSUInteger,TangramProgressBarType)
 {
-    LinearMUIProgressBar = 0,
-    BlockMUIProgressBar
+    LinearTangramProgressBar = 0,
+    BlockTangramProgressBar
 };
 
 
-@interface TMMuiProgressBar : UIView
+@interface TangramProgressBar : UIView
 
 //bar的颜色
 @property (nonatomic, strong) UIColor *barColor;
@@ -28,7 +28,7 @@ typedef NS_ENUM(NSUInteger,MUIProgressBarType)
 //设置进度
 @property (nonatomic, assign) CGFloat progress;
 
-@property (nonatomic, assign) MUIProgressBarType progressBarType;
+@property (nonatomic, assign) TangramProgressBarType progressBarType;
 
 @property (nonatomic, assign) BOOL autoHide;
 

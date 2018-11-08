@@ -15,8 +15,8 @@
 #import "UIView+Tangram.h"
 #import "TMUtils.h"
 #import <VirtualView/UIColor+VirtualView.h>
-#import "TMMuiProgressBar.h"
-#import "TMPageControl.h"
+#import "TangramProgressBar.h"
+#import "TangramPageControl.h"
 #import <Foundation/Foundation.h>
 
 @interface TangramPageScrollLayoutTimerAction : NSObject
@@ -48,7 +48,7 @@
 @interface TangramPageScrollLayout()<UIScrollViewDelegate>
 
 @property   (nonatomic, strong) UIScrollView        *scrollView;
-@property   (nonatomic, strong) TMPageControl       *pageControl;
+@property   (nonatomic, strong) TangramPageControl       *pageControl;
 @property   (nonatomic, weak) id<TangramPageScrollLayoutDelegate> delegate;
 
 @property   (nonatomic, strong) NSString            *layoutIdentifier;
@@ -64,7 +64,7 @@
 @property   (nonatomic, strong) UIImageView         *loadMoreImageView;
 @property   (nonatomic, assign) BOOL                willPush;
 //进度条
-@property   (nonatomic, strong) TMMuiProgressBar    *progressBar;
+@property   (nonatomic, strong) TangramProgressBar    *progressBar;
 //进度条自动隐藏
 @property   (nonatomic, assign) NSUInteger          realCount;
 @property   (nonatomic, strong) NSObject<TangramItemModelProtocol> *firstItemModel;
@@ -192,10 +192,10 @@
 }
 
 #pragma mark - Getter & Setter
-- (TMPageControl *)pageControl
+- (TangramPageControl *)pageControl
 {
     if (nil == _pageControl) {
-        _pageControl = [[TMPageControl alloc] init];
+        _pageControl = [[TangramPageControl alloc] init];
         _pageControl.backgroundColor = [UIColor clearColor];
     }
     return _pageControl;
@@ -232,17 +232,17 @@
     }
     return _loadMoreImageView;
 }
-- (TMMuiProgressBar *)progressBar
+- (TangramProgressBar *)progressBar
 {
     if (!_progressBar)
     {
-        _progressBar = [[TMMuiProgressBar alloc] init];
+        _progressBar = [[TangramProgressBar alloc] init];
         _progressBar.barColor = [UIColor vv_colorWithRGB:0xB4B4B4];
         _progressBar.bgImageView.backgroundColor = [UIColor vv_colorWithRGB:0xDFDFDF];
         _progressBar.bgImageView.vv_height = 1;
         _progressBar.vv_width = 154;
         _progressBar.vv_height = 4;
-        _progressBar.progressBarType = BlockMUIProgressBar;
+        _progressBar.progressBarType = BlockTangramProgressBar;
     }
     return _progressBar;
 }
@@ -466,7 +466,7 @@
         if (self.indicatorStyleType == IndicatorStyleDot)
         {
             if (self.indicatorImg1.length <= 0 && self.indicatorImg2.length <= 0) {
-                self.pageControl.style = TMPageControlStyleDefault;
+                self.pageControl.style = TangramPageControlStyleDefault;
                 self.pageControl.pageHeight = self.indicatorRadius * 2;
                 self.pageControl.pageWidth = self.indicatorRadius * 2;
                 self.pageControl.pageSpacing = 4.f;
@@ -474,7 +474,7 @@
                 self.pageControl.selectedFillColor = [UIColor vv_colorWithString:self.indicatorColor];
             }
             else{
-                self.pageControl.style = TMPageControlStyleImage;
+                self.pageControl.style = TangramPageControlStyleImage;
                 //如果配置了indicatorHeight，那么pageControl的宽度会改变
                 
             }
@@ -630,7 +630,7 @@
 {
     
    _itemModels = itemModels;
-    if ([self.pageControl isKindOfClass:[TMPageControl class]])
+    if ([self.pageControl isKindOfClass:[TangramPageControl class]])
     {
         self.pageControl.numberOfPages = itemModels.count;
     }

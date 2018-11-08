@@ -1,17 +1,17 @@
 //
-//  TMMuiProgressBar.m
+//  TangramProgressBar.m
 //  Tangram
 //
 //  Copyright (c) 2017-2018 Alibaba. All rights reserved.
 //
 
-#import "TMMuiProgressBar.h"
+#import "TangramProgressBar.h"
 #import "UIImageView+WebCache.h"
 #import <VirtualView/UIView+VirtualView.h>
 #import "TMUtils.h"
 
 
-@interface TMMuiProgressBar()
+@interface TangramProgressBar()
 
 @property (nonatomic, assign) BOOL shouldAnim;
 
@@ -19,7 +19,7 @@
 
 @end
 
-@implementation TMMuiProgressBar
+@implementation TangramProgressBar
 
 -(UIView *)barView
 {
@@ -69,7 +69,7 @@
 -(void)setProgress:(CGFloat)progress
 {
     _progress = progress;
-    if (self.progressBarType == LinearMUIProgressBar) {
+    if (self.progressBarType == LinearTangramProgressBar) {
         self.barView.vv_width = self.barWidth + (self.vv_width - self.barWidth) * progress;
         self.barView.vv_left = 0.f;
         if (self.barView.vv_width <=  self.barWidth) {
