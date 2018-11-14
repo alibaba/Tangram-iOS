@@ -185,4 +185,29 @@
     return [dict copy];
 }
 
+- (instancetype)copyWithZone:(NSZone *)zone {
+    TangramDefaultItemModel *itemModel = [[TangramDefaultItemModel alloc] init];
+    itemModel.type = [self.type copy];
+    itemModel.margin = [self.margin copy];
+    itemModel.display = [self.display copy];
+    itemModel.position = [self.position copy];
+    itemModel.colspan = self.colspan;
+    itemModel.modelAspectRatio = self.modelAspectRatio;
+    itemModel.heightFromStyle = self.heightFromStyle;
+    itemModel.widthFromStyle = self.widthFromStyle;
+    itemModel.heightFromElement = self.heightFromElement;
+    itemModel.index = self.index;
+    itemModel.linkElementName = [self.linkElementName copy];
+    itemModel.specificReuseIdentifier = [self.specificReuseIdentifier copy];
+    itemModel.disableReuse = self.disableReuse;
+    itemModel.innerItemModel = self.innerItemModel;
+    itemModel.inLayoutIdentifier = [self.inLayoutIdentifier copy];
+    itemModel.layoutIdentifierForLayoutModel = [self.layoutIdentifierForLayoutModel copy];
+    itemModel.zIndex = self.zIndex;
+    itemModel.bizDict = [self.bizDict mutableCopy];
+    itemModel.modelRect = self.modelRect;
+    itemModel.styleDict = [self.styleDict mutableCopy];
+    return itemModel;
+}
+
 @end

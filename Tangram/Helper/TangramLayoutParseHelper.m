@@ -169,7 +169,7 @@
     layout.autoScrollTime = [styleDict tm_floatForKey:@"autoScroll"]/1000.0;
     layout.layoutLoadAPI = [dict tm_stringForKey:@"load"];
     layout.zIndex = [styleDict tm_floatForKey:@"zIndex"];
-    if ([styleDict tm_stringForKey:@"infiniteMinCount"].length > 0) {
+    if ([styleDict tm_stringForKey:@"infinite"]) {
         layout.infiniteLoop = YES;
     }
     if ([[styleDict tm_stringForKey:@"indicatorPosition"] isEqualToString:@"inside"]) {

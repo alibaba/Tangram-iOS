@@ -9,7 +9,7 @@
 #import "TangramItemModelProtocol.h"
 #import "TMLazyScrollView.h"
 
-@interface TangramDefaultItemModel : TMLazyItemModel <TangramItemModelProtocol>
+@interface TangramDefaultItemModel : TMLazyItemModel <TangramItemModelProtocol, NSCopying>
 
 // type
 @property (nonatomic, strong) NSString *type;

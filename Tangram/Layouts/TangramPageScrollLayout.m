@@ -636,8 +636,9 @@
     }
     //保证只加了一次，做一次数据校验
     if (self.infiniteLoop && itemModels.count > 2 && nil == self.firstItemModel && nil == self.lastItemModel) {
-        self.firstItemModel = (NSObject<TangramItemModelProtocol> *)[self duplicateObject:[self.itemModels firstObject]];
-        self.lastItemModel = (NSObject<TangramItemModelProtocol> *)[self duplicateObject:[self.itemModels lastObject]];
+        self.firstItemModel = [[self.itemModels firstObject] copy];
+        self.lastItemModel = [[self.itemModels lastObject] copy];
+
         NSMutableArray *mutableItemModels = [itemModels mutableCopy];
         [mutableItemModels insertObject:self.lastItemModel atIndex:0];
         [mutableItemModels tm_safeAddObject:self.firstItemModel];
@@ -690,13 +691,6 @@
 -(NSString *)position
 {
     return @"";
-}
-
-
-- (NSObject *)duplicateObject:(NSObject *)object
-{
-    NSData * tempArchive = [NSKeyedArchiver archivedDataWithRootObject:object];
-    return [NSKeyedUnarchiver unarchiveObjectWithData:tempArchive];
 }
 
 #pragma mark - 定时器相关
