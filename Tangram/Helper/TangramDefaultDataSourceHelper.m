@@ -331,6 +331,42 @@
     }
 }
 
++ (NSArray *)parseArrayWithRP:(NSArray *)originArray
+{
+    if (originArray.count > 3) {
+        return @[
+                 @([TangramDefaultDataSourceHelper floatValueByRPObject:[originArray objectAtIndex:0]]),
+                 @([TangramDefaultDataSourceHelper floatValueByRPObject:[originArray objectAtIndex:1]]),
+                 @([TangramDefaultDataSourceHelper floatValueByRPObject:[originArray objectAtIndex:2]]),
+                 @([TangramDefaultDataSourceHelper floatValueByRPObject:[originArray objectAtIndex:3]]),
+                 ];
+    }
+    return @[@0,@0,@0,@0];
+}
 
-
++ (float)floatValueByRPObject:(id)rpObject
+{
+    float margin = 0.f;
+    //如果是字符串并且包含rp
+    if ([rpObject isKindOfClass:[NSString class]]) {
+        if ([rpObject containsString:@"rp"]) {
+            margin = [rpObject floatValue]*[UIScreen mainScreen].bounds.size.width / 750.f;
+        }
+        else{
+            margin = [rpObject floatValue];
+        }
+    }
+    else if ([rpObject isKindOfClass:[NSNumber class]]){
+        margin = [rpObject floatValue];
+    }
+    return margin;
+}
++ (TangramDefaultItemModel *)itemModelByJSONDictionary:(NSDictionary *)dict
+{
+    return (TangramDefaultItemModel *) [[TangramDefaultDataSourceHelper sharedInstance].itemModelFactoryClass itemModelByDict:dict];
+}
++ (BOOL)isTypeRegisted:(NSString *)type
+{
+    return [[TangramDefaultDataSourceHelper sharedInstance].itemModelFactoryClass isTypeRegisted:type];
+}
 @end

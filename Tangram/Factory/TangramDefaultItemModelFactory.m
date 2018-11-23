@@ -10,6 +10,7 @@
 #import "TMUtils.h"
 
 #import "TangramDefaultLayoutFactory.h"
+#import "TangramDefaultDataSourceHelper.h"
 
 @interface TangramDefaultItemModelFactory()
 
@@ -56,20 +57,15 @@
         marginString = [marginString stringByReplacingOccurrencesOfString:@"]" withString:@""];
         NSArray *marginArray = [marginString componentsSeparatedByString:@","];
         if (marginArray && 4 == marginArray.count) {
-            itemModel.margin = @[
-                                 @([marginArray tm_floatAtIndex:0]),
-                                 @([marginArray tm_floatAtIndex:1]),
-                                 @([marginArray tm_floatAtIndex:2]),
-                                 @([marginArray tm_floatAtIndex:3]),
-                                 ];
+            itemModel.margin = [TangramDefaultDataSourceHelper parseArrayWithRP:marginArray];
         }
     }
-    else if([margin isKindOfClass:[NSArray class]])
+    else if(![margin isKindOfClass:[NSArray class]])
     {
-        itemModel.margin = (NSArray *)margin;
+        itemModel.margin = @[@0, @0, @0, @0];
     }
     else{
-        itemModel.margin = @[@0, @0, @0, @0];
+        itemModel.margin = [TangramDefaultDataSourceHelper parseArrayWithRP:[styleDict tm_safeObjectForKey:@"margin"]];
     }
     if ([[styleDict tm_stringForKey:@"display"] isEqualToString:@"block"]) {
         itemModel.display = @"block";
@@ -78,11 +74,21 @@
         itemModel.display = @"inline";
     }
     //针对style中的height和width
-    if ([styleDict tm_floatForKey:@"height"] > 0.f) {
-        itemModel.heightFromStyle = [styleDict tm_floatForKey:@"height"]/375.f*[UIScreen mainScreen].bounds.size.width;
+    if ([styleDict tm_safeObjectForKey:@"height"] != nil) {
+        if([[styleDict tm_stringForKey:@"height"]containsString:@"rp"]){
+            itemModel.heightFromStyle = [TangramDefaultDataSourceHelper floatValueByRPObject:[styleDict tm_safeObjectForKey:@"height"]];
+        }
+        else{
+            itemModel.heightFromStyle = [styleDict tm_floatForKey:@"height"];
+        }
     }
-    if ([styleDict tm_floatForKey:@"width"] > 0.f) {
-        itemModel.widthFromStyle = [styleDict tm_floatForKey:@"width"]/375.f*[UIScreen mainScreen].bounds.size.width;
+    if ([styleDict tm_safeObjectForKey:@"width"] != nil) {
+        if([[styleDict tm_stringForKey:@"width"]containsString:@"rp"]){
+            itemModel.heightFromStyle = [TangramDefaultDataSourceHelper floatValueByRPObject:[styleDict tm_safeObjectForKey:@"width"]];
+        }
+        else{
+            itemModel.widthFromStyle = [styleDict tm_floatForKey:@"width"];
+        }
     }
     else if ([[styleDict tm_stringForKey:@"width"] isEqualToString:@"-1"]) {
         //width 配-1 意味着屏幕宽度
@@ -96,7 +102,6 @@
     }
     itemModel.colspan = [styleDict tm_integerForKey:@"colspan"];
     itemModel.position = [dict tm_stringForKey:@"position"];
-    //    itemModel.ctrClickParam = [dict tm_stringForKey:@"ctrClickParam"];
     itemModel.specificReuseIdentifier = [styleDict tm_stringForKey:@"reuseId"];
     itemModel.disableReuse = [styleDict tm_boolForKey:@"disableReuse"];
     
@@ -117,11 +122,12 @@
             [itemModel setStyleValue:[styleDict tm_safeObjectForKey:key] forKey:key];
         }
     }
-    if ([[dict tm_stringForKey:@"kind"] isEqualToString:@"row"] || [TangramDefaultLayoutFactory layoutClassNameByType:type] != nil) {
+    if ([[dict tm_stringForKey:@"kind"] isEqualToString:@"row"] || [TangramDefaultLayoutFactory layoutClassNameByType:type].length > 0) {
         itemModel.layoutIdentifierForLayoutModel = [dict tm_stringForKey:@"id"];
     }
+    //itemModel.specificReuseIdentifier = [dict tm_stringForKey:@"muiID"];
     itemModel.linkElementName = [[TangramDefaultItemModelFactory sharedInstance].elementTypeMap tm_stringForKey:itemModel.type];
-    
+    //TODO specificMuiID 增加逻辑
     return itemModel;
 }
 + (NSMutableDictionary *)decodeElementTypeMap:(NSArray *)mapArray
@@ -148,6 +154,14 @@
         && [elementClassName isKindOfClass:[NSString class]] && elementClassName.length > 0) {
         [[TangramDefaultItemModelFactory sharedInstance].elementTypeMap tm_safeSetObject:[elementClassName copy] forKey:[type copy]];
     }
+}
+
++ (BOOL)isTypeRegisted:(NSString *)type
+{
+    if ([[[TangramDefaultItemModelFactory sharedInstance].elementTypeMap allKeys]containsObject:type]) {
+        return YES;
+    }
+    return NO;
 }
 
 @end

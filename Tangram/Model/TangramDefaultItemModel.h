@@ -43,8 +43,10 @@
 @property (nonatomic, strong) NSString *inLayoutIdentifier;
 // Layout identifier(For nested card,experiment function)
 @property (nonatomic, strong) NSString *layoutIdentifierForLayoutModel;
-
+// 
 @property (nonatomic, assign) CGFloat zIndex;
+
+@property (nonatomic, assign) CGRect modelRect;
 
 - (NSArray *)bizKeys;
 

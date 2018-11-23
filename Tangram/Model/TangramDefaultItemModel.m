@@ -14,7 +14,6 @@
 
 @property (nonatomic, strong) NSMutableDictionary *bizDict;
 
-@property (nonatomic, assign) CGRect modelRect;
 
 @property (nonatomic, strong) NSMutableDictionary *styleDict;
 
