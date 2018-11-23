@@ -43,7 +43,7 @@
 {
     if (self = [super init]) {
         self.layoutFactoryClass = NSClassFromString(@"TangramDefaultLayoutFactory");
-        self.itemModelFactoryClass = NSClassFromString(@"TangramDefaultItemModelFactory");
+        self.itemModelFactoryClass = NSClassFromString(@"TangramYosemiteItemModelFactory");
         self.elementFactoryClass = NSClassFromString(@"TangramDefaultElementFactory");
     }
     return self;
@@ -104,7 +104,7 @@
     }
     NSObject<TangramItemModelProtocol> *itemModel = nil;
     itemModel = [[TangramDefaultDataSourceHelper sharedInstance].itemModelFactoryClass itemModelByDict:dict];
-    if ([[dict tm_stringForKey:@"kind"] isEqualToString:@"row"]) {
+    if ([[dict tm_stringForKey:@"kind"] isEqualToString:@"row"] || [[TangramDefaultDataSourceHelper sharedInstance].layoutFactoryClass layoutClassNameByType:type] != nil) {
         if ([(Class)([TangramDefaultDataSourceHelper sharedInstance].layoutFactoryClass) instanceMethodForSelector:@selector(layoutClassNameByType:)]) {
             itemModel.linkElementName = [[TangramDefaultDataSourceHelper sharedInstance].layoutFactoryClass layoutClassNameByType:itemModel.itemType];
         }

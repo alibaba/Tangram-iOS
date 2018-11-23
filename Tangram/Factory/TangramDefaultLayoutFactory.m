@@ -201,6 +201,6 @@
 
 + (NSString *)layoutClassNameByType:(NSString *)type
 {
-    return [[TangramDefaultLayoutFactory sharedInstance].layoutTypeMap tm_stringForKey:@"type"];
+    return [[TangramDefaultLayoutFactory sharedInstance].layoutTypeMap tm_stringForKey:type];
 }
 @end

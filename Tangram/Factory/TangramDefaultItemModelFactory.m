@@ -9,6 +9,8 @@
 #import "TangramDefaultItemModel.h"
 #import "TMUtils.h"
 
+#import "TangramDefaultLayoutFactory.h"
+
 @interface TangramDefaultItemModelFactory()
 
 @property (nonatomic, strong) NSMutableDictionary *elementTypeMap;
@@ -39,12 +41,13 @@
 
 + (NSObject<TangramItemModelProtocol> *)itemModelByDict:(NSDictionary *)dict
 {
-    NSString *type = [dict tm_stringForKey:@"type"];
-//    if (type.length <= 0) {
-//        return nil;
-//    }
     TangramDefaultItemModel *itemModel = [[TangramDefaultItemModel alloc]init];
-    //布局参数解析
+    return [[self class]praseDictToItemModel:itemModel dict:dict];
+}
+
++ (TangramDefaultItemModel *)praseDictToItemModel:(TangramDefaultItemModel *)itemModel dict:(NSDictionary *)dict
+{
+    NSString *type = [dict tm_stringForKey:@"type"];
     itemModel.type = type;
     NSDictionary *styleDict =[dict tm_dictionaryForKey:@"style"];
     NSObject *margin =[styleDict objectForKey:@"margin"];
@@ -93,7 +96,7 @@
     }
     itemModel.colspan = [styleDict tm_integerForKey:@"colspan"];
     itemModel.position = [dict tm_stringForKey:@"position"];
-//    itemModel.ctrClickParam = [dict tm_stringForKey:@"ctrClickParam"];
+    //    itemModel.ctrClickParam = [dict tm_stringForKey:@"ctrClickParam"];
     itemModel.specificReuseIdentifier = [styleDict tm_stringForKey:@"reuseId"];
     itemModel.disableReuse = [styleDict tm_boolForKey:@"disableReuse"];
     
@@ -114,11 +117,11 @@
             [itemModel setStyleValue:[styleDict tm_safeObjectForKey:key] forKey:key];
         }
     }
-    if ([[dict tm_stringForKey:@"kind"] isEqualToString:@"row"]) {
+    if ([[dict tm_stringForKey:@"kind"] isEqualToString:@"row"] || [TangramDefaultLayoutFactory layoutClassNameByType:type] != nil) {
         itemModel.layoutIdentifierForLayoutModel = [dict tm_stringForKey:@"id"];
     }
     itemModel.linkElementName = [[TangramDefaultItemModelFactory sharedInstance].elementTypeMap tm_stringForKey:itemModel.type];
-
+    
     return itemModel;
 }
 + (NSMutableDictionary *)decodeElementTypeMap:(NSArray *)mapArray
