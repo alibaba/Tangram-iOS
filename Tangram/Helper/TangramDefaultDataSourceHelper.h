@@ -163,4 +163,10 @@
 
 ////////////////////////////////Regist Factory class Method end/////////////////////////////////////
 
++ (float)floatValueByRPObject:(id)rpObject;
++ (NSArray *)parseArrayWithRP:(NSArray *)originArray;
++ (TangramDefaultItemModel *)itemModelByJSONDictionary:(NSDictionary *)dict;
++ (BOOL)isTypeRegisted:(NSString *)type;
+
+
 @end

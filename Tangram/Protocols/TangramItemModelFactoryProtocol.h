@@ -24,4 +24,7 @@
  @param type In ItemModel we need return a itemType, the itemType will be used here
  */
 + (void)registElementType:(NSString *)type className:(NSString *)elementClassName;
+
++ (BOOL)isTypeRegisted:(NSString *)type;
+
 @end

@@ -1,23 +1,23 @@
 //
-//  TMPageControl.m
+//  TangramPageControl.m
 //  Tangram
 //
 //  Copyright (c) 2017-2018 Alibaba. All rights reserved.
 //
 
-#import "TMPageControl.h"
+#import "TangramPageControl.h"
 #import "TMUtils.h"
 #define ELEMENT_WIDTH       4
 #define ELEMENT_HEIGHT      4
 #define ELEMENT_SPACING     10
 
-@interface TMPageControl()
+@interface TangramPageControl()
 {
     NSMutableArray *_norDots;
 }
 @end
 
-@implementation TMPageControl
+@implementation TangramPageControl
 
 - (id)initWithFrame:(CGRect)frame
 {
@@ -52,7 +52,7 @@
         
         switch (_style)
         {
-            case TMPageControlStyleDefault:
+            case TangramPageControlStyleDefault:
             {
                 CAShapeLayer *layer = [CAShapeLayer layer];
                 UIBezierPath *ellipse = [UIBezierPath bezierPathWithOvalInRect:CGRectMake(0, 0, _pageWidth, _pageHeight)];
@@ -65,7 +65,7 @@
                 break;
             }
                 
-            case TMPageControlStyleImage:
+            case TangramPageControlStyleImage:
             {
                 CALayer *layer = [CALayer layer];
                 layer.contents=(__bridge id)(i==_currentPage?_selectedImage.CGImage:_normalImage.CGImage);
@@ -97,7 +97,7 @@
     [_norDots enumerateObjectsUsingBlock:^(CALayer *layer, NSUInteger idx, BOOL *stop) {
         switch (self->_style)
         {
-            case TMPageControlStyleDefault:
+            case TangramPageControlStyleDefault:
             {
                 if ([layer isKindOfClass:[CAShapeLayer class]]) {
                     CAShapeLayer *shapeLayer = (CAShapeLayer*)layer;
@@ -111,7 +111,7 @@
                 }
                 break;
             }
-            case TMPageControlStyleImage:
+            case TangramPageControlStyleImage:
             {
                 layer.frame = frame;
                 layer.contents=(__bridge id)(idx==self->_currentPage?self->_selectedImage.CGImage:self->_normalImage.CGImage);
@@ -158,7 +158,7 @@
     
     switch (_style)
     {
-        case TMPageControlStyleDefault:
+        case TangramPageControlStyleDefault:
         {
             CAShapeLayer *cur = (CAShapeLayer*)[_norDots tm_safeObjectAtIndex:_currentPage];
             cur.fillColor =  _selectedFillColor.CGColor;
@@ -168,7 +168,7 @@
             break;
         }
             
-        case TMPageControlStyleImage:
+        case TangramPageControlStyleImage:
         {
             CALayer *cur = (CALayer*)[_norDots tm_safeObjectAtIndex:_currentPage];
             cur.contents =  (id)_selectedImage.CGImage;
@@ -180,7 +180,7 @@
     }
 }
 
-- (void)setStyle:(TMPageControlStyle)style
+- (void)setStyle:(TangramPageControlStyle)style
 {
     _style = style;
     if (_norDots.count) {

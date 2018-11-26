@@ -78,8 +78,8 @@
     NSData *data = [mockDataString dataUsingEncoding:NSUTF8StringEncoding];
     NSDictionary *dict = [NSJSONSerialization JSONObjectWithData: data options:NSJSONReadingAllowFragments error:nil];
     self.layoutModelArray = [[dict objectForKey:@"data"] objectForKey:@"cards"];
-    [TangramDefaultItemModelFactory registElementType:@"1" className:@"TangramSingleImageElement"];
-    [TangramDefaultItemModelFactory registElementType:@"2" className:@"TangramSimpleTextElement"];
+    [TangramDefaultItemModelFactory registElementType:@"image" className:@"TangramSingleImageElement"];
+    [TangramDefaultItemModelFactory registElementType:@"text" className:@"TangramSimpleTextElement"];
 //    [TangramDefaultItemModelFactory registElementType:@"110" className:@"TangramSingleImageElement"];
 //    [TangramDefaultItemModelFactory registElementType:@"202" className:@"TangramSingleImageElement"];
 //    [TangramDefaultItemModelFactory registElementType:@"203" className:@"TangramSingleImageElement"];
@@ -99,7 +99,7 @@
 }
 - (NSUInteger)numberOfLayoutsInTangramView:(TangramView *)view
 {
-    return self.layoutModelArray.count;
+    return self.layoutArray.count;
 }
 
 - (UIView<TangramLayoutProtocol> *)layoutInTangramView:(TangramView *)view atIndex:(NSUInteger)index

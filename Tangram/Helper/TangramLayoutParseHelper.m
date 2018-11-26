@@ -52,42 +52,24 @@
     NSDictionary *styleDict = [dict tm_dictionaryForKey:@"style"];
     layout.cols = [styleDict tm_arrayForKey:@"cols"];
     NSArray *margin = [styleDict tm_arrayForKey:@"margin"];
-    layout.margin = margin;
     NSString *originMarginString = [styleDict tm_stringForKey:@"margin"];
     if (margin.count  != 4 && originMarginString.length > 3) {
-        NSString *splitString = [originMarginString substringWithRange:NSMakeRange(1, originMarginString.length-2)];
-        NSArray *splitMarginArray = [splitString componentsSeparatedByString:@","];
-        if (splitMarginArray.count == 4) {
-            layout.margin = splitMarginArray;
-        }
+        layout.margin = [TangramLayoutParseHelper parseStringWithRP:originMarginString];
     }
-    layout.padding = [styleDict tm_arrayForKey:@"padding"];
-    if ((nil == layout.padding || 4 != [layout.padding count]) && [styleDict tm_stringForKey:@"padding"].length > 0) {
-        NSString *originalPaddingString = [styleDict tm_stringForKey:@"padding"];
-        NSMutableArray *mutablePaddingArray = [[NSMutableArray alloc]initWithCapacity:4];
-        originalPaddingString = [[originalPaddingString trim] substringWithRange:NSMakeRange(1, originalPaddingString.length - 2)];
-        NSArray *pArray = [originalPaddingString componentsSeparatedByString:@","];
-        for (NSUInteger i = 0 ; i < pArray.count ; i++) {
-            if (i == 4) {
-                break;
-            }
-            id onePadding = [pArray tm_safeObjectAtIndex:i];
-            NSNumber *onePaddingNumber = nil;
-            if ([onePadding isKindOfClass:[NSString class]]) {
-                onePaddingNumber =[NSNumber numberWithFloat:[[onePadding trim] floatValue]];
-            }
-            else if ([onePadding isKindOfClass:[NSNumber class]]) {
-                onePaddingNumber = onePadding;
-            }
-            [mutablePaddingArray tm_safeAddObject:onePaddingNumber];
-        }
-        if (mutablePaddingArray.count == 4) {
-            layout.padding = [mutablePaddingArray copy];
-        }
+    else{
+        layout.margin = [TangramLayoutParseHelper parseArrayWithRP:margin];
+    }
+    NSArray *padding = [styleDict tm_arrayForKey:@"padding"];
+    NSString *originPaddingString = [styleDict tm_stringForKey:@"padding"];
+    if (padding.count  != 4 && originPaddingString.length > 3) {
+        layout.padding = [TangramLayoutParseHelper parseStringWithRP:originPaddingString];
+    }
+    else{
+        layout.padding = [TangramLayoutParseHelper parseArrayWithRP:padding];
     }
     layout.aspectRatio = [styleDict tm_stringForKey:@"aspectRatio"];
-    layout.vGap = [styleDict tm_floatForKey:@"vGap"];
-    layout.hGap = [styleDict tm_floatForKey:@"hGap"];
+    layout.vGap =    [self floatRPValueByObject:[styleDict tm_safeObjectForKey:@"vGap"]];
+    layout.hGap = [self floatRPValueByObject:[styleDict tm_safeObjectForKey:@"hGap"]];
     layout.autoFill = [styleDict tm_boolForKey:@"autoFill"];
     layout.layoutLoadAPI = [dict tm_stringForKey:@"load"];
     layout.loadType = [dict tm_integerForKey:@"loadType"];
@@ -128,40 +110,21 @@
 {
     NSDictionary *styleDict = [dict tm_dictionaryForKey:@"style"];
     NSArray *margin = [styleDict tm_arrayForKey:@"margin"];
-    layout.margin = margin;
     NSString *originMarginString = [styleDict tm_stringForKey:@"margin"];
     if (margin.count  != 4 && originMarginString.length > 3) {
-        NSString *splitString = [originMarginString substringWithRange:NSMakeRange(1, originMarginString.length-2)];
-        NSArray *splitMarginArray = [splitString componentsSeparatedByString:@","];
-        if (splitMarginArray.count == 4) {
-            layout.margin = splitMarginArray;
-        }
+        layout.margin = [TangramLayoutParseHelper parseStringWithRP:originMarginString];
     }
-    layout.padding = [styleDict tm_arrayForKey:@"padding"];
-    if ((nil == layout.padding || 4 != [layout.padding count]) && [styleDict tm_stringForKey:@"padding"].length > 0) {
-        NSString *originalPaddingString = [styleDict tm_stringForKey:@"padding"];
-        NSMutableArray *mutablePaddingArray = [[NSMutableArray alloc]initWithCapacity:4];
-        originalPaddingString = [[originalPaddingString trim] substringWithRange:NSMakeRange(1, originalPaddingString.length - 2)];
-        NSArray *pArray = [originalPaddingString componentsSeparatedByString:@","];
-        for (NSUInteger i = 0 ; i < pArray.count ; i++) {
-            if (i == 4) {
-                break;
-            }
-            id onePadding = [pArray tm_safeObjectAtIndex:i];
-            NSNumber *onePaddingNumber = nil;
-            if ([onePadding isKindOfClass:[NSString class]]) {
-                onePaddingNumber =[NSNumber numberWithFloat:[[onePadding trim] floatValue]];
-            }
-            else if ([onePadding isKindOfClass:[NSNumber class]]) {
-                onePaddingNumber = onePadding;
-            }
-            [mutablePaddingArray tm_safeAddObject:onePaddingNumber];
-        }
-        if (mutablePaddingArray.count == 4) {
-            layout.padding = [mutablePaddingArray copy];
-        }
+    else{
+        layout.margin = [TangramLayoutParseHelper parseArrayWithRP:margin];
     }
-    
+    NSArray *padding = [styleDict tm_arrayForKey:@"padding"];
+    NSString *originPaddingString = [styleDict tm_stringForKey:@"padding"];
+    if (padding.count  != 4 && originPaddingString.length > 3) {
+        layout.padding = [TangramLayoutParseHelper parseStringWithRP:originPaddingString];
+    }
+    else{
+        layout.padding = [TangramLayoutParseHelper parseArrayWithRP:padding];
+    }
     layout.aspectRatio = [styleDict tm_stringForKey:@"aspectRatio"];
     layout.indicatorGap = [styleDict tm_floatForKey:@"indicatorGap"];
     layout.indicatorImg1 = [styleDict tm_stringForKey:@"indicatorImg1"];
@@ -199,9 +162,9 @@
     layout.pageMargin = [styleDict tm_arrayForKey:@"pageMargin"];
     layout.pageWidth = SCREEN_WIDTH * [styleDict tm_floatForKey:@"pageRatio"];
     BOOL disableScale = [styleDict tm_boolForKey:@"disableScale"];
-    CGFloat pageWidthInConfig = [styleDict tm_floatForKey:@"pageWidth"];
+    CGFloat pageWidthInConfig = [self floatRPValueByObject:[styleDict tm_safeObjectForKey:@"pageWidth"]];
     if (pageWidthInConfig > 0.f) {
-        if (disableScale) {
+        if (disableScale || [[styleDict tm_stringForKey:@"pageWidth"] containsString:@"rp"]) {
             layout.pageWidth = pageWidthInConfig;
         }
         else{
@@ -230,8 +193,7 @@
     //height 和 width 仅会应用在dot类型
     layout.indicatorHeight = [styleDict tm_floatForKey:@"indicatorHeight"];
     if (layout.indicatorHeight > 0) {
-        // 需要根据layout.indicatorImg1图片宽高比计算，这里默认先乘以3
-        layout.indicatorWidth = layout.indicatorHeight * 3;
+//        layout.indicatorWidth = [TMImageView imageWidthByHeight:layout.indicatorHeight imgUrl:layout.indicatorImg1];
     }
     if (layout.indicatorMargin == 0.f) {
         layout.indicatorMargin = 3.f;
@@ -278,35 +240,15 @@
     layout.animationDuration = [styleDict tm_floatForKey:@"animationDuration"]/1000.f;
     layout.hGap = [styleDict tm_floatForKey:@"hGap"];
     layout.padding = [styleDict tm_arrayForKey:@"padding"];
-    id tmpValue = [styleDict tm_safeObjectForKey:@"retainScrollState"];
-    if (tmpValue && ([tmpValue isKindOfClass:[NSNumber class]] || [tmpValue isKindOfClass:[NSString class]])) {
-        layout.retainScrollState = [tmpValue boolValue];
-    } else {
-        layout.retainScrollState = YES;
-    }
+    //layout.retainScrollState = [styleDict tm_boolForKey:@"retainScrollState" defaultValue:YES];
     layout.zIndex = [styleDict tm_floatForKey:@"zIndex"];
-    if ((nil == layout.padding || 4 != [layout.padding count]) && [styleDict tm_stringForKey:@"padding"].length > 0) {
-        NSString *originalPaddingString = [styleDict tm_stringForKey:@"padding"];
-        NSMutableArray *mutablePaddingArray = [[NSMutableArray alloc]initWithCapacity:4];
-        originalPaddingString = [[originalPaddingString trim] substringWithRange:NSMakeRange(1, originalPaddingString.length - 2)];
-        NSArray *pArray = [originalPaddingString componentsSeparatedByString:@","];
-        for (NSUInteger i = 0 ; i < pArray.count ; i++) {
-            if (i == 4) {
-                break;
-            }
-            id onePadding = [pArray tm_safeObjectAtIndex:i];
-            NSNumber *onePaddingNumber = nil;
-            if ([onePadding isKindOfClass:[NSString class]]) {
-                onePaddingNumber =[NSNumber numberWithFloat:[[onePadding trim] floatValue]];
-            }
-            else if ([onePadding isKindOfClass:[NSNumber class]]) {
-                onePaddingNumber = onePadding;
-            }
-            [mutablePaddingArray tm_safeAddObject:onePaddingNumber];
-        }
-        if (mutablePaddingArray.count == 4) {
-            layout.padding = [mutablePaddingArray copy];
-        }
+    NSArray *padding = [styleDict tm_arrayForKey:@"padding"];
+    NSString *originPaddingString = [styleDict tm_stringForKey:@"padding"];
+    if (padding.count  != 4 && originPaddingString.length > 3) {
+        layout.padding = [TangramLayoutParseHelper parseStringWithRP:originPaddingString];
+    }
+    else{
+        layout.padding = [TangramLayoutParseHelper parseArrayWithRP:padding];
     }
     return layout;
 }
@@ -314,15 +256,14 @@
 + (UIView<TangramLayoutProtocol> *)praseStickyLayout:(TangramStickyLayout *)layout withDict:(NSDictionary *)dict
 {
     NSDictionary *styleDict = [dict tm_dictionaryForKey:@"style"];
-    NSArray *margin = [styleDict tm_arrayForKey:@"margin"];
     layout.zIndex = [styleDict tm_floatForKey:@"zIndex"];
+    NSArray *margin = [styleDict tm_arrayForKey:@"margin"];
     NSString *originMarginString = [styleDict tm_stringForKey:@"margin"];
     if (margin.count  != 4 && originMarginString.length > 3) {
-        NSString *splitString = [originMarginString substringWithRange:NSMakeRange(1, originMarginString.length-2)];
-        NSArray *splitMarginArray = [splitString componentsSeparatedByString:@","];
-        if (splitMarginArray.count == 4) {
-            layout.margin = splitMarginArray;
-        }
+        layout.margin = [TangramLayoutParseHelper parseStringWithRP:originMarginString];
+    }
+    else{
+        layout.margin = [TangramLayoutParseHelper parseArrayWithRP:margin];
     }
     NSString *stickyStatus = [styleDict tm_stringForKey:@"sticky"];
     if ([stickyStatus isEqualToString:@"end"]) {
@@ -338,45 +279,27 @@
 + (UIView<TangramLayoutProtocol> *)praseWaterFlowLayout:(TangramWaterFlowLayout *)layout withDict:(NSDictionary *)dict
 {
     NSDictionary *styleDict = [dict tm_dictionaryForKey:@"style"];
-    layout.vGap = [styleDict tm_floatForKey:@"vGap"];
-    layout.hGap = [styleDict tm_floatForKey:@"hGap"];
+    layout.vGap = [self floatRPValueByObject:[styleDict tm_safeObjectForKey:@"vGap"]];
+    layout.hGap = [self floatRPValueByObject:[styleDict tm_safeObjectForKey:@"hGap"]];
     layout.layoutLoadAPI = [dict tm_stringForKey:@"load"];
     layout.loadType = [dict tm_integerForKey:@"loadType"];
     layout.zIndex = [styleDict tm_floatForKey:@"zIndex"];
     NSArray *margin = [styleDict tm_arrayForKey:@"margin"];
-    layout.margin = margin;
     NSString *originMarginString = [styleDict tm_stringForKey:@"margin"];
     if (margin.count  != 4 && originMarginString.length > 3) {
-        NSString *splitString = [originMarginString substringWithRange:NSMakeRange(1, originMarginString.length-2)];
-        NSArray *splitMarginArray = [splitString componentsSeparatedByString:@","];
-        if (splitMarginArray.count == 4) {
-            layout.margin = splitMarginArray;
-        }
+        layout.margin = [TangramLayoutParseHelper parseStringWithRP:originMarginString];
+    }
+    else{
+        layout.margin = [TangramLayoutParseHelper parseArrayWithRP:margin];
     }
     //padding支持，以后抽出解析margin和padding的代码，很多地方会用到
-    layout.padding = [styleDict tm_arrayForKey:@"padding"];
-    if ((nil == layout.padding || 4 != [layout.padding count]) && [styleDict tm_stringForKey:@"padding"].length > 0) {
-        NSString *originalPaddingString = [styleDict tm_stringForKey:@"padding"];
-        NSMutableArray *mutablePaddingArray = [[NSMutableArray alloc]initWithCapacity:4];
-        originalPaddingString = [[originalPaddingString trim] substringWithRange:NSMakeRange(1, originalPaddingString.length - 2)];
-        NSArray *pArray = [originalPaddingString componentsSeparatedByString:@","];
-        for (NSUInteger i = 0 ; i < pArray.count ; i++) {
-            if (i == 4) {
-                break;
-            }
-            id onePadding = [pArray tm_safeObjectAtIndex:i];
-            NSNumber *onePaddingNumber = nil;
-            if ([onePadding isKindOfClass:[NSString class]]) {
-                onePaddingNumber =[NSNumber numberWithFloat:[[onePadding trim] floatValue]];
-            }
-            else if ([onePadding isKindOfClass:[NSNumber class]]) {
-                onePaddingNumber = onePadding;
-            }
-            [mutablePaddingArray tm_safeAddObject:onePaddingNumber];
-        }
-        if (mutablePaddingArray.count == 4) {
-            layout.padding = [mutablePaddingArray copy];
-        }
+    NSArray *padding = [styleDict tm_arrayForKey:@"padding"];
+    NSString *originPaddingString = [styleDict tm_stringForKey:@"padding"];
+    if (padding.count  != 4 && originPaddingString.length > 3) {
+        layout.padding = [TangramLayoutParseHelper parseStringWithRP:originPaddingString];
+    }
+    else{
+        layout.padding = [TangramLayoutParseHelper parseArrayWithRP:padding];
     }
     if ([layout isKindOfClass:[TangramScrollWaterFlowLayout class]]) {
         ((TangramScrollWaterFlowLayout *)layout).pagingLength = [styleDict tm_integerForKey:@"pageCount"];
@@ -388,4 +311,75 @@
     }
     return layout;
 }
+
+
++ (NSArray *)parseLayoutMarginWithDict:(NSDictionary *)dict
+{
+    NSDictionary *styleDict = [dict tm_dictionaryForKey:@"style"];
+    NSString *originMarginString = [styleDict tm_stringForKey:@"margin"];
+    if (originMarginString.length > 3) {
+        NSString *splitString = [originMarginString substringWithRange:NSMakeRange(1, originMarginString.length-2)];
+        NSArray *splitMarginArray = [splitString componentsSeparatedByString:@","];
+        if (splitMarginArray.count == 4) {
+            return @[
+                     @([self floatRPValueByObject:[splitMarginArray objectAtIndex:0]]),
+                     @([self floatRPValueByObject:[splitMarginArray objectAtIndex:1]]),
+                     @([self floatRPValueByObject:[splitMarginArray objectAtIndex:2]]),
+                     @([self floatRPValueByObject:[splitMarginArray objectAtIndex:3]]),
+                     ];
+        }
+    }
+    return @[@0,@0,@0,@0];
+}
+
+//解析String里面带RP的
++ (NSArray *)parseStringWithRP:(NSString *)originMarginString
+{
+    if (originMarginString.length > 3) {
+        NSString *splitString = [originMarginString substringWithRange:NSMakeRange(1, originMarginString.length-2)];
+        NSArray *splitMarginArray = [splitString componentsSeparatedByString:@","];
+        if (splitMarginArray.count == 4) {
+            return @[
+                     @([self floatRPValueByObject:[splitMarginArray objectAtIndex:0]]),
+                     @([self floatRPValueByObject:[splitMarginArray objectAtIndex:1]]),
+                     @([self floatRPValueByObject:[splitMarginArray objectAtIndex:2]]),
+                     @([self floatRPValueByObject:[splitMarginArray objectAtIndex:3]]),
+                     ];
+        }
+    }
+    return @[@0,@0,@0,@0];
+}
+
++ (NSArray *)parseArrayWithRP:(NSArray *)originArray
+{
+    if (originArray.count > 3) {
+        return @[
+                 @([self floatRPValueByObject:[originArray objectAtIndex:0]]),
+                 @([self floatRPValueByObject:[originArray objectAtIndex:1]]),
+                 @([self floatRPValueByObject:[originArray objectAtIndex:2]]),
+                 @([self floatRPValueByObject:[originArray objectAtIndex:3]]),
+                 ];
+    }
+    return @[@0,@0,@0,@0];
+}
+
++ (float)floatRPValueByObject:(id)marginObject
+{
+    float margin = 0.f;
+    //如果是字符串并且包含rp
+    if ([marginObject isKindOfClass:[NSString class]]) {
+        if ([marginObject containsString:@"rp"]) {
+            margin = [marginObject floatValue]*[UIScreen mainScreen].bounds.size.width / 750.f;
+        }
+        else{
+            margin = [marginObject floatValue];
+        }
+    }
+    else if ([marginObject isKindOfClass:[NSNumber class]]){
+        margin = [marginObject floatValue];
+    }
+    return margin;
+}
+
+
 @end

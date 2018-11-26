@@ -8,7 +8,8 @@
 #import <Foundation/Foundation.h>
 
 #define TangramEventTopicJumpAction   @"openUrl"
-
+#define TangramEventTopicExposure @"exposure"
+#define TangramEventTopicElementLeave @"elementLeave"
 @class TangramContext;
 @class TangramView;
 

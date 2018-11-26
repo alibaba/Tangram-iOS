@@ -6,6 +6,7 @@
 //
 
 #import "TangramSimpleTextElement.h"
+#import "TangramDefaultItemModel.h"
 
 @interface TangramSimpleTextElement()
 
@@ -20,6 +21,7 @@
     if (nil == _label) {
         _label = [[UILabel alloc]init];
         [self addSubview:_label];
+        _label.font = [UIFont systemFontOfSize:14.f];
     }
     return _label;
 }
@@ -28,10 +30,11 @@
 {
     self.label.frame = CGRectMake(0, 0, self.frame.size.width, self.frame.size.height);
     self.label.text = self.text;
+    
 }
 
 + (CGFloat)heightByModel:(TangramDefaultItemModel *)itemModel
 {
-    return 60.f;
+    return 30.f;
 }
 @end
