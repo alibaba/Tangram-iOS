@@ -168,7 +168,7 @@
             [layouts tm_safeAddObject:[layoutMutableDict copy]];
         }
         //11 MixLayout, 做数据拆分
-        if ([type isEqualToString:@"11"]) {
+        else if ([type isEqualToString:@"11"]) {
             NSMutableArray *mutableOriginalItems = [originalItems mutableCopy];
             NSString *identifier = [dict tm_stringForKey:@"id"];
             //获得了N个Layout实例
@@ -194,7 +194,17 @@
                 [layouts tm_safeAddObject:mutableDict];
             }
         }
-        [layouts tm_safeAddObject:dict];
+        //如果找不到了对应的layout，那么外面套一个onecolumn 当做组件处理
+        else if (![[self class]layoutClassNameByType:type]){
+            NSMutableDictionary *singleColumnDict = [[NSMutableDictionary alloc]init];
+            [singleColumnDict tm_safeSetObject:@"container-oneColumn" forKey:@"type"];
+            [singleColumnDict tm_safeSetObject:[dict tm_stringForKey:@"id"] forKey:@"id"];
+            [singleColumnDict tm_safeSetObject:@[dict] forKey:@"items"];
+            [layouts tm_safeAddObject:[singleColumnDict copy]];
+        }
+        else{
+            [layouts tm_safeAddObject:dict];
+        }
     }
     return [layouts copy];
 }
