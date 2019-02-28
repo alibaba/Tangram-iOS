@@ -222,6 +222,10 @@
     }
     if (index == 6){
         TangramWaterFlowLayout *waterFlowLayout = [[TangramWaterFlowLayout alloc]init];
+        waterFlowLayout.hGap = 5;
+        waterFlowLayout.vGap = 5;
+        waterFlowLayout.padding = @[@5, @5, @5, @5];
+        waterFlowLayout.margin = @[@10, @10, @10, @10];
         return waterFlowLayout;
     }
     //普通流式布局
