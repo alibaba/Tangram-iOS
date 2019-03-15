@@ -49,7 +49,7 @@
 + (void)registLayoutType:(NSString *)type className:(NSString *)layoutClassName
 {
     if (type.length > 0 && layoutClassName.length > 0) {
-        [[TangramDefaultLayoutFactory sharedInstance].layoutTypeMap setObject:[type copy] forKey:[layoutClassName copy]];
+        [[TangramDefaultLayoutFactory sharedInstance].layoutTypeMap setObject:[layoutClassName copy] forKey:[type copy]];
     }
 }
 
