@@ -738,6 +738,7 @@
 
 - (void)setContentOffset:(CGPoint)contentOffset
 {
+    [super setContentOffset: contentOffset];
     NSUInteger min = [self layoutIndexByHeight:self.contentOffset.y];
     NSUInteger max = [self layoutIndexByHeight:self.contentOffset.y + self.vv_height];
     [self.visibleLayoutIdentifierSet removeAllObjects];
