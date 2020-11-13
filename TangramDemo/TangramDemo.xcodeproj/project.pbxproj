@@ -206,7 +206,7 @@
 			files = (
 			);
 			inputPaths = (
-				"${SRCROOT}/../Pods/Target Support Files/Pods-TangramDemo/Pods-TangramDemo-resources.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-TangramDemo/Pods-TangramDemo-resources.sh",
 				"${PODS_ROOT}/../Tangram/Resources/TangramKitVVElementTypeMap.plist",
 				"${PODS_ROOT}/../Tangram/Resources/TangramLayoutTypeMap.plist",
 				"${PODS_ROOT}/../Tangram/Resources/TmallComponent2.out",
@@ -219,7 +219,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/../Pods/Target Support Files/Pods-TangramDemo/Pods-TangramDemo-resources.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-TangramDemo/Pods-TangramDemo-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		F04088E1AA23D8122992FFBB /* [CP] Check Pods Manifest.lock */ = {

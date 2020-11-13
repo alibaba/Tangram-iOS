@@ -171,12 +171,17 @@
             layout.pageWidth = pageWidthInConfig/375.f*SCREEN_WIDTH;
         }
     }
-    CGFloat pageHeightInConfig = [styleDict tm_floatForKey:@"pageHeight"];
-    if (disableScale) {
-        layout.pageHeight = pageHeightInConfig;
-    }
-    else{
-        layout.pageHeight = pageHeightInConfig/375.f*SCREEN_WIDTH;
+  
+    //高度应该和宽度一样使用rp单位, 要不然style中设置rp单位无效
+    CGFloat pageHeightInConfig = [self floatRPValueByObject:[styleDict tm_safeObjectForKey:@"pageHeight"]];
+    
+    if (pageWidthInConfig > 0.f) {
+        if (disableScale || [[styleDict tm_stringForKey:@"pageHeight"] containsString:@"rp"]) {
+            layout.pageHeight = pageHeightInConfig;
+        }
+        else{
+            layout.pageHeight = pageHeightInConfig/375.f*SCREEN_WIDTH;
+        }
     }
     layout.hGap = [styleDict tm_floatForKey:@"hGap"];
     if ([[styleDict tm_stringForKey:@"hasIndicator"] isEqualToString:@"false"]) {
