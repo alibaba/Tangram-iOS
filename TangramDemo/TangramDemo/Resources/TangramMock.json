@@ -37,18 +37,58 @@
                 ]
             },
             {
+                "type": "container-float",
+                "id": "float-RYYYYYYYYYY",
+                "style":{
+                    "bgColor": "#CC5500",
+                    "align": "bottom_left",
+                    "x": 20,
+                    "y": 20
+                },
+                "items": [
+                    {
+                        "type": "text",
+                        "text": "float-layout",
+                        "style":{
+                           "width":  40,
+                           "height": 40,
+                        }
+                    }
+                ]
+            },
+            {
+                "type": "container-sticky",
+                "id": "sticky-RYYYYYYYYYY",
+                "style":{
+                    "bgColor": "#CC5500",
+                    "align": "top_left",
+                    "x": 0,
+                    "y": 80
+                },
+                "items": [
+                    {
+                        "type": "text",
+                        "text": "sticky-layout",
+                        "style":{
+                           "width":  100,
+                           "height": 20,
+                        }
+                    }
+                ]
+            },
+            {
                 "type": "container-fix",
                 "id": "fix-RYYYYYYYYYY",
                 "style":{
                     "bgColor": "#4dCC0000",
                     "align": "top_left",
                     "x": 0,
-                    "y": 55
+                    "y": 100
                 },
                 "items": [
                     {
                         "type": "text",
-                        "text": "RYYYYYYYYYY",
+                        "text": "fix layout",
                         "style":{
                            "width": "-1",
                            "height": 20,
