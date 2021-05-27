@@ -37,6 +37,26 @@
                 ]
             },
             {
+                "type": "container-fix",
+                "id": "fix-RYYYYYYYYYY",
+                "style":{
+                    "bgColor": "#4dCC0000",
+                    "align": "top_left",
+                    "x": 0,
+                    "y": 55
+                },
+                "items": [
+                    {
+                        "type": "text",
+                        "text": "RYYYYYYYYYY",
+                        "style":{
+                           "width": "-1",
+                           "height": 20,
+                        }
+                    }
+                ]
+            },
+            {
                 "type": "container-oneColumn",
                 "id": "first-line-1",
                 "items": [
