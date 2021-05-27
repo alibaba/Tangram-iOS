@@ -83,17 +83,17 @@
         }
     }
     if ([styleDict tm_safeObjectForKey:@"width"] != nil) {
-        if([[styleDict tm_stringForKey:@"width"]containsString:@"rp"]){
+        NSString *widthStr = [styleDict tm_stringForKey:@"width"];
+        if([widthStr containsString:@"rp"]){
             itemModel.heightFromStyle = [TangramDefaultDataSourceHelper floatValueByRPObject:[styleDict tm_safeObjectForKey:@"width"]];
-        }
-        else{
+        } else if ([widthStr isEqualToString:@"-1"]) {
+            //width 配-1 意味着屏幕宽度
+            itemModel.widthFromStyle = [UIScreen mainScreen].bounds.size.width;
+        } else {
             itemModel.widthFromStyle = [styleDict tm_floatForKey:@"width"];
         }
     }
-    else if ([[styleDict tm_stringForKey:@"width"] isEqualToString:@"-1"]) {
-        //width 配-1 意味着屏幕宽度
-        itemModel.widthFromStyle = [UIScreen mainScreen].bounds.size.width;
-    }
+
     if ([styleDict tm_floatForKey:@"aspectRatio"] > 0.f) {
         itemModel.modelAspectRatio  = [styleDict tm_floatForKey:@"aspectRatio"];
     }

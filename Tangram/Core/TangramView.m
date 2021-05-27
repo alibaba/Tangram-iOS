@@ -793,13 +793,13 @@
         }
         if ([layout.position isEqualToString:@"top-fixed"] ||
             (([layout.position isEqualToString:@"fixed"]) && (((TangramFixLayout *)layout).alignType == TopLeft || ((TangramFixLayout *)layout).alignType == TopRight))) {
-            layout.frame = CGRectMake(layout.frame.origin.x,self.contentOffset.y + ((TangramFixLayout *)layout).originPoint.y, layout.frame.size.width, layout.frame.size.height);
+            layout.frame = CGRectMake(layout.frame.origin.x, contentOffset.y + ((TangramFixLayout *)layout).originPoint.y, layout.frame.size.width, layout.frame.size.height);
             if (topOffset < layout.vv_height + ((TangramFixLayout *)layout).originPoint.y) {
                 topOffset = layout.vv_height + ((TangramFixLayout *)layout).originPoint.y;
             }
         }
         else {
-            layout.frame = CGRectMake(layout.frame.origin.x,self.vv_height- layout.vv_height + self.contentOffset.y -  ((TangramFixLayout *)layout).offsetY, layout.frame.size.width, layout.frame.size.height);
+            layout.frame = CGRectMake(layout.frame.origin.x,self.vv_height- layout.vv_height + contentOffset.y -  ((TangramFixLayout *)layout).offsetY, layout.frame.size.width, layout.frame.size.height);
             bottomOffset -= (layout.vv_height + ((TangramFixLayout *)layout).offsetY);
             if (bottomOffset > (self.vv_height - layout.vv_height - ((TangramFixLayout *)layout).offsetY)) {
                 bottomOffset  = (self.vv_height - layout.vv_height - ((TangramFixLayout *)layout).offsetY);
@@ -811,7 +811,7 @@
         if (((TangramStickyLayout *)layout).stickyBottom == NO
             && self.contentOffset.y >= ((TangramStickyLayout *)layout).originalY - topOffset - ((TangramStickyLayout *)layout).extraOffset) {
             ((TangramStickyLayout *)layout).enterFloatStatus = YES;
-            layout.frame = CGRectMake(layout.frame.origin.x,self.contentOffset.y + topOffset + layout.marginTop + ((TangramStickyLayout *)layout).extraOffset , layout.frame.size.width, layout.frame.size.height);
+            layout.frame = CGRectMake(layout.frame.origin.x, contentOffset.y + topOffset + layout.marginTop + ((TangramStickyLayout *)layout).extraOffset , layout.frame.size.width, layout.frame.size.height);
             topOffset += (layout.vv_height + layout.marginTop + layout.marginBottom + ((TangramStickyLayout *)layout).extraOffset) ;
         }
         //吸底判断
@@ -819,7 +819,7 @@
                 && self.contentOffset.y + self.vv_height >= ((TangramStickyLayout *)layout).originalY + layout.vv_height)
         {
             ((TangramStickyLayout *)layout).enterFloatStatus = YES;
-            layout.frame = CGRectMake(layout.frame.origin.x,self.contentOffset.y + self.vv_height - layout.vv_height - layout.marginBottom, layout.frame.size.width, layout.frame.size.height);
+            layout.frame = CGRectMake(layout.frame.origin.x, contentOffset.y + self.vv_height - layout.vv_height - layout.marginBottom, layout.frame.size.width, layout.frame.size.height);
             bottomOffset -= (layout.vv_height + layout.marginTop + layout.marginBottom);
         }
         else
@@ -829,7 +829,7 @@
         }
     }
     for (UIView<TangramLayoutProtocol> *layout in self.dragableLayoutArray) {
-        layout.frame = CGRectMake(layout.frame.origin.x, ((TangramDragableLayout *)layout).originPoint.y + self.contentOffset.y , layout.frame.size.width, layout.frame.size.height);
+        layout.frame = CGRectMake(layout.frame.origin.x, ((TangramDragableLayout *)layout).originPoint.y + contentOffset.y , layout.frame.size.width, layout.frame.size.height);
     }
     
     [super setContentOffset:contentOffset];
